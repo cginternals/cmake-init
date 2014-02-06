@@ -39,6 +39,7 @@ if(WIN32)
         DOC "The TRDP binary")
 
 endif()
-    
+
+include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(TRDP REQUIRED_VARS TRDP_INCLUDE_DIR TRDP_LIBRARY)
 mark_as_advanced(TRDP_INCLUDE_DIR TRDP_LIBRARY)

@@ -118,7 +118,7 @@ endif()
 
 set(project ${META_PROJECT_NAME})
 if(WIN32)
-    set(INSTALL_BIN           ".")                      # C:\Programme\<project>
+    set(INSTALL_BIN           "bin")                    # C:\Programme\<project>
     set(INSTALL_SHARED        ".")                      # C:\Programme\<project>
     set(INSTALL_LIB           "lib")                    # C:\Programme\<project>\lib
     set(INSTALL_INCLUDE       "include")                # C:\Programme\<project>\include
@@ -182,6 +182,10 @@ if (OPTION_BUILD_STATIC)
     add_definitions("-DTEMPLATE_STATIC")
 endif()
 
+# MODULES
+
+add_subdirectory(source)
+
 # PACKAGING
 
 add_subdirectory(packages)
@@ -189,7 +193,3 @@ add_subdirectory(packages)
 # DOXYGEN
 
 add_subdirectory(docs)
-
-# MODULES
-
-add_subdirectory(source)

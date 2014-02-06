@@ -57,5 +57,6 @@ else ()
 	set(GMOCK_LIBRARIES "")
 endif ()
 
+include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(GMOCK REQUIRED_VARS GMOCK_INCLUDE_DIR GMOCK_LIBRARIES)
 mark_as_advanced(GMOCK_INCLUDE_DIR GMOCK_LIBRARIES)

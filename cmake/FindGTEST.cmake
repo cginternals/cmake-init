@@ -63,5 +63,6 @@ else ()
 	set(GTEST_LIBRARIES "")
 endif ()
 
+include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(GTEST REQUIRED_VARS GTEST_INCLUDE_DIR GTEST_LIBRARIES)
 mark_as_advanced(GTEST_INCLUDE_DIR GTEST_LIBRARIES)
