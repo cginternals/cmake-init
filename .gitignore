@@ -1,5 +1,27 @@
-CMakeCache.txt
-CMakeFiles
-Makefile
-cmake_install.cmake
-install_manifest.txt
+# Compiled Object files
+*.slo
+*.lo
+*.o
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+
+# build dir
+build
+build.release
+build.debug
+debug_build
+release_build
+/bin
+/lib
+/install
+
+#qt cache
+CMakeLists.txt.user
+CMakeLists.txt.user.*

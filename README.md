@@ -1,4 +1,6 @@
-cmake-init
-==========
+cmake-init - a c++ project template
+====
 
-Template for quick and easy project setup using cmake.
+cmake-init is a copy and paste template, that provides the following features:
+
+ToDo 
