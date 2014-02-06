@@ -21,7 +21,7 @@ endif()
 
 if(GMOCK_FOUND AND GTEST_FOUND)
 
-	set(TEMPLATE_TESTS_FOLDER "Tests")
+	set(TESTS_FOLDER "Tests")
 
 	include_directories(
 		${GMOCK_INCLUDE_DIR}

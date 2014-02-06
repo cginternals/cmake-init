@@ -14,9 +14,9 @@ file(TO_CMAKE_PATH "$ENV{PROGRAMFILES}" ENVPROGRAMFILES)
 file(TO_CMAKE_PATH "$ENV{TEMPLATE_DIR}" ENVTEMPLATE_DIR)
 
 find_path(TEMPLATE_INCLUDE_DIR template/template.h
-	$ENV{TEMPLATE_DIR}/include
+	${ENVTEMPLATE_DIR}/include
 	${TEMPLATE_DIR}/include
-	$ENV{PROGRAMFILES}/template/include
+	${ENVPROGRAMFILES}/template/include
 	/usr/include
 	/usr/local/include
 	/sw/include
@@ -29,9 +29,9 @@ set(LIB_PATHS
 	${TEMPLATE_DIR}/build/Debug
 	${TEMPLATE_DIR}/build-release
 	${TEMPLATE_DIR}/build-debug
-	$ENV{TEMPLATE_DIR}/lib
+	${ENVTEMPLATE_DIR}/lib
 	${TEMPLATE_DIR}/lib
-	$ENV{PROGRAMFILES}/glow/lib
+	${ENVPROGRAMFILES}/glow/lib
 	/usr/lib
 	/usr/local/lib
 	/sw/lib
