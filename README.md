@@ -1,6 +1,19 @@
-cmake-init - a c++ project template
+cmake-init - A cross-platform C++ CMake project template
 ====
 
-cmake-init is a copy and paste template, that provides the following features:
+Cmake-init is a copy and paste template, that provides the following features:
+ * Cross Platform
+  * Windows
+  * Linux
+  * Mac
+ * Libraries, Applications, Testing template
+ * Documentation template
+ * Installation, Packaging template
+ * CMake find script template for defined libraries
 
-ToDo 
+The files of cmake-init are an instantiation of the templates containing:
+  * Example app
+  * Example lib
+  * Example test
+  * Example documentation
+  * Example package
