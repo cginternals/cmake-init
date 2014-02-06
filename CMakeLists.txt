@@ -176,8 +176,6 @@ install(FILES LICENSE DESTINATION ".")
 
 # [TODO] Deal with GIT-NOTFOUND
 
-# GLOW DEPENDENCIES
-
 if (OPTION_BUILD_STATIC)
     add_definitions("-DTEMPLATE_STATIC")
 endif()

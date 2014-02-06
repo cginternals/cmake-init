@@ -21,7 +21,7 @@ find_path(TEMPLATE_INCLUDE_DIR template/template.h
 	/usr/local/include
 	/sw/include
 	/opt/local/include
-	DOC "The directory where template/template.h resides")
+	DOC "The directory where fiblib/fiblib-api.h resides")
 
 set(LIB_PATHS 	
 	${TEMPLATE_DIR}/build
@@ -74,5 +74,5 @@ endmacro()
 find(template ${LIB_PATHS})
 # find(...  ${LIB_PATHS})
 
-find_package_handle_standard_args(TEMPLATE DEFAULT_MSG GLOW_LIBRARIES GLOW_INCLUDE_DIR)
+find_package_handle_standard_args(TEMPLATE DEFAULT_MSG TEMPLATE_LIBRARIES TEMPLATE_INCLUDE_DIR)
 mark_as_advanced(TEMPLATE_FOUND)
