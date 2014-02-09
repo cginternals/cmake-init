@@ -139,7 +139,7 @@ install(FILES LICENSE DESTINATION ".")
 create_revision_file(${CMAKE_BINARY_DIR}/revision)
 
 # Data files
-install(DIRECTORY ${CMAKE_SOURCE_DIR}/data DESTINATION ${INSTALL_APPLICATIONS})
+install(DIRECTORY ${CMAKE_SOURCE_DIR}/data DESTINATION ${INSTALL_DATA})
 
 
 #
