@@ -1,7 +1,9 @@
 cmake_minimum_required(VERSION 2.8.9 FATAL_ERROR)
 
 
-# PROJECT DESCRIPTION
+#
+# Project description
+#
 
 set(META_PROJECT_NAME        "template")
 set(META_VERSION_MAJOR       "0")
@@ -12,14 +14,19 @@ set(META_AUTHOR_ORGANIZATION "hpicgs group")
 set(META_AUTHOR_DOMAIN       "https://github.com/hpicgs/cmake-init/")
 
 
-# OPTIONS
+#
+# Options
+#
 
 option(OPTION_LIMIT_CONFIGS  "Generate limited configs (Release; Debug)" ON)
 option(OPTION_LOCAL_INSTALL  "Install to a local directory instead of the system" OFF)
 option(OPTION_BUILD_STATIC   "Build static libraries" OFF)
-option(OPTION_BUILD_TESTS    "Build test projects (if gmock and gtest are found)" ON)
+option(OPTION_BUILD_TESTS    "Build tests (if gmock and gtest are found)" ON)
 
-# CMAKE CONFIGURATION
+
+#
+# CMake configuration
+#
 
 # Include cmake modules from ./cmake
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
@@ -37,7 +44,6 @@ if (${CMAKE_BUILD_TYPE})
     set (CMAKE_BUILD_TYPE "Debug" CACHE STRING "Use build type 'Debug' per default" FORCE)
 endif()
 
-
 # Project
 project(${META_PROJECT_NAME} C CXX)
 
@@ -48,7 +54,9 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 include(cmake/Custom.cmake)
 
 
-# PLATFORM AND ARCHITECTURE
+#
+# Platform and architecture
+#
 
 # Architecture (32/64 bit)
 set(X64 OFF)
@@ -56,65 +64,23 @@ if(CMAKE_SIZEOF_VOID_P EQUAL 8)
     set(X64 ON)
 endif()
 
-
-# Check for linux
-#if(UNIX AND NOT APPLE)
-#    set(LINUX 1)
-#endif()
-
-
 # Setup platform specifics (compile flags, etc., ...)
 if(MSVC)
-
-    message(STATUS "Configuring for platform Windows/MSVC.")
     include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/PlatformWindowsMSVC.cmake)
-
 elseif(WIN32 AND CMAKE_COMPILER_IS_GNUCXX)
-
-    message(STATUS "Configuring for platform Windows/GCC.")
     include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/PlatformWindowsGCC.cmake)
-
 elseif(APPLE)
-
-    message(STATUS "XCODE VERSION :: ${XCODE_VERSION}")
-    
-    if ("${XCODE_VERSION}")
-	# check regex, it's just a quick-hack for now but should work if the
-	# version string format returned by ${XCODE_VERSION} does not change.
-	# required format is <MAJOR>.<MINOR>.<PATCH>
-	string(REGEX REPLACE "^([0-9]+).*" "\\1" XCODE_MAJOR "${XCODE_VERSION}")
-	string(LENGTH ${XCODE_MAJOR} XCODE_MAJOR_LENGTH)
-	string(REGEX MATCH "[0-4]" XCODE_MAJOR_TO_OLD ${XCODE_MAJOR})
-	
-	if (NOT (${XCODE_MAJOR_LENGTH} EQUAL 1 AND "${XCODE_MAJOR_TO_OLD}" GREATER ""))
-	    message(STATUS "Configuring for platform MacOS with XCode Version 5+.")
-	    include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/PlatformMacOS.cmake)
-	else ()
-	    message (WARNING "Insufficient XCode Version (upgrade to XCode 5.x or higher)!")
-	endif()
-    else ()
-	    message (STATUS "Configuring for platform MacOS without XCode, using plain make.")
-	    include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/PlatformMacOS.cmake)
-    endif()
-
+    include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/PlatformMacOS.cmake)
 elseif(UNIX AND CMAKE_COMPILER_IS_GNUCXX)
-
-    message(STATUS "Configuring for platform Linux/GCC.")
     include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/PlatformLinuxGCC.cmake)
-
 else()
-
-    # Unsupported system/compiler
     message(WARNING "Unsupported platform/compiler combination")
-
 endif()
 
 
-# INSTALL
-if(X64)
-    # http://public.kitware.com/Bug/view.php?id=9094
-    set(CPACK_NSIS_INSTALL_ROOT "$PROGRAMFILES64")
-endif()
+#
+# Installation paths
+#
 
 set(project ${META_PROJECT_NAME})
 if(WIN32)
@@ -157,6 +123,7 @@ else()
     endif()
 endif()
 
+
 # GET REPOSITORY VERSION
 
 # Add a revision file containing the git-head tag for cpack and install
@@ -167,27 +134,21 @@ get_git_head_revision(GIT_REFSPEC GIT_SHA1)
 string(SUBSTRING ${GIT_SHA1} 0 12 GIT_REV)
 file(WRITE ${CMAKE_BINARY_DIR}/revision ${GIT_REV})
 
-# [TODO] Really?? Do we want this deployed?
 
-install(FILES ${CMAKE_BINARY_DIR}/revision DESTINATION .)
+#
+# Global deployment
+#
+
+install(FILES ${CMAKE_BINARY_DIR}/revision DESTINATION ".")
 install(FILES template-config.cmake DESTINATION ".")
 install(FILES AUTHORS DESTINATION ".")
 install(FILES LICENSE DESTINATION ".")
 
-# [TODO] Deal with GIT-NOTFOUND
 
-if (OPTION_BUILD_STATIC)
-    add_definitions("-DTEMPLATE_STATIC")
-endif()
-
-# MODULES
+#
+# Include projects
+#
 
 add_subdirectory(source)
-
-# PACKAGING
-
 add_subdirectory(packages)
-
-# DOXYGEN
-
 add_subdirectory(docs)

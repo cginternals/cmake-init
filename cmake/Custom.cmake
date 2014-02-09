@@ -28,6 +28,8 @@ macro(source_group_by_path PARENT_PATH REGEX GROUP)
 endmacro()
 
 
+# Extract entries matching a given regex from a list
+
 macro(list_extract OUTPUT REGEX)
 
     set(args ${ARGV})

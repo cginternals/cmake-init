@@ -1,3 +1,4 @@
+message(STATUS "Configuring for platform Windows/GCC.")
 
 # support for C++11 etc.
 

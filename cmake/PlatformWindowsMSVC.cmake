@@ -1,3 +1,4 @@
+message(STATUS "Configuring for platform Windows/MSVC.")
 
 set(WIN32_COMPILE_DEFS
     WIN32						# Windows system

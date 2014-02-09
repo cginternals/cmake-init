@@ -1,5 +1,7 @@
+message(STATUS "Configuring for platform Linux/GCC.")
 
-# support for C++11 etc.
+
+# Enable C++11 support
 
 execute_process(COMMAND ${CMAKE_C_COMPILER} -dumpversion
 	OUTPUT_VARIABLE GCC_VERSION)

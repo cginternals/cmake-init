@@ -1,27 +1,48 @@
-
-# Target
 set(target fiblib)
 message(STATUS "lib ${target}")
 
-# Find externals
-find_package(TRDP QUIET) # or REQUIRED
+
+#
+# External libraries
+#
+
+#find_package(THIRDPARTY) # REQUIRED
+
+
+#
+# Include directories
+#
 
 include_directories(
     # e.g., ${TRDP_INCLUDE_DIR}
     ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
+
+#
 # Libraries
+#
+
 set(libs
-    # e.g., ${TRDP_LIBRARY}
+    # e.g., ${THIRDPARTY_LIBRARY}
 )
 
-# Definitions
-if (NOT OPTION_BUILD_STATIC)
+
+#
+# Compiler definitions
+#
+
+if (OPTION_BUILD_STATIC)
+    add_definitions("-DTEMPLATE_STATIC")
+else()
     add_definitions("-DFIBLIB_EXPORTS")
 endif()
 
+
+#
 # Sources
+#
+
 set(include_path "${CMAKE_CURRENT_SOURCE_DIR}/include/${target}")
 set(source_path "${CMAKE_CURRENT_SOURCE_DIR}/source")
 
@@ -42,7 +63,11 @@ source_group_by_path(${include_path} "\\\\.h$|\\\\.hpp$"
 source_group_by_path(${source_path} "\\\\.cpp$|\\\\.c$|\\\\.h$|\\\\.hpp$" 
     ${source_group} ${sources})
 
+
+#
 # Build library
+#
+
 if(OPTION_BUILD_STATIC)
     add_library(${target} ${api_includes} ${sources})
 else()
@@ -50,6 +75,7 @@ else()
 endif()
 
 target_link_libraries(${target} ${libs})
+
 set_target_properties(${target}
     PROPERTIES
     LINKER_LANGUAGE CXX
@@ -61,11 +87,17 @@ set_target_properties(${target}
     DEBUG_POSTFIX               "d${DEBUG_POSTFIX}"
     INCLUDE_PATH	            ${include_path})
 
+
+#
 # Deployment
+#
+
+# Library
 install(TARGETS ${target}
     RUNTIME DESTINATION ${INSTALL_BIN}
     LIBRARY DESTINATION ${INSTALL_SHARED}
     ARCHIVE DESTINATION ${INSTALL_LIB}
 )
 
+# Header files
 install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/${target} DESTINATION ${INSTALL_INCLUDE})
