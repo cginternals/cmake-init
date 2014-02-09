@@ -11,7 +11,7 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
         set(OPTION_PACK_GENERATOR "ZIP;TGZ;DEB" CACHE STRING "Package targets")
     endif()
 
-    
+
     # Initialize
     
     # Reset CPack configuration
@@ -109,7 +109,7 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
     
     set(CPACK_PACKAGE_FILE_NAME "${package_name}-${CPACK_PACKAGE_VERSION}")
 
-    # NOTE: for using MUI (UN)WELCOME images and isntaller icon we suggest to replace nsis defautls,
+    # NOTE: for using MUI (UN)WELCOME images and installer icon we suggest to replace nsis defaults,
     # since there is currently no way to do so without manipulating the installer template (which we won't).
 
     #string(REGEX REPLACE "/" "\\\\\\\\" CPACK_PACKAGE_ICON ${CPACK_PACKAGE_ICON})

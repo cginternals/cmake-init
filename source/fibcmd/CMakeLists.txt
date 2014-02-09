@@ -1,6 +1,6 @@
 
 set(target fibcmd)
-message(STATUS "app ${target}")
+message(STATUS "App ${target}")
 
 add_executable(${target} 
     main.cpp

@@ -1,6 +1,6 @@
 
 set(target fiblib-test)
-message(STATUS "test ${target}")
+message(STATUS "Test ${target}")
 
 include_directories(
     # e.g., ${TRDP_INCLUDE_DIR}

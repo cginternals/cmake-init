@@ -47,11 +47,12 @@ endif()
 # Project
 project(${META_PROJECT_NAME} C CXX)
 
-# Generate folders
+# Generate folders for IDE targets (e.g., VisualStudio solutions)
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 # Include custom cmake functions
 include(cmake/Custom.cmake)
+include(cmake/GitRevision.cmake)
 
 
 #
@@ -124,25 +125,17 @@ else()
 endif()
 
 
-# GET REPOSITORY VERSION
-
-# Add a revision file containing the git-head tag for cpack and install
-include(GetGitRevisionDescription)
-get_git_head_revision(GIT_REFSPEC GIT_SHA1)
-
-# Generate a shorter, googlelike variation for rev
-string(SUBSTRING ${GIT_SHA1} 0 12 GIT_REV)
-file(WRITE ${CMAKE_BINARY_DIR}/revision ${GIT_REV})
-
-
 #
 # Global deployment
 #
 
-install(FILES ${CMAKE_BINARY_DIR}/revision DESTINATION ".")
+# Project meta files
 install(FILES template-config.cmake DESTINATION ".")
 install(FILES AUTHORS DESTINATION ".")
 install(FILES LICENSE DESTINATION ".")
+
+# Add a revision file containing the git-head tag for cpack and install
+create_revision_file(${CMAKE_BINARY_DIR}/revision)
 
 
 #

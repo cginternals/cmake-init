@@ -1,5 +1,6 @@
+
 set(target fiblib)
-message(STATUS "lib ${target}")
+message(STATUS "Lib ${target}")
 
 
 #

@@ -19,7 +19,9 @@ find_library(GTEST_LIBRARY
     NAMES gtest
     PATHS
     $ENV{GTESTDIR}/lib
+    $ENV{GTESTDIR}/lib/.libs
     $ENV{GTEST_HOME}/lib
+    $ENV{GTEST_HOME}/lib/.libs
     $ENV{GTESTDIR}
     $ENV{GTEST_HOME}
     $ENV{GMOCKDIR}/gtest
@@ -38,7 +40,9 @@ find_library(GTEST_LIBRARY_DEBUG
     NAMES gtestd
     PATHS
     $ENV{GTESTDIR}/lib
+    $ENV{GTESTDIR}/lib/.libs
     $ENV{GTEST_HOME}/lib
+    $ENV{GTEST_HOME}/lib/.libs
     $ENV{GTESTDIR}
     $ENV{GTEST_HOME}
     $ENV{GMOCKDIR}/gtest
