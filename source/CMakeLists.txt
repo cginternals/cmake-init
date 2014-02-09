@@ -1,11 +1,9 @@
 
 # Generate meta-header
 configure_file(template-version.h.in ${CMAKE_CURRENT_BINARY_DIR}/template-version.h)
-# we do NOT want to deploy this header
-#install(FILES ${CMAKE_CURRENT_BINARY_DIR}/template/template-version.h DESTINATION ${INSTALL_INCLUDE}/template)
 
-# Install data files
-install(DIRECTORY ${CMAKE_SOURCE_DIR}/data DESTINATION ${INSTALL_APPLICATIONS})
+# We do NOT want to deploy this header (at least not for binary packages)
+#install(FILES ${CMAKE_CURRENT_BINARY_DIR}/template/template-version.h DESTINATION ${INSTALL_INCLUDE}/template)
 
 
 # Include directories

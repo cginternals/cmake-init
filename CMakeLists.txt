@@ -138,6 +138,9 @@ install(FILES LICENSE DESTINATION ".")
 # Add a revision file containing the git-head tag for cpack and install
 create_revision_file(${CMAKE_BINARY_DIR}/revision)
 
+# Data files
+install(DIRECTORY ${CMAKE_SOURCE_DIR}/data DESTINATION ${INSTALL_APPLICATIONS})
+
 
 #
 # Include projects
