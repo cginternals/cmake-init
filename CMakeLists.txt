@@ -49,6 +49,7 @@ project(${META_PROJECT_NAME} C CXX)
 
 # Generate folders for IDE targets (e.g., VisualStudio solutions)
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+set(IDE_FOLDER "")  # Put projects in root folder by default
 
 # Include custom cmake functions
 include(cmake/Custom.cmake)

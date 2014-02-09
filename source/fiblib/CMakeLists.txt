@@ -79,7 +79,8 @@ target_link_libraries(${target} ${libs})
 
 set_target_properties(${target}
     PROPERTIES
-    LINKER_LANGUAGE CXX
+    LINKER_LANGUAGE              CXX
+    FOLDER                      "${IDE_FOLDER}"
     COMPILE_DEFINITIONS_DEBUG   "${DEFAULT_COMPILE_DEFS_DEBUG}"
     COMPILE_DEFINITIONS_RELEASE "${DEFAULT_COMPILE_DEFS_RELEASE}"
     COMPILE_FLAGS               "${DEFAULT_COMPILE_FLAGS}"

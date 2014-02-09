@@ -25,9 +25,6 @@ endif()
 # Check if tests are enabled
 if(OPTION_BUILD_TESTS AND GMOCK_FOUND AND GTEST_FOUND)
 
-    # Used by the test projects!
-    set(TESTS_FOLDER "Tests")
-
     # Include gmock and gtest
     include_directories(
         ${GMOCK_INCLUDE_DIR}
@@ -39,6 +36,7 @@ if(OPTION_BUILD_TESTS AND GMOCK_FOUND AND GTEST_FOUND)
     set_target_properties(test PROPERTIES EXCLUDE_FROM_DEFAULT_BUILD 1)
 
     # Tests
+    set(IDE_FOLDER "Tests")
     add_test_without_ctest(fiblib-test)
 
 endif()
