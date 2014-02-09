@@ -25,3 +25,11 @@ release_build
 #qt cache
 CMakeLists.txt.user
 CMakeLists.txt.user.*
+
+#local config windows
+_configure.bat
+_open-project.bat
+_start-cmake-gui.bat
+_start-cmd.bat
+
+#local config unix
