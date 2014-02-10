@@ -16,6 +16,8 @@
 build
 build.release
 build.debug
+build-release
+build-debug
 debug_build
 release_build
 /bin
@@ -37,3 +39,4 @@ _start-cmake-gui.bat
 _start-cmd.bat
 
 # Local config unix
+localconfig
