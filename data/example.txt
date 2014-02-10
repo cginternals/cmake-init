@@ -1,0 +1,7 @@
+This is a test data file read from the 'data' directory.
+
+Keep in mind to always keep data files relative to the project's root directory, not to your source directories, otherwise you have to copy your data files around during installation or packaging.
+
+To execute your applications, make sure that the current working directory is the root directory of your project, then all data files can be found during runtime. 
+
+The project is set up to support this kind of setting in all important steps, e.g., during development, for local or system installs, and for packaging. If you change this behaviour, be careful and consider that you have to adapt all situations mentions above to the new requirements! (read: do *NOT* change this behaviour at all, unless you really know what you are doing)
