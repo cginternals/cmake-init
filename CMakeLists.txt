@@ -83,6 +83,8 @@ endif()
 # Installation paths
 set(project ${META_PROJECT_NAME})
 if(WIN32)
+    set(INSTALL_ROOT          ".")                      # C:\Programme\<project>
+    set(INSTALL_DATA          ".")                      # C:\Programme\<project>
     set(INSTALL_BIN           "bin")                    # C:\Programme\<project>
     set(INSTALL_SHARED        ".")                      # C:\Programme\<project>
     set(INSTALL_LIB           "lib")                    # C:\Programme\<project>\lib
@@ -91,8 +93,9 @@ if(WIN32)
     set(INSTALL_SHORTCUTS     ".")                      # Not available under Windows
     set(INSTALL_ICONS         ".")                      # Not available under Windows
     set(INSTALL_INIT          ".")                      # Not available under Windows
-    set(INSTALL_DATA          ".")                      # C:\Programme\<project>
 else()
+    set(INSTALL_ROOT          "share/${project}")       # /usr/[local]/share/<project>
+    set(INSTALL_DATA          "share/${project}")       # /usr/[local]/share/<project>
     set(INSTALL_BIN           "bin")                    # /usr/[local]/bin
     set(INSTALL_SHARED        "lib")                    # /usr/[local]/lib
     set(INSTALL_LIB           "lib")                    # /usr/[local]/lib
@@ -101,13 +104,13 @@ else()
     set(INSTALL_SHORTCUTS     "share/applications")     # /usr/[local]/share/applications
     set(INSTALL_ICONS         "share/pixmaps")          # /usr/[local]/share/pixmaps
     set(INSTALL_INIT          "/etc/init")              # /etc/init (upstart init scripts)
-    set(INSTALL_DATA          "share/${project}")       # /usr/[local]/share/<project>
 
     # Adjust target paths for Local installs
     if(OPTION_LOCAL_INSTALL)
         # Put binaries in root directory and keep data directory name
-        set(INSTALL_BIN                       ".")           # /<INSTALL_PREFIX>
+        set(INSTALL_ROOT                      ".")           # /<INSTALL_PREFIX>
         set(INSTALL_DATA                      ".")           # /<INSTALL_PREFIX>
+        set(INSTALL_BIN                       ".")           # /<INSTALL_PREFIX>
 
         # We have to change the RPATH of binaries to achieve a usable local install.
         # [TODO] For binaries, "$ORIGIN/lib" is right, so that libraries are found in ./lib.
@@ -126,12 +129,12 @@ endif()
 #
 
 # Project meta files
-install(FILES template-config.cmake DESTINATION ".")
-install(FILES AUTHORS DESTINATION ".")
-install(FILES LICENSE DESTINATION ".")
+install(FILES template-config.cmake DESTINATION ${INSTALL_ROOT})
+install(FILES AUTHORS               DESTINATION ${INSTALL_ROOT})
+install(FILES LICENSE               DESTINATION ${INSTALL_ROOT})
 
 # Add a revision file containing the git-head tag for cpack and install
-create_revision_file(${CMAKE_BINARY_DIR}/revision)
+create_revision_file(${CMAKE_BINARY_DIR}/revision ${INSTALL_ROOT})
 
 # Data files
 install(DIRECTORY ${CMAKE_SOURCE_DIR}/data DESTINATION ${INSTALL_DATA})
