@@ -19,10 +19,10 @@ set(META_AUTHOR_DOMAIN       "https://github.com/hpicgs/cmake-init/")
 # Options
 #
 
-option(OPTION_LIMIT_CONFIGS  "Generate limited configs (Release; Debug)" ON)
-option(OPTION_LOCAL_INSTALL  "Install to a local directory instead of the system" OFF)
-option(OPTION_BUILD_STATIC   "Build static libraries" OFF)
-option(OPTION_BUILD_TESTS    "Build tests (if gmock and gtest are found)" ON)
+option(OPTION_LIMIT_CONFIGS    "Generate limited configs (Release; Debug)" ON)
+option(OPTION_PORTABLE_INSTALL "Install into a self-contained directory" OFF)
+option(OPTION_BUILD_STATIC     "Build static libraries" OFF)
+option(OPTION_BUILD_TESTS      "Build tests (if gmock and gtest are found)" ON)
 
 
 #
@@ -105,8 +105,8 @@ else()
     set(INSTALL_ICONS         "share/pixmaps")          # /usr/[local]/share/pixmaps
     set(INSTALL_INIT          "/etc/init")              # /etc/init (upstart init scripts)
 
-    # Adjust target paths for Local installs
-    if(OPTION_LOCAL_INSTALL)
+    # Adjust target paths for portable installs
+    if(OPTION_PORTABLE_INSTALL)
         # Put binaries in root directory and keep data directory name
         set(INSTALL_ROOT                      ".")           # /<INSTALL_PREFIX>
         set(INSTALL_DATA                      ".")           # /<INSTALL_PREFIX>
