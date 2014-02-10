@@ -88,22 +88,20 @@ if(WIN32)
     set(INSTALL_LIB           "lib")                    # C:\Programme\<project>\lib
     set(INSTALL_INCLUDE       "include")                # C:\Programme\<project>\include
     set(INSTALL_DOC           "doc")                    # C:\Programme\<project>\doc
-    set(INSTALL_APPLICATIONS  ".")                      # Not available under Windows
+    set(INSTALL_SHORTCUTS     ".")                      # Not available under Windows
     set(INSTALL_ICONS         ".")                      # Not available under Windows
     set(INSTALL_INIT          ".")                      # Not available under Windows
     set(INSTALL_DATA          ".")                      # C:\Programme\<project>
-    set(INSTALL_EXAMPLES      ".")                      # C:\Programme\<project>
 else()
     set(INSTALL_BIN           "bin")                    # /usr/[local]/bin
     set(INSTALL_SHARED        "lib")                    # /usr/[local]/lib
     set(INSTALL_LIB           "lib")                    # /usr/[local]/lib
     set(INSTALL_INCLUDE       "include")                # /usr/[local]/include
     set(INSTALL_DOC           "share/doc/${project}")   # /usr/[local]/share/doc/<project>
-    set(INSTALL_APPLICATIONS  "share/applications")     # /usr/[local]/share/applications
+    set(INSTALL_SHORTCUTS     "share/applications")     # /usr/[local]/share/applications
     set(INSTALL_ICONS         "share/pixmaps")          # /usr/[local]/share/pixmaps
     set(INSTALL_INIT          "/etc/init")              # /etc/init (upstart init scripts)
     set(INSTALL_DATA          "share/${project}")       # /usr/[local]/share/<project>
-    set(INSTALL_EXAMPLES      "share/${project}")       # /usr/[local]/share/<project>
 
     # Adjust target paths for Local installs
     if(OPTION_LOCAL_INSTALL)
