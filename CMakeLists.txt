@@ -1,3 +1,4 @@
+
 cmake_minimum_required(VERSION 2.8.9 FATAL_ERROR)
 
 
@@ -79,11 +80,7 @@ else()
     message(WARNING "Unsupported platform/compiler combination")
 endif()
 
-
-#
 # Installation paths
-#
-
 set(project ${META_PROJECT_NAME})
 if(WIN32)
     set(INSTALL_BIN           "bin")                    # C:\Programme\<project>

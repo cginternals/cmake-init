@@ -2,21 +2,40 @@
 set(target fiblib-test)
 message(STATUS "Test ${target}")
 
+#
+# Includes
+#
+
 include_directories(
-    # e.g., ${TRDP_INCLUDE_DIR}
     ${CMAKE_SOURCE_DIR}/source/fiblib/include
 )
 
-add_executable(${target} 
-    main.cpp
-    fibonacci_test.cpp
-)
+#
+# Libraries
+#
 
-target_link_libraries(${target} 
+set(libs
     ${GMOCK_LIBRARIES}
     ${GTEST_LIBRARIES}
     fiblib
 )
+
+#
+# Sources
+#
+
+set(sources
+    main.cpp
+    fibonacci_test.cpp
+)
+
+#
+# Build executable
+#
+
+add_executable(${target} ${sources})
+
+target_link_libraries(${target} ${libs})
 
 set_target_properties(${target}
     PROPERTIES

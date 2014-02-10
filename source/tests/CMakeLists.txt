@@ -1,4 +1,5 @@
 
+# Macro: Build test and add command to execute it via target 'test'
 macro(add_test_without_ctest target)
 
     add_subdirectory(${target})
@@ -10,7 +11,6 @@ macro(add_test_without_ctest target)
         COMMAND $<TARGET_FILE:${target}>)
 
 endmacro()
-
 
 # Design decision: tests are enabled by default. If the required components are not found,
 # tests are disabled and a warning is printed, but configuration is still valid.

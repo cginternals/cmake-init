@@ -2,23 +2,20 @@
 set(target fiblib)
 message(STATUS "Lib ${target}")
 
-
 #
 # External libraries
 #
 
-#find_package(THIRDPARTY) # REQUIRED
-
+# e.g., find_package(THIRDPARTY REQUIRED)
 
 #
-# Include directories
+# Includes
 #
 
 include_directories(
     # e.g., ${TRDP_INCLUDE_DIR}
     ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
-
 
 #
 # Libraries
@@ -27,7 +24,6 @@ include_directories(
 set(libs
     # e.g., ${THIRDPARTY_LIBRARY}
 )
-
 
 #
 # Compiler definitions
@@ -64,7 +60,6 @@ source_group_by_path(${include_path} "\\\\.h$|\\\\.hpp$"
 source_group_by_path(${source_path} "\\\\.cpp$|\\\\.c$|\\\\.h$|\\\\.hpp$" 
     ${source_group} ${sources})
 
-
 #
 # Build library
 #
@@ -88,7 +83,6 @@ set_target_properties(${target}
     LINK_FLAGS_RELEASE          "${DEFAULT_LINKER_FLAGS_RELEASE}"
     DEBUG_POSTFIX               "d${DEBUG_POSTFIX}"
     INCLUDE_PATH	            ${include_path})
-
 
 #
 # Deployment
