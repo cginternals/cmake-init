@@ -65,9 +65,16 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
     set(CPACK_PACKAGE_ICON                  "")
     set(CPACK_PACKAGE_RELOCATABLE           OFF)
 
+
+    # NSIS package information
+
+    if(X64)
+        # http://public.kitware.com/Bug/view.php?id=9094
+        set(CPACK_NSIS_INSTALL_ROOT "$PROGRAMFILES64")
+    endif()
     #set(CPACK_NSIS_DISPLAY_NAME             "${package_name}-${META_VERSION}")
 
-    
+
     # Debian package information
     
     set(CPACK_DEBIAN_PACKAGE_NAME           "${package_name}")
