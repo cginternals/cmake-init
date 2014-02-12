@@ -143,5 +143,5 @@ install(DIRECTORY ${CMAKE_SOURCE_DIR}/data DESTINATION ${INSTALL_DATA})
 #
 
 add_subdirectory(source)
-add_subdirectory(packages)
 add_subdirectory(docs)
+add_subdirectory(packages)

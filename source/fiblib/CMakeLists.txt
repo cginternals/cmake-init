@@ -35,7 +35,6 @@ else()
     add_definitions("-DFIBLIB_EXPORTS")
 endif()
 
-
 #
 # Sources
 #
