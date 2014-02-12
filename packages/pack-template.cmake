@@ -142,9 +142,9 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
     # Install files
 
     if(APPLE)
-        set(CPACK_INSTALL_CMAKE_PROJECTS        "${CMAKE_BINARY_DIR};fiblib;/")
+        set(CPACK_INSTALL_CMAKE_PROJECTS        "${CMAKE_BINARY_DIR};/")
     else()
-        set(CPACK_INSTALL_CMAKE_PROJECTS        "${CMAKE_BINARY_DIR};fiblib;ALL;/")
+        set(CPACK_INSTALL_CMAKE_PROJECTS        "${CMAKE_BINARY_DIR};${project_root};ALL;/")
     endif()
     set(CPACK_PACKAGE_INSTALL_DIRECTORY     "${package_name}")
     set(CPACK_PACKAGE_INSTALL_REGISTRY_KEY  "${package_name}")
@@ -183,5 +183,5 @@ set_target_properties(pack-${project_name} PROPERTIES EXCLUDE_FROM_DEFAULT_BUILD
 
 # Dependencies
 
-add_dependencies(pack-${project_name}   ${project_root})
+add_dependencies(pack-${project_name}   ${project_root} ALL_BUILD)
 add_dependencies(pack                   pack-${project_name})
