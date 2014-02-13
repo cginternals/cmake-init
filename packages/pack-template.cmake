@@ -32,8 +32,8 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 
     # Package project
 
-    set(project_name "template")   # Name of package project
-    set(project_root "template")   # Name of root project that is to be installed
+    set(project_name ${META_PROJECT_NAME})   # Name of package project
+    set(project_root ${META_PROJECT_NAME})   # Name of root project that is to be installed
 
 
     # Package information
@@ -141,11 +141,7 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 
     # Install files
 
-    if(APPLE)
-        set(CPACK_INSTALL_CMAKE_PROJECTS        "${CMAKE_BINARY_DIR};/")
-    else()
-        set(CPACK_INSTALL_CMAKE_PROJECTS        "${CMAKE_BINARY_DIR};${project_root};ALL;/")
-    endif()
+    set(CPACK_INSTALL_CMAKE_PROJECTS        "${CMAKE_BINARY_DIR};${project_root};ALL;/")
     set(CPACK_PACKAGE_INSTALL_DIRECTORY     "${package_name}")
     set(CPACK_PACKAGE_INSTALL_REGISTRY_KEY  "${package_name}")
     if(NOT WIN32)
@@ -183,5 +179,7 @@ set_target_properties(pack-${project_name} PROPERTIES EXCLUDE_FROM_DEFAULT_BUILD
 
 # Dependencies
 
-add_dependencies(pack-${project_name}   ${project_root} ALL_BUILD)
-add_dependencies(pack                   pack-${project_name})
+if(MSVC)
+    add_dependencies(pack-${project_name} ALL_BUILD)
+endif()
+add_dependencies(pack pack-${project_name})
