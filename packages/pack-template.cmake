@@ -62,18 +62,23 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
     set(CPACK_RESOURCE_FILE_README          "${CMAKE_SOURCE_DIR}/README.md")
     set(CPACK_RESOURCE_FILE_WELCOME         "${CMAKE_SOURCE_DIR}/README.md")
     set(CPACK_PACKAGE_DESCRIPTION_FILE      "${CMAKE_SOURCE_DIR}/README.md")
-    set(CPACK_PACKAGE_ICON                  "")
+    set(CPACK_PACKAGE_ICON                  "${CMAKE_SOURCE_DIR}/packages/logo.bmp")
     set(CPACK_PACKAGE_RELOCATABLE           OFF)
 
 
     # NSIS package information
+
+	if(WIN32)
+		file(TO_NATIVE_PATH ${CPACK_PACKAGE_ICON} CPACK_PACKAGE_ICON)
+	endif()
 
     if(X64)
         # http://public.kitware.com/Bug/view.php?id=9094
         set(CPACK_NSIS_INSTALL_ROOT "$PROGRAMFILES64")
     endif()
     #set(CPACK_NSIS_DISPLAY_NAME             "${package_name}-${META_VERSION}")
-
+	set(CPACK_NSIS_MUI_ICON    "${CMAKE_SOURCE_DIR}/packages/logo.ico")
+	set(CPACK_NSIS_MUI_UNIICON "${CMAKE_SOURCE_DIR}/packages/logo.ico")
 
     # Debian package information
 
