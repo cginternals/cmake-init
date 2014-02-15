@@ -1,14 +1,13 @@
 
 # TEMPLATE_FOUND
-# TEMPLATE_INCLUDE_DIR
 
 # TEMPLATE_LIBRARIES
 # TEMPLATE_INCLUDES
 
-# TEMPLATE_FIBLIB_INCLUDE_DIR
+# TEMPLATE_FIBLIB_LIBRARIES
 # TEMPLATE_FIBLIB_LIBRARY
 # TEMPLATE_FIBLIB_LIBRARY_DEBUG
-# TEMPLATE_FIBLIB_LIBRARIES
+# TEMPLATE_FIBLIB_INCLUDE_DIR
 
 
 include(FindPackageHandleStandardArgs)
@@ -28,7 +27,7 @@ set(LIB_PATHS
     ${TEMPLATE_DIR}/build-debug
     ${ENVTEMPLATE_DIR}/lib
     ${TEMPLATE_DIR}/lib
-    ${ENVPROGRAMFILES}/glow/lib
+    ${ENVPROGRAMFILES}/template/lib
     /usr/lib
     /usr/local/lib
     /sw/lib
@@ -60,9 +59,9 @@ macro (find LIB_NAME HEADER)
         /usr/local/include
         /sw/include
         /opt/local/include
-        DOC "The directory where fiblib/fiblib-api.h resides")
+        DOC "The directory where ${HEADER} resides")
 
-    find_library(${LIB_NAME_UPPER}_LIBRARY
+    find_library(${LIB_NAME_UPPER}_LIBRARY_RELEASE
         NAMES ${LIBNAME}
         PATHS ${HINT_PATHS}
         DOC "The ${LIB_NAME} library")
@@ -71,22 +70,22 @@ macro (find LIB_NAME HEADER)
         PATHS ${HINT_PATHS}
         DOC "The ${LIB_NAME} debug library")
     
-    if(${LIB_NAME_UPPER}_LIBRARY AND ${LIB_NAME_UPPER}_LIBRARY_DEBUG)
-        set(${LIB_NAME_UPPER}_LIBRARIES "optimized" ${${LIB_NAME_UPPER}_LIBRARY} "debug" ${${LIB_NAME_UPPER}_LIBRARY_DEBUG})
-    elseif(${LIB_NAME_UPPER}_LIBRARY)
-        set(${LIB_NAME_UPPER}_LIBRARIES ${${LIB_NAME_UPPER}_LIBRARY})
+    if(${LIB_NAME_UPPER}_LIBRARY_RELEASE AND ${LIB_NAME_UPPER}_LIBRARY_DEBUG)
+        set(${LIB_NAME_UPPER}_LIBRARY "optimized" ${${LIB_NAME_UPPER}_LIBRARY_RELEASE} "debug" ${${LIB_NAME_UPPER}_LIBRARY_DEBUG})
+    elseif(${LIB_NAME_UPPER}_LIBRARY_RELEASE)
+        set(${LIB_NAME_UPPER}_LIBRARY ${${LIB_NAME_UPPER}_LIBRARY_RELEASE})
     elseif(${LIB_NAME_UPPER}_LIBRARY_DEBUG)
-        set(${LIB_NAME_UPPER}_LIBRARIES ${${LIB_NAME_UPPER}_LIBRARY_DEBUG})
+        set(${LIB_NAME_UPPER}_LIBRARY ${${LIB_NAME_UPPER}_LIBRARY_DEBUG})
     endif()
 
     set(TEMPLATE_INCLUDES  ${TEMPLATE_INCLUDES}  ${${LIB_NAME_UPPER}_INCLUDE_DIR})
-    set(TEMPLATE_LIBRARIES ${TEMPLATE_LIBRARIES} ${${LIB_NAME_UPPER}_LIBRARIES})
+    set(TEMPLATE_LIBRARIES ${TEMPLATE_LIBRARIES} ${${LIB_NAME_UPPER}_LIBRARY})
 
     # DEBUG
-    #message("${LIB_NAME_UPPER}_INCLUDE_DIR   = ${${LIB_NAME_UPPER}_INCLUDE_DIR}")
-    #message("${LIB_NAME_UPPER}_LIBRARY       = ${${LIB_NAME_UPPER}_LIBRARY}")
-    #message("${LIB_NAME_UPPER}_LIBRARY_DEBUG = ${${LIB_NAME_UPPER}_LIBRARY_DEBUG}")
-    #message("${LIB_NAME_UPPER}_LIBRARIES     = ${${LIB_NAME_UPPER}_LIBRARIES}")
+    #message("${LIB_NAME_UPPER}_INCLUDE_DIR     = ${${LIB_NAME_UPPER}_INCLUDE_DIR}")
+    #message("${LIB_NAME_UPPER}_LIBRARY_RELEASE = ${${LIB_NAME_UPPER}_LIBRARY_RELEASE}")
+    #message("${LIB_NAME_UPPER}_LIBRARY_DEBUG   = ${${LIB_NAME_UPPER}_LIBRARY_DEBUG}")
+    #message("${LIB_NAME_UPPER}_LIBRARY         = ${${LIB_NAME_UPPER}_LIBRARY}")
 
 endmacro()
 
