@@ -5,14 +5,14 @@
 if ("${XCODE_VERSION}" VERSION_LESS "5")
 
     if ("${XCODE_VERSION}" VERSION_GREATER "0") 
-	message(FATAL_ERROR "Insufficient XCode Version (upgrade to XCode 5.x or higher)!")
+        message(FATAL_ERROR "Insufficient XCode Version (upgrade to XCode 5.x or higher)!")
     else ()
-	message (STATUS "Configuring for platform MacOS without XCode, using plain make.")
+        message (STATUS "Configuring for platform MacOS without XCode, using plain make.")
     endif ()
 
 else ()
 
-	message(STATUS "Configuring for platform MacOS with XCode Version 5+.")
+    message(STATUS "Configuring for platform MacOS with XCode Version 5+.")
 
 endif()
 
