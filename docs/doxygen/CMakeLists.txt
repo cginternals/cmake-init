@@ -33,6 +33,7 @@ if(DOXYGEN_FOUND)
 
     # Declare target
     add_custom_target(docs-doxygen DEPENDS ${doxyfile_hhp})
+    set_target_properties(docs-doxygen PROPERTIES EXCLUDE_FROM_DEFAULT_BUILD 1)
     add_dependencies(docs docs-doxygen)
 
 else()
