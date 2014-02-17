@@ -7,6 +7,11 @@ message(STATUS "Test ${target}")
 #
 
 include_directories(
+    
+)
+
+include_directories(
+    BEFORE
     ${CMAKE_SOURCE_DIR}/source/fiblib/include
 )
 

@@ -14,6 +14,10 @@ message(STATUS "Lib ${target}")
 
 include_directories(
     # e.g., ${TRDP_INCLUDE_DIR}
+)
+
+include_directories(
+    BEFORE
     ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 

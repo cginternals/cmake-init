@@ -19,4 +19,5 @@ set(IDE_FOLDER "Applications")
 add_subdirectory(fibcmd)
 
 # Tests
+set(IDE_FOLDER "Tests")
 add_subdirectory(tests)

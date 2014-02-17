@@ -14,6 +14,10 @@ message(STATUS "App ${target}")
 
 include_directories(
     # e.g., ${TRDP_INCLUDE_DIR}
+)
+
+include_directories(
+    BEFORE
     ${CMAKE_SOURCE_DIR}/source/fiblib/include
 )
 
