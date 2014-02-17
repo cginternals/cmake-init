@@ -1,21 +1,19 @@
 
-# Check compiler and version
-if ("${XCODE_VERSION}")
-	# check regex, it's just a quick-hack for now but should work if the
-	# version string format returned by ${XCODE_VERSION} does not change.
-	# required format is <MAJOR>.<MINOR>.<PATCH>
-	string(REGEX REPLACE "^([0-9]+).*" "\\1" XCODE_MAJOR "${XCODE_VERSION}")
-	string(LENGTH ${XCODE_MAJOR} XCODE_MAJOR_LENGTH)
-	string(REGEX MATCH "[0-4]" XCODE_MAJOR_TO_OLD ${XCODE_MAJOR})
+#message(STATUS "XCODE VERSION :: ${XCODE_VERSION}")
 
-	# Reject XCode < Version 5
-	if (NOT (${XCODE_MAJOR_LENGTH} EQUAL 1 AND "${XCODE_MAJOR_TO_OLD}" GREATER ""))
-	    message(STATUS "Configuring for platform MacOS with XCode Version 5+.")
-	else ()
-	    message(FATAL_ERROR "Insufficient XCode Version (upgrade to XCode 5.x or higher)!")
-	endif()
+# Check compiler and version
+if ("${XCODE_VERSION}" VERSION_LESS "5")
+
+    if ("${XCODE_VERSION}" VERSION_GREATER "0") 
+	message(FATAL_ERROR "Insufficient XCode Version (upgrade to XCode 5.x or higher)!")
+    else ()
+	message (STATUS "Configuring for platform MacOS without XCode, using plain make.")
+    endif ()
+
 else ()
-    message (STATUS "Configuring for platform MacOS without XCode, using plain make.")
+
+	message(STATUS "Configuring for platform MacOS with XCode Version 5+.")
+
 endif()
 
 
