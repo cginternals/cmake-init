@@ -65,11 +65,20 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
     set(CPACK_PACKAGE_ICON                  "${CMAKE_SOURCE_DIR}/packages/logo.bmp")
     set(CPACK_PACKAGE_RELOCATABLE           OFF)
 
-
     # NSIS package information
 
 	if(WIN32)
-		file(TO_NATIVE_PATH ${CPACK_PACKAGE_ICON} CPACK_PACKAGE_ICON)
+        # NOTE: for using MUI (UN)WELCOME images we suggest to replace nsis defaults,
+        # since there is currently no way to do so without manipulating the installer template (which we won't).
+        # http://public.kitware.com/pipermail/cmake-developers/2013-January/006243.html
+
+        # SO the following only works for the installer icon, not for the welcome image.
+
+        # NSIS requires "\\" - escaped backslash to work properly. We probably won't rely on this feature, 
+        # so just replacing / with \\ manually.
+
+		#file(TO_NATIVE_PATH "${CPACK_PACKAGE_ICON}" CPACK_PACKAGE_ICON) 
+        string(REGEX REPLACE "/" "\\\\\\\\" CPACK_PACKAGE_ICON ${CPACK_PACKAGE_ICON})
 	endif()
 
     if(X64)
@@ -120,12 +129,6 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
     # Package name
 
     set(CPACK_PACKAGE_FILE_NAME "${package_name}-${CPACK_PACKAGE_VERSION}")
-
-    # NOTE: for using MUI (UN)WELCOME images and installer icon we suggest to replace nsis defaults,
-    # since there is currently no way to do so without manipulating the installer template (which we won't).
-
-    #string(REGEX REPLACE "/" "\\\\\\\\" CPACK_PACKAGE_ICON ${CPACK_PACKAGE_ICON})
-
 
     # Optional Preliminaries (i.e., silent Visual Studio Redistributable install)
 
