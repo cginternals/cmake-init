@@ -37,7 +37,7 @@ else()
     set(EXCEPTION_FLAG "-fno-exceptions")
 endif()
 
-set(MINGW_COMPILE_FLAGS "-pthread -pipe -fPIC -Wreturn-type -Wall -w -pedantic -Wextra -Wtrampolines -Wfloat-equal -Wshadow -Wcast-qual -Wcast-align -Wconversion -Werror ${EXCEPTION_FLAG}")
+set(MINGW_COMPILE_FLAGS "-pthread -pipe -fPIC -Wreturn-type -Wall -Wextra -Wfloat-equal -Wshadow -Wcast-align -Wconversion ${EXCEPTION_FLAG}")
 # pthread       -> use pthread library
 # no-rtti       -> disable c++ rtti
 # no-exceptions -> disable exception handling

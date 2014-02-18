@@ -20,7 +20,7 @@ set(DEFAULT_COMPILE_DEFS_RELEASE
 
 
 set(WIN32_COMPILE_FLAGS
-    "/nologo /Zc:wchar_t /Zc:forScope /GL /GF /GR /GS- /Zi /fp:precise /MP /wd4267 /wd4251 /wd4273 /W3 /WX "
+    "/nologo /Zc:wchar_t /Zc:forScope /GL /GF /GR /GS- /Zi /fp:precise /MP /W3 "
     # nologo       -> no logo
     # Zc:wchar_t   -> treat wchar_t as built-in type: yes
     # Zc:forScope  -> force conformance in for loop scope: Yes
@@ -34,6 +34,7 @@ set(WIN32_COMPILE_FLAGS
     # Ot           -> favor fast code
     # MP           -> build with multiple processes
     # wd           -> disable warning
+    #   4273       -> Two definitions in a file differ in their use of dllimport.
     #   4100       -> 'identifier' : unreferenced formal parameter
     #   4127       -> conditional expression is constant
     #   4251       -> 'identifier' : class 'type' needs to have dll-interface to be used by clients of class 'type2'
