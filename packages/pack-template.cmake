@@ -67,7 +67,7 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 
     # NSIS package information
 
-    if(WIN32)
+    if(WIN32 AND CPACK_PACKAGE_ICON)
         # NOTE: for using MUI (UN)WELCOME images we suggest to replace nsis defaults,
         # since there is currently no way to do so without manipulating the installer template (which we won't).
         # http://public.kitware.com/pipermail/cmake-developers/2013-January/006243.html
@@ -78,7 +78,7 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
         # so just replacing / with \\ manually.
 
         #file(TO_NATIVE_PATH "${CPACK_PACKAGE_ICON}" CPACK_PACKAGE_ICON) 
-        string(REGEX REPLACE "/" "\\\\\\\\" CPACK_PACKAGE_ICON ${CPACK_PACKAGE_ICON})
+        string(REGEX REPLACE "/" "\\\\\\\\" CPACK_PACKAGE_ICON "${CPACK_PACKAGE_ICON}")
     endif()
 
     if(X64)
