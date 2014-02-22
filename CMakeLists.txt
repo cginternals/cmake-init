@@ -82,7 +82,7 @@ endif()
 set(project ${META_PROJECT_NAME})
 if(WIN32)
     set(INSTALL_ROOT          ".")                      # C:\Programme\<project>
-    set(INSTALL_DATA          ".")                      # C:\Programme\<project>
+    set(INSTALL_DATA          "bin")                    # C:\Programme\<project>
     set(INSTALL_BIN           "bin")                    # C:\Programme\<project>
     set(INSTALL_SHARED        ".")                      # C:\Programme\<project>
     set(INSTALL_LIB           "lib")                    # C:\Programme\<project>\lib
