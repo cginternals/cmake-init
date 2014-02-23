@@ -1,0 +1,57 @@
+To adapt this template to your own project, follow these steps:
+
+
+Edit AUTHORS
+Edit LICENSE
+Edit README.md
+Rename template-config.cmake -> <project>-config.cmake
+
+<project>-config.cmake:
+  Substitute template -> <project>
+  Substitute TEMPLATE -> <PROJECT>
+
+CMakeLists.txt:
+  Set META_PROJECT_*
+  Set META_VERSION_*
+  Set META_AUTHOR_*
+  Adjust INSTALL_* to the desired install locations for all systems
+    (defaults should be fine for a start)
+  Substitute template-config.cmake -> <project>-config.cmake
+
+source/CMakeLists.txt:
+  Substitute template -> <project>
+
+Rename source/template-version.h.in -> source/<project>-version.h.in
+source/<project>-version.h.in:
+  Substitute TEMPLATE -> <PROJECT>
+
+source/fiblib/CMakeLists.txt:
+  Substitute TEMPLATE_STATIC -> <PROJECT>_STATIC
+
+source/fiblib/include/fiblib/fiblib_api.h:
+  Substitute TEMPLATE_STATIC -> <PROJECT>_STATIC
+
+source/fibcmd/main.cpp:
+  Substitute template-version.h -> <project>-version.h
+  Substitute TEMPLATE_VERSION -> <PROJECT>_VERSION
+
+packages/CMakeLists.txt:
+  Substitute pack-template.cmake -> pack-<project>.cmake
+
+Exchange packages/logo.ico
+Exchange packages/logo.bmp
+Rename packages/pack-template.cmake -> packages/pack-<project>.cmake
+packages/pack-<project>.cmake:
+  Adjust OPTION_PACK_GENERATOR to your liking for all systems
+  Adjust package options, e.g., CPACK_DEBIAN_PACKAGE_DEPENDS, CPACK_DEBIAN_PACKAGE_SECTION, CPACK_DEBIAN_PACKAGE_PRIORITY, CPACK_RPM_PACKAGE_LICENSE, CPACK_RPM_PACKAGE_GROUP, ...
+
+Exchange docs/doxygen/logo.png
+docs/doxygen/doxyfile.in:
+  Adjust INPUT
+
+Rename and adjust projects in source/
+
+Remove data/example.txt
+Populate data/
+
+Remove ADAPT
