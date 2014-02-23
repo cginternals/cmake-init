@@ -28,7 +28,7 @@ if(DOXYGEN_FOUND)
         WORKING_DIRECTORY   ${path}
         COMMAND             ${CMAKE_COMMAND} -E copy_directory ${path} ${CMAKE_CURRENT_BINARY_DIR}/html # ToDO, configure doxygen to use source as is
         COMMAND             ${DOXYGEN} \"${doxyfile}\"
-        COMMENT             "Creating doxygen documentation for template."
+        COMMENT             "Creating doxygen documentation."
     )
 
     # Declare target
