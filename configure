@@ -8,16 +8,16 @@ INSTALL_OPTIONS=""
 EXTRA_OPTIONS=""
 
 # Read local default options
-if [ -f "./localconfig/default" ]
+if [ -f "./.localconfig/default" ]
 then
-    . ./localconfig/default
+    . ./.localconfig/default
 fi
 
 # Parse command line arguments
 for ARG in "$@"
 do
     # Read in configuration for that command-line argument
-    CONFIGFILE="./localconfig/$ARG"
+    CONFIGFILE="./.localconfig/$ARG"
     if [ -f "$CONFIGFILE" ]
     then
         . "$CONFIGFILE"

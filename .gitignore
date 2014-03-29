@@ -39,4 +39,4 @@ _start-cmake-gui.bat
 _start-cmd.bat
 
 # Local config unix
-localconfig
+.localconfig
