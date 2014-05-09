@@ -41,7 +41,7 @@ function (find LIB_NAME HEADER)
         ${ENV_TEMPLATE_DIR}/source/${LIB_NAME}/include
         ${TEMPLATE_DIR}/include
         ${TEMPLATE_DIR}/source/${LIB_NAME}/include
-        ${ENV_PROGRAMFILES}/digvis/include
+        ${ENV_PROGRAMFILES}/template/include
         /usr/include
         /usr/local/include
         /sw/include
