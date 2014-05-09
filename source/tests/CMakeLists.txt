@@ -1,16 +1,15 @@
 
-# Macro: Build test and add command to execute it via target 'test'
-macro(add_test_without_ctest target)
+# Function: Build test and add command to execute it via target 'test'
+function(add_test_without_ctest target)
 
     add_subdirectory(${target})
-
     add_dependencies(test ${target})
     add_custom_command(TARGET test POST_BUILD 
         COMMAND cmake -E echo
         COMMAND cmake -E echo run $<TARGET_FILE:${target}>:
         COMMAND $<TARGET_FILE:${target}>)
 
-endmacro()
+endfunction(add_test_without_ctest)
 
 # Design decision: tests are enabled by default. If the required components are not found,
 # tests are disabled and a warning is printed, but configuration is still valid.
