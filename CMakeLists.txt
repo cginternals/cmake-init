@@ -136,7 +136,7 @@ else()
 endif()
 
 # Install the project meta files
-install(FILES digvis-config.cmake DESTINATION ${INSTALL_ROOT})
+install(FILES template-config.cmake DESTINATION ${INSTALL_ROOT})
 install(FILES AUTHORS DESTINATION ${INSTALL_ROOT})
 install(FILES LICENSE DESTINATION ${INSTALL_ROOT})
 
