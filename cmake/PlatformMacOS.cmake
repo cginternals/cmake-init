@@ -19,8 +19,11 @@ else ()
     # type (cf. http://www.cmake.org/pipermail/cmake/2006-December/012288.html)
     # Therefore, we re-define the CMAKE_CONFIGURATION_TYPES here according to the value
     # in CMAKE_BUILD_TYPES.
-    set(CMAKE_CONFIGURATION_TYPES ${CMAKE_BUILD_TYPE})
-    message(STATUS ">> Re-defining variable CMAKE_CONFIGURATION_TYPES := ${CMAKE_CONFIGURATION_TYPES}")
+    if ("${CMAKE_BUILD_TYPE}" STREQUAL "Release")
+	set(CMAKE_CONFIGURATION_TYPES "Release;Debug")
+    else ()
+        set(CMAKE_CONFIGURATION_TYPES "Debug;Release")
+    endif ()
 
 
 endif()
