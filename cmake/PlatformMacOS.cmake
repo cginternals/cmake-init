@@ -14,17 +14,6 @@ else ()
 
     message(STATUS "Configuring for platform MacOS with XCode Version 5+.")
 
-    # The XCode generator seems to ignore the value in the CMAKE_BUILD_TYPE variable.
-    # Instead, it uses the first value of the CMAKE_CONFIGURATION_TYPES list as build
-    # type (cf. http://www.cmake.org/pipermail/cmake/2006-December/012288.html)
-    # Therefore, we re-define the CMAKE_CONFIGURATION_TYPES here according to the value
-    # in CMAKE_BUILD_TYPES.
-    if ("${CMAKE_BUILD_TYPE}" STREQUAL "Release")
-	set(CMAKE_CONFIGURATION_TYPES "Release;Debug")
-    else ()
-        set(CMAKE_CONFIGURATION_TYPES "Debug;Release")
-    endif ()
-
 
 endif()
 
