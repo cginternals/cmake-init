@@ -31,6 +31,14 @@ set(libs
 )
 
 #
+# Compiler definitions
+#
+
+if (OPTION_BUILD_STATIC)
+    add_definitions("-D${META_PROJECT_NAME_UPPER}_STATIC")
+endif()
+
+#
 # Sources
 #
 
