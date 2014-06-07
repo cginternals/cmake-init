@@ -13,7 +13,7 @@
 #else
 #   define FIBLIB_API_EXPORT_DECLARATION
 #   define FIBLIB_API_IMPORT_DECLARATION
-#endif
+#endif 
 
 #ifndef TEMPLATE_STATIC
 #ifdef FIBLIB_EXPORTS
