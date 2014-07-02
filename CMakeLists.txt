@@ -82,6 +82,14 @@ if(CMAKE_SIZEOF_VOID_P EQUAL 8)
 endif()
 
 # Setup platform specifics (compile flags, etc., ...)
+
+# This policy was introduced in 3.0.0 and does not allow for COMPILER_DEFINITIONS_<Config>,
+# anymore, but instead requires generator expressions like $<CONFIG:Debug> ... 
+# For now the current compile-flag, -definitions, and linker-flags setup shall remain as is.
+if(POLICY CMP0043)
+    cmake_policy(SET CMP0043 OLD)
+endif()
+
 if(MSVC)
     include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/PlatformWindowsMSVC.cmake)
 elseif(WIN32 AND CMAKE_COMPILER_IS_GNUCXX)
@@ -157,12 +165,6 @@ install(DIRECTORY ${CMAKE_SOURCE_DIR}/data DESTINATION ${INSTALL_DATA})
 create_revision_file(${CMAKE_BINARY_DIR}/revision ${INSTALL_ROOT})
 
 
-# This policy was introduced in 3.0.0 and does not allow for COMPILER_DEFINITIONS_<Config>,
-# anymore, but instead requires generator expressions like $<CONFIG:Debug> ... 
-# For now the current compile-flag, -definitions, and linker-flags setup shall remain as is.
-if(POLICY CMP0043)
-    cmake_policy(SET CMP0043 OLD)
-endif()
 
 
 #
