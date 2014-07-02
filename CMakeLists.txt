@@ -157,6 +157,12 @@ install(DIRECTORY ${CMAKE_SOURCE_DIR}/data DESTINATION ${INSTALL_DATA})
 create_revision_file(${CMAKE_BINARY_DIR}/revision ${INSTALL_ROOT})
 
 
+# This policy was introduced in 3.0.0 and does not allow for COMPILER_DEFINITIONS_<Config>,
+# anymore, but instead requires generator expressions like $<CONFIG:Debug> ... 
+# For now the current compile-flag, -definitions, and linker-flags setup shall remain as is.
+if(POLICY CMP0043)
+    cmake_policy(SET CMP0043 OLD)
+endif()
 
 
 #

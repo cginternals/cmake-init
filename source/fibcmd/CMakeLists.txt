@@ -58,11 +58,11 @@ set_target_properties(${target}
     PROPERTIES
     LINKER_LANGUAGE              CXX
     FOLDER                      "${IDE_FOLDER}"
-    COMPILE_DEFINITIONS         "$<$<CONFIG:Debug>:DEFAULT_COMPILE_DEFS_DEBUG>"
-                                "$<$<CONFIG:Release>:DEFAULT_COMPILE_DEFS_RELEASE>"
+    COMPILE_DEFINITIONS_DEBUG   "${DEFAULT_COMPILE_DEFS_DEBUG}"
+    COMPILE_DEFINITIONS_RELEASE "${DEFAULT_COMPILE_DEFS_RELEASE}"
     COMPILE_FLAGS               "${DEFAULT_COMPILE_FLAGS}"
-    LINK_FLAGS                  "$<$<CONFIG:Debug>:DEFAULT_LINKER_FLAGS_DEBUG>"
-                                "$<$<CONFIG:Release>:DEFAULT_LINKER_FLAGS_RELEASE>"
+    LINK_FLAGS_DEBUG            "${DEFAULT_LINKER_FLAGS_DEBUG}"
+    LINK_FLAGS_RELEASE          "${DEFAULT_LINKER_FLAGS_RELEASE}"
     DEBUG_POSTFIX               "d${DEBUG_POSTFIX}")
 
 #
