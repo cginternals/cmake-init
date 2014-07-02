@@ -15,7 +15,7 @@ function(add_test_without_ctest target)
         COMMAND cmake -E echo run $<TARGET_FILE:${target}>:
         COMMAND $<TARGET_FILE:${target}> --gtest_output=xml:gtests.xml)
 
-endfunction(add_test_without_ctest)
+endfunction()
 
 # Design decision: tests are enabled by default. If the required components are not found,
 # tests are disabled and a warning is printed, but configuration is still valid.
