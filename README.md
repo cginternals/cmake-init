@@ -1,5 +1,4 @@
-Cross-Platform C++ CMake Project Template
-=========================================
+# Cross-Platform C++ CMake Project Template
 
 nightly build status (master): ![status](http://jenkins.hpi3d.de/buildStatus/icon?job=cmake-init)
 
