@@ -19,4 +19,4 @@ The files of cmake-init are an instantiation of the templates containing:
 
 ## Status
 
-build status (@hourly for master): ![status](http://jenkins.hpi3d.de/buildStatus/icon?job=glbinding)
+build status (@hourly for master): ![status](http://jenkins.hpi3d.de/buildStatus/icon?job=cmake-init)
