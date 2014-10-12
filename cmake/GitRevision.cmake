@@ -14,10 +14,7 @@ macro(create_revision_file filename dest)
     get_git_head_revision(GIT_REFSPEC GIT_SHA1)
 
     # Generate a shorter, googlelike variation for rev
-    string(SUBSTRING ${GIT_SHA1} 0 12 GIT_REV)
+    string(SUBSTRING "${GIT_SHA1}" 0 12 GIT_REV)
     file(WRITE ${filename} ${GIT_REV})
-
-    # Install
-    install(FILES ${filename} DESTINATION ${dest})
 
 endmacro()
