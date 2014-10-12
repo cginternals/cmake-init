@@ -12,17 +12,16 @@
 # TEMPLATE_LIBRARIES -> <PROJECT_NAME>_LIBRARIES
 # TEMPLATE_INCLUDES -> <PROJECT_NAME>_INCLUDES
 
-
 # TEMPLATE_FIBLIB_LIBRARY -> <PROJECT_NAME>_<...>_LIBRARY
 # TEMPLATE_FIBLIB_LIBRARY_RELEASE -> <PROJECT_NAME>_<...>_LIBRARY_RELEASE
 # TEMPLATE_FIBLIB_LIBRARY_DEBUG -> <PROJECT_NAME>_<...>_LIBRARY_DEBUG
 # TEMPLATE_FIBLIB_INCLUDE_DIR -> <PROJECT_NAME>_<...>_INCLUDE_DIR
 
-
-
+set(TEMPLATE_INCLUDES "")
+set(TEMPLATE_LIBRARIES "")
 
 # Definition of function "find" with two mandatory arguments, "LIB_NAME" and "HEADER".
-function (find LIB_NAME HEADER)
+macro (find LIB_NAME HEADER)
 
     set(HINT_PATHS ${ARGN})
 
@@ -72,23 +71,16 @@ function (find LIB_NAME HEADER)
         set(${LIB_NAME_UPPER}_LIBRARY ${${LIB_NAME_UPPER}_LIBRARY_DEBUG})
     endif()
 
-
-    set(TEMPLATE_INCLUDES  ${TEMPLATE_INCLUDES}  ${${LIB_NAME_UPPER}_INCLUDE_DIR} PARENT_SCOPE)
-    set(TEMPLATE_LIBRARIES ${TEMPLATE_LIBRARIES} ${${LIB_NAME_UPPER}_LIBRARY} PARENT_SCOPE)
+    list(APPEND TEMPLATE_INCLUDES ${${LIB_NAME_UPPER}_INCLUDE_DIR})
+    list(APPEND TEMPLATE_LIBRARIES ${${LIB_NAME_UPPER}_LIBRARY})
 
     # DEBUG MESSAGES
-#    message("${LIB_NAME_UPPER}_INCLUDE_DIR     = ${${LIB_NAME_UPPER}_INCLUDE_DIR}")
-#    message("${LIB_NAME_UPPER}_LIBRARY_RELEASE = ${${LIB_NAME_UPPER}_LIBRARY_RELEASE}")
-#    message("${LIB_NAME_UPPER}_LIBRARY_DEBUG   = ${${LIB_NAME_UPPER}_LIBRARY_DEBUG}")
-#    message("${LIB_NAME_UPPER}_LIBRARY         = ${${LIB_NAME_UPPER}_LIBRARY}")
+    # message("${LIB_NAME_UPPER}_INCLUDE_DIR     = ${${LIB_NAME_UPPER}_INCLUDE_DIR}")
+    # message("${LIB_NAME_UPPER}_LIBRARY_RELEASE = ${${LIB_NAME_UPPER}_LIBRARY_RELEASE}")
+    # message("${LIB_NAME_UPPER}_LIBRARY_DEBUG   = ${${LIB_NAME_UPPER}_LIBRARY_DEBUG}")
+    # message("${LIB_NAME_UPPER}_LIBRARY         = ${${LIB_NAME_UPPER}_LIBRARY}")
 
-endfunction(find)
-
-
-
-
-
-
+endmacro(find)
 
 
 # load standard CMake arguments (c.f. http://stackoverflow.com/questions/7005782/cmake-include-findpackagehandlestandardargs-cmake)
@@ -101,7 +93,7 @@ endif()
 file(TO_CMAKE_PATH "$ENV{PROGRAMFILES}" ENV_PROGRAMFILES)
 file(TO_CMAKE_PATH "$ENV{TEMPLATE_DIR}" ENV_TEMPLATE_DIR)
 
-set(LIB_PATHS   
+set(LIB_PATHS
     ${TEMPLATE_DIR}/build
     ${TEMPLATE_DIR}/build/Release
     ${TEMPLATE_DIR}/build/Debug
@@ -120,14 +112,17 @@ set(LIB_PATHS
     /opt/local/lib64
 )
 
-
 # Find libraries
 find(fiblib fiblib/fiblib_api.h ${LIB_PATHS})
 
+if(TEMPLATE_FIBLIB_LIBRARY)
+  # add dependencies
+endif()
+
 
 # DEBUG
-#message("TEMPLATE_INCLUDES  = ${TEMPLATE_INCLUDES}")
-#message("TEMPLATE_LIBRARIES = ${TEMPLATE_LIBRARIES}")
+# message("TEMPLATE_INCLUDES  = ${TEMPLATE_INCLUDES}")
+# message("TEMPLATE_LIBRARIES = ${TEMPLATE_LIBRARIES}")
 
 find_package_handle_standard_args(TEMPLATE DEFAULT_MSG TEMPLATE_LIBRARIES TEMPLATE_INCLUDES)
 mark_as_advanced(TEMPLATE_FOUND)

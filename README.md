@@ -1,5 +1,4 @@
-Cross-Platform C++ CMake Project Template
-=========================================
+# Cross-Platform C++ CMake Project Template
 
 cmake-init is a copy and paste template, that provides the following features:
  * Cross Platform
@@ -17,3 +16,7 @@ The files of cmake-init are an instantiation of the templates containing:
   * Example test
   * Example documentation
   * Example package
+
+## Status
+
+build status (@hourly for master): ![status](http://jenkins.hpi3d.de/buildStatus/icon?job=cmake-init)

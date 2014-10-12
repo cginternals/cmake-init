@@ -11,8 +11,6 @@ function(add_test_without_ctest target)
     add_subdirectory(${target})
     add_dependencies(test ${target})
     add_custom_command(TARGET test POST_BUILD 
-        COMMAND cmake -E echo
-        COMMAND cmake -E echo run $<TARGET_FILE:${target}>:
         COMMAND $<TARGET_FILE:${target}> --gtest_output=xml:gtests.xml)
 
 endfunction()
