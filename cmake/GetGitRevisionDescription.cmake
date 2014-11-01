@@ -41,23 +41,36 @@ get_filename_component(_gitdescmoddir ${CMAKE_CURRENT_LIST_FILE} PATH)
 
 function(get_git_head_revision _refspecvar _hashvar)
     set(GIT_PARENT_DIR "${CMAKE_SOURCE_DIR}")
-    set(GIT_DIR "${GIT_PARENT_DIR}/.git")
-    while(NOT EXISTS "${GIT_DIR}")  # .git dir not found, search parent directories
+    
+    while(NOT EXISTS "${GIT_PARENT_DIR}/.git")  # .git dir not found, search parent directories
         set(GIT_PREVIOUS_PARENT "${GIT_PARENT_DIR}")
-        get_filename_component(GIT_PARENT_DIR ${GIT_PARENT_DIR} PATH)
+        get_filename_component(GIT_PARENT_DIR ${GIT_PARENT_DIR} DIRECTORY)
         if(GIT_PARENT_DIR STREQUAL GIT_PREVIOUS_PARENT)
             # We have reached the root directory, we are not in git
-            set(${_refspecvar} "GITDIR-NOTFOUND" PARENT_SCOPE)
-            set(${_hashvar} "GITDIR-NOTFOUND" PARENT_SCOPE)
+            set(${_refspecvar} "000000000000" PARENT_SCOPE)
+            set(${_hashvar} "000000000000" PARENT_SCOPE)
             return()
         endif()
-        set(GIT_DIR "${GIT_PARENT_DIR}/.git")
     endwhile()
+    
+    if (IS_DIRECTORY "${GIT_PARENT_DIR}/.git")
+	# common case
+	set(GIT_DIR "${GIT_PARENT_DIR}/.git")
+    else()
+	# submodule case
+	file(STRINGS "${GIT_PARENT_DIR}/.git" contents LIMIT_COUNT 1)
+	message(STATUS "${contents}")
+	string(SUBSTRING "${contents}" 8 -1 SUBMODULE_GIT_DIR)
+	message(STATUS "${SUBMODULE_GIT_DIR}")
+	set(GIT_DIR "${GIT_PARENT_DIR}/${SUBMODULE_GIT_DIR}")
+	message(STATUS "${GIT_DIR}")
+    endif()
+    
     set(GIT_DATA "${CMAKE_CURRENT_BINARY_DIR}/CMakeFiles/git-data")
     if(NOT EXISTS "${GIT_DATA}")
         file(MAKE_DIRECTORY "${GIT_DATA}")
     endif()
-
+    
     if(NOT EXISTS "${GIT_DIR}/HEAD")
         return()
     endif()
