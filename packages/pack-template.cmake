@@ -5,6 +5,7 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 
     # Options
 
+    set(CPACK_ARCHIVE_COMPONENT_INSTALL ON)
     if(WIN32)
         set(OPTION_PACK_GENERATOR "ZIP;NSIS" CACHE STRING "Package targets")
     else()

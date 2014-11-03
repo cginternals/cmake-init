@@ -21,7 +21,7 @@ if(OPTION_BUILD_TESTS)
     find_package(GMOCK)
     find_package(GTEST)
     if(NOT GMOCK_FOUND OR NOT GTEST_FOUND)
-        message(STATUS "Disabled tests (missing gmock and/or gtest)")
+        message("Tests skipped: gmock and/or gtest not found")
     endif()
 endif()
 

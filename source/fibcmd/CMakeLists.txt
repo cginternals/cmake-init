@@ -2,15 +2,13 @@
 set(target fibcmd)
 message(STATUS "App ${target}")
 
-#
+
 # External libraries
-#
 
 # ...
 
-#
+
 # Includes
-#
 
 include_directories(
     # e.g., ${TRDP_INCLUDE_DIR}
@@ -21,34 +19,30 @@ include_directories(
     ${CMAKE_SOURCE_DIR}/source/fiblib/include
 )
 
-#
+
 # Libraries
-#
 
 set(libs
     # e.g., ${TRDP_LIBRARIES}
     fiblib
 )
 
-#
+
 # Compiler definitions
-#
 
 if (OPTION_BUILD_STATIC)
     add_definitions("-D${META_PROJECT_NAME_UPPER}_STATIC")
 endif()
 
-#
+
 # Sources
-#
 
 set(sources
     main.cpp
 )
 
-#
+
 # Build executable
-#
 
 add_executable(${target} ${sources})
 
@@ -65,9 +59,8 @@ set_target_properties(${target}
     LINK_FLAGS_RELEASE          "${DEFAULT_LINKER_FLAGS_RELEASE}"
     DEBUG_POSTFIX               "d${DEBUG_POSTFIX}")
 
-#
+
 # Deployment
-#
 
 install(TARGETS ${target}
     RUNTIME DESTINATION ${INSTALL_BIN}

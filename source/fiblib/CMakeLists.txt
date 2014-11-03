@@ -2,15 +2,13 @@
 set(target fiblib)
 message(STATUS "Lib ${target}")
 
-#
+
 # External libraries
-#
 
 # e.g., find_package(THIRDPARTY REQUIRED)
 
-#
+
 # Includes
-#
 
 include_directories(
     # e.g., ${TRDP_INCLUDE_DIR}
@@ -21,17 +19,15 @@ include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
-#
+
 # Libraries
-#
 
 set(libs
     # e.g., ${THIRDPARTY_LIBRARY}
 )
 
-#
+
 # Compiler definitions
-#
 
 if (OPTION_BUILD_STATIC)
     add_definitions("-D${META_PROJECT_NAME_UPPER}_STATIC")
@@ -39,9 +35,8 @@ else()
     add_definitions("-DFIBLIB_EXPORTS")
 endif()
 
-#
+
 # Sources
-#
 
 set(include_path "${CMAKE_CURRENT_SOURCE_DIR}/include/${target}")
 set(source_path "${CMAKE_CURRENT_SOURCE_DIR}/source")
@@ -63,9 +58,8 @@ source_group_by_path(${include_path} "\\\\.h$|\\\\.hpp$"
 source_group_by_path(${source_path} "\\\\.cpp$|\\\\.c$|\\\\.h$|\\\\.hpp$" 
     ${source_group} ${sources})
 
-#
+
 # Build library
-#
 
 add_library(${target} ${api_includes} ${sources})
 
@@ -83,9 +77,8 @@ set_target_properties(${target}
     DEBUG_POSTFIX               "d${DEBUG_POSTFIX}"
     INCLUDE_PATH	            ${include_path})
 
-#
+
 # Deployment
-#
 
 # Library
 install(TARGETS ${target}
