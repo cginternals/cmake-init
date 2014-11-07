@@ -51,7 +51,7 @@ find_library(GTEST_LIBRARY_DEBUG
     $ENV{GTEST_HOME}
     $ENV{GMOCKDIR}/gtest
     $ENV{GMOCK_HOME}/gtest
-	$ENV{GTESTDIR}/Debug
+    $ENV{GTESTDIR}/Debug
     $ENV{GTEST_HOME}/Debug
     $ENV{GMOCKDIR}/gtest/Debug
     $ENV{GMOCK_HOME}/gtest/Debug
@@ -63,6 +63,15 @@ find_library(GTEST_LIBRARY_DEBUG
     /usr/local/lib
     /sw/lib
     /opt/local/lib
+    DOC "The GTEST debug library")
+
+find_library(GTEST_LIBRARY_DEBUG
+    NAMES gtest
+    PATHS
+    $ENV{GTESTDIR}/Debug
+    $ENV{GTEST_HOME}/Debug
+    $ENV{GMOCKDIR}/gtest/Debug
+    $ENV{GMOCK_HOME}/gtest/Debug
     DOC "The GTEST debug library")
 
 if (GTEST_LIBRARY AND GTEST_LIBRARY_DEBUG)
