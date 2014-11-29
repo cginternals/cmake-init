@@ -37,13 +37,35 @@ else()
     set(EXCEPTION_FLAG "-fno-exceptions")
 endif()
 
-set(MINGW_COMPILE_FLAGS "-pthread -pipe -fPIC -Wreturn-type -Wall -Wextra -Wfloat-equal -Wshadow -Wcast-align -Wconversion ${EXCEPTION_FLAG}")
-# pthread       -> use pthread library
-# no-rtti       -> disable c++ rtti
-# no-exceptions -> disable exception handling
-# pipe          -> use pipes
-# fPIC          -> use position independent code
-# -Wreturn-type -Werror=return-type -> missing returns in functions and methods are handled as errors which stops the compilation
+
+set(MINGW_COMPILE_FLAGS
+      
+      ${EXCEPTION_FLAG}
+      -pthread      # -> use pthread library
+    # -no-rtti      # -> disable c++ rtti
+      -pipe         # -> use pipes
+      -Wall         # -> 
+      -Wextra       # -> 
+      -Werror       # ->
+      -fPIC         # -> use position independent code
+      
+      -Wreturn-type 
+      -Wfloat-equal 
+      -Wshadow      # -> e.g. when a parameter is named like a member, too many warnings, disabled for now
+      -Wcast-align 
+      -Wconversion
+
+    # -Werror=return-type -> missing returns in functions and methods are handled as errors which stops the compilation
+    
+)
+
+set(DEFAULT_COMPILE_FLAGS
+    ${MINGW_COMPILE_FLAGS}
+    $<$<CONFIG:Debug>:   
+    >
+    $<$<CONFIG:Release>: 
+    >
+)
 
 set(DEFAULT_COMPILE_FLAGS ${MINGW_COMPILE_FLAGS})
 

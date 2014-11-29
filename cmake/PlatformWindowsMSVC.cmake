@@ -20,45 +20,31 @@ set(DEFAULT_COMPILE_DEFS_RELEASE
 
 
 set(WIN32_COMPILE_FLAGS
-    "/nologo /Zc:wchar_t /Zc:forScope /GL /GF /GR /GS- /Zi /fp:precise /MP /W3 "
-    # nologo       -> no logo
-    # Zc:wchar_t   -> treat wchar_t as built-in type: yes
-    # Zc:forScope  -> force conformance in for loop scope: Yes
-    # GF           -> string pooling 
-    # GR           -> runtime type information
-    # GS           -> buffer security check
-    # Zi           -> debug information format: program database
-    # Gm           -> enable minimal rebuild
-    # fp:precise   -> floating point model: precise
-    # fp:fast      -> floating point model: fast
-    # Ot           -> favor fast code
-    # MP           -> build with multiple processes
-    # wd           -> disable warning
-    #   4273       -> Two definitions in a file differ in their use of dllimport.
-    #   4100       -> 'identifier' : unreferenced formal parameter
-    #   4127       -> conditional expression is constant
-    #   4251       -> 'identifier' : class 'type' needs to have dll-interface to be used by clients of class 'type2'
-    #   4267       -> 'var' : conversion from 'size_t' to 'type', possible loss of data
-    # W4           -> warning level 4
-    # WX           -> treat warnings as errors
- 
-    # For debug: 
-    # MDd          -> Runtime Library: Multithreaded Debug DLL
-    # Od           -> Optimization: none
-    # RTC1         -> Runtime error checks
- 
-    # For release: 
-    # W3           -> warn level 3
-    # MD           -> runtime library: multithreaded dll
-    # Ox           -> optimization: full optimization 
-    # Ob2          -> inline function expansion: any suitable
-    # Oi           -> enable intrinsic functions: yes
-    # Ot           -> favor size or speed: favor fast code
-    # Oy           -> omit frame pointers: yes
-    # GL           -> whole program optimization: enable link-time code generation
-    # GF           -> enable string pooling
-    # GS-          -> buffer security check: no 
-    # arch:SSE2    -> enable enhanced instruction set: streaming simd extensions 2
+
+      /MP           # -> build with multiple processes
+
+      /nologo       # -> no logo
+      /Zc:wchar_t   # -> treat wchar_t as built-in type: yes
+      /Zc:forScope  # -> force conformance in for loop scope: Yes
+    # /Zi           # -> debug information format: program database
+    # /Gm           # -> enable minimal rebuild
+      /fp:precise   # -> floating point model: precise
+    # /fp:fast      # -> floating point model: fast
+    # /arch:SSE2    # -> enable enhanced instruction set: streaming simd extensions 2
+
+    # /wd####       # -> disable warning C####
+    # /wd4273       # -> Two definitions in a file differ in their use of dllimport.
+    # /wd4100       # -> 'identifier' : unreferenced formal parameter
+    # /wd4127       # -> conditional expression is constant
+    # /wd4251       # -> 'identifier' : class 'type' needs to have dll-interface to be used by clients of class 'type2'
+    # /wd4267       # -> 'var' : conversion from 'size_t' to 'type', possible loss of data
+
+      /W3           # -> warning level 3
+    # /W4           # -> warning level 4
+      /WX           # -> treat warnings as errors
+
+    # /MD           # -> runtime library: multithreaded dll
+    # /MDd          # -> Runtime Library: Multithreaded Debug DLL
 )
 
 # http://support.microsoft.com/kb/154419
@@ -73,8 +59,28 @@ set(WIN32_COMPILE_FLAGS
 #   set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS_MODIFIED} CACHE TYPE STRING)
 #endif()
 
-
-set(DEFAULT_COMPILE_FLAGS ${WIN32_COMPILE_FLAGS})
+set(DEFAULT_COMPILE_FLAGS
+    ${WIN32_COMPILE_FLAGS}
+    $<$<CONFIG:Debug>:   
+      /RTC1         # -> Runtime error checks
+      /RTCc   
+      /Od           # -> Optimization: none
+      /GS           # -> buffer security check
+      /GF-          # -> enable string pooling
+      /Zi           # -> debug information format: program database
+    >
+    $<$<CONFIG:Release>: 
+      /Ox           # -> optimization: full optimization 
+    # /Ob2          # -> inline function expansion: any suitable
+    # /Oi           # -> enable intrinsic functions: yes
+    # /Ot           # -> favor size or speed: favor fast code
+    # /Oy           # -> omit frame pointers: yes
+      /GS-          # -> buffer security check: no 
+      /GL           # -> whole program optimization: enable link-time code generation
+      /GF           # -> enable string pooling
+      /GR           # -> runtime type information
+    >
+)
 
 
 set(WIN32_LINKER_FLAGS
