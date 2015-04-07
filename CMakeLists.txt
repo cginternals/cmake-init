@@ -141,8 +141,8 @@ else()
         endif()
     else()
         if (APPLE)
-            set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/${INSTALL_LIB}")
-            set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
+            set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/${INSTALL_LIB}") # Add rpath of project libraries
+            set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)                       # Add rpaths of depending libraries
         endif()
     endif()
 endif()
