@@ -132,7 +132,18 @@ else()
         set(CMAKE_SKIP_BUILD_RPATH FALSE)            # Use automatic rpath for build
         set(CMAKE_BUILD_WITH_INSTALL_RPATH FALSE)    # Use specific rpath for INSTALL
         set(CMAKE_INSTALL_RPATH_USE_LINK_PATH FALSE) # NO automatic rpath for INSTALL
-        set(CMAKE_INSTALL_RPATH "$ORIGIN/lib")       # Libraries are relative to binary
+
+        # Libraries are relative to binary
+        if (APPLE)
+            set(CMAKE_INSTALL_RPATH "@executable_path/${INSTALL_LIB}")
+        else()
+            set(CMAKE_INSTALL_RPATH "$ORIGIN/${INSTALL_LIB}")       
+        endif()
+    else()
+        if (APPLE)
+            set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/${INSTALL_LIB}")
+            set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
+        endif()
     endif()
 endif()
 
