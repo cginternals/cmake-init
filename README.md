@@ -1,4 +1,4 @@
-# Cross-Platform C++ CMake Project Template
+# C++ CMake Project Template
 
 cmake-init is a copy and paste template, that provides the following features:
  * Cross Platform
@@ -17,6 +17,14 @@ The files of cmake-init are an instantiation of the templates containing:
   * Example documentation
   * Example package
 
-## Status
+| Service | System | Compiler | Options | Status |
+| ------- | ------ | -------- | ------- | ------ |
+| [Drone](https://drone.io/github.com/cginternals/cmake-init) | Ubuntu 12.04 | GCC 4.8 | no tests | [![Build Status](https://drone.io/github.com/cginternals/cmake-init/status.png)](https://drone.io/github.com/cginternals/cmake-init/latest) |
+| Jenkins | Ubuntu 14.04 | GCC 4.8 | BUILD_TESTS | [![Build Status](http://jenkins.hpi3d.de/buildStatus/icon?job=cmake-init-linux-gcc4.8)](http://jenkins.hpi3d.de/job/cmake-init-linux-gcc4.8)|
+| Jenkins | Ubuntu 14.04 | GCC 4.9 | BUILD_TESTS | [![Build Status](http://jenkins.hpi3d.de/buildStatus/icon?job=cmake-init-linux-gcc4.9)](http://jenkins.hpi3d.de/job/cmake-init-linux-gcc4.9)|
+| Jenkins | Ubuntu 14.04 | Clang 3.5 | BUILD_TESTS | [![Build Status](http://jenkins.hpi3d.de/buildStatus/icon?job=cmake-init-linux-clang3.5)](http://jenkins.hpi3d.de/job/cmake-init-linux-clang3.5) |
+| Jenkins | OS X 10.10 | Clang 3.5 | BUILD_TESTS | [![Build Status](http://jenkins.hpi3d.de/buildStatus/icon?job=cmake-init-osx-clang3.5)](http://jenkins.hpi3d.de/job/cmake-init-osx-clang3.5) |
+| Jenkins | Windows 8.1 | MSVC 2013 Update 5 | BUILD_TESTS | [![Build Status](http://jenkins.hpi3d.de/buildStatus/icon?job=cmake-init-windows-msvc2013)](http://jenkins.hpi3d.de/job/cmake-init-windows-msvc2013) |
+| Jenkins | Windows 8.1 | MSVC 2015 | BUILD_TESTS | [![Build Status](http://jenkins.hpi3d.de/buildStatus/icon?job=cmake-init-windows-msvc2015)](http://jenkins.hpi3d.de/job/cmake-init-windows-msvc2015) |
 
-build status (@hourly for master): ![status](http://jenkins.hpi3d.de/buildStatus/icon?job=cmake-init)
+
