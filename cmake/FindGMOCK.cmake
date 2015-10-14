@@ -55,6 +55,13 @@ find_library(GMOCK_LIBRARY_DEBUG
     /opt/local/lib
     DOC "The GMOCK debug library")
 
+find_library(GMOCK_LIBRARY_DEBUG
+    NAMES gmock
+    PATHS
+    $ENV{GMOCKDIR}/Debug
+    $ENV{GMOCK_HOME}/Debug
+    DOC "The GMOCK debug library")
+
 if (GMOCK_LIBRARY AND GMOCK_LIBRARY_DEBUG)
     set(GMOCK_LIBRARIES "optimized" ${GMOCK_LIBRARY} "debug" ${GMOCK_LIBRARY_DEBUG})
 elseif (GMOCK_LIBRARY)
