@@ -33,4 +33,6 @@ function (list_extract OUTPUT REGEX)
         endif()
     endforeach()
 
+    set(${OUTPUT} ${${OUTPUT}} PARENT_SCOPE)
+
 endfunction (list_extract)
