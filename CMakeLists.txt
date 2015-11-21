@@ -154,8 +154,7 @@ endif()
 # 
 
 # Install cmake find script for the project
-install(FILES deploy/${META_PROJECT_NAME}-config.cmake DESTINATION ${INSTALL_ROOT})
-install(FILES ${META_PROJECT_NAME}-files.cmake         DESTINATION ${INSTALL_ROOT})
+install(FILES ${META_PROJECT_NAME}-config.cmake DESTINATION ${INSTALL_ROOT})
 
 # Install the project meta files
 install(FILES AUTHORS DESTINATION ${INSTALL_ROOT})

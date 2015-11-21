@@ -9,8 +9,6 @@ In the root directory adapt/change/do the following:
 [ ] Edit LICENSE
 [ ] Edit README.md
 [ ] Rename ./template-config.cmake -> <project>-config.cmake
-[ ] Rename deploy/template-config.cmake -> <project>-config.cmake
-[ ] Rename ./template-files.cmake -> <project>-files.cmake
 
 CMakeLists.txt:
 [ ]  Set META_PROJECT_*
@@ -56,7 +54,7 @@ General stuff left to do:
 
 [ ] Rename and adjust projects in source/
 [ ] Add new projects to source/CMakeLists.txt
-[ ] Add new projects to ./{project}-files.cmake
+[ ] Add new projects to ./{project}-config.cmake
 [ ] Remove data/DATA_FOLDER
 [ ] Populate data/
 [ ] Remove ADAPT
