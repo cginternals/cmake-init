@@ -24,6 +24,7 @@ deploy/CMakeLists.txt:
 [ ] Substitute pack-template.cmake -> pack-<project>.cmake
 [ ] Exchange deploy/logo.ico
 [ ] Exchange deploy/logo.bmp
+[ ] Exchange deploy/logo.png
 [ ] Rename deploy/pack-template.cmake -> deploy/pack-<project>.cmake
 deploy/pack-<project>.cmake:
 [ ] Adjust OPTION_PACK_GENERATOR to your liking for all systems
@@ -41,11 +42,10 @@ source/fibcmd/main.cpp:
 
 
 --------------------------------------------------------------------
-In subdirectory "./docs/doxygen/" do:
+In subdirectory "./docs/api-docs/" do:
 
-[ ] Exchange docs/doxygen/logo.png
-docs/doxygen/doxyfile.in:
-[ ] Adjust INPUT tag to check for doxygen annotated sources.
+docs/api-docs/doxyfile.in:
+[ ] Adjust INPUT tag (list of doxygen annotated sources)
 --------------------------------------------------------------------
 
 
@@ -55,6 +55,7 @@ General stuff left to do:
 [ ] Rename and adjust projects in source/
 [ ] Add new projects to source/CMakeLists.txt
 [ ] Add new projects to ./{project}-config.cmake
+[ ] Add new projects to docs/api-docs/doxyfile.in
 [ ] Remove data/DATA_FOLDER
 [ ] Populate data/
 [ ] Remove ADAPT
