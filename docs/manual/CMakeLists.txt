@@ -1,0 +1,33 @@
+
+# Find LaTeX
+find_package(LATEX)
+if(NOT LATEX_FOUND)
+    message(STATUS "Disabled generation of documentation (missing LaTeX).")
+    return()
+endif()
+
+# Target name
+set(target docs-manual)
+
+# Input and output files
+set(source "${CMAKE_CURRENT_SOURCE_DIR}/cmake-init.tex")
+set(pdf    "${CMAKE_CURRENT_BINARY_DIR}/cmake-init.pdf")
+
+# Invoke LaTeX
+add_custom_command(
+    OUTPUT              ${pdf}
+    DEPENDS             ${source}
+    WORKING_DIRECTORY   "${CMAKE_CURRENT_BINARY_DIR}"
+    COMMAND             ${PDFLATEX_COMPILER} \"${source}\"
+    COMMAND             ${PDFLATEX_COMPILER} \"${source}\"
+    COMMAND             ${PDFLATEX_COMPILER} \"${source}\"
+    COMMENT             "Creating LaTeX documentation."
+)
+
+# Declare target
+add_custom_target(${target} DEPENDS ${pdf})
+set_target_properties(${target} PROPERTIES EXCLUDE_FROM_DEFAULT_BUILD 1)
+add_dependencies(docs ${target})
+
+# Deploy
+# install(FILES ${pdf} DESTINATION "${INSTALL_DOC}")

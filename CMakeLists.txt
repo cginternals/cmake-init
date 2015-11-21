@@ -126,6 +126,12 @@ else()
         set(INSTALL_DATA ".")                       # /<INSTALL_PREFIX>
         set(INSTALL_BIN ".")                        # /<INSTALL_PREFIX>
 
+        # Do not put any files in global places
+        set(INSTALL_DOC       "doc")
+        set(INSTALL_SHORTCUTS "misc")
+        set(INSTALL_ICONS     "misc")
+        set(INSTALL_INIT      "misc")
+
         # We have to change the RPATH of binaries to achieve a usable local install.
         # [TODO] For binaries, "$ORIGIN/lib" is right, so that libraries are found in ./lib.
         # However, I have not yet tested what happens when libraries use other libraries.
