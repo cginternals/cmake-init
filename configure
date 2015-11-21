@@ -50,7 +50,7 @@ then
     echo "# Configuration option 'portable'" >> ".localconfig/portable"
     echo "" >> ".localconfig/portable"
     echo "# Enable portable installation" >> ".localconfig/portable"
-    echo "INSTALL_OPTIONS=\"-DCMAKE_INSTALL_PREFIX:PATH=./install -DOPTION_PORTABLE_INSTALL=ON\"" >> ".localconfig/portable"
+    echo "INSTALL_OPTIONS=\"-DCMAKE_INSTALL_PREFIX:PATH=../install -DOPTION_PORTABLE_INSTALL=ON\"" >> ".localconfig/portable"
 
     echo "Default configuration has been written to .localconfig"
     echo "Please review and adjust the configuration, then run again"

@@ -1,6 +1,5 @@
 
-# This config script tries to locate a project in its source tree.
-# For installed version, see deploy/template-config.cmake
+# This config script tries to locate a project in an installed location.
 
 
 # Macro for loading a target configuration if it exists
@@ -12,9 +11,7 @@ macro(include_config_script PREFIX FILENAME)
 endmacro()
 
 
-# Try common build locations
-set(prefix "build/source")
-include("${CMAKE_CURRENT_LIST_DIR}/template-files.cmake")
+# Find project in installed location
 
-set(prefix "build-debug/source")
+set(prefix "cmake")
 include("${CMAKE_CURRENT_LIST_DIR}/template-files.cmake")

@@ -21,10 +21,8 @@ function (source_group_by_path PARENT_PATH REGEX GROUP)
 endfunction (source_group_by_path)
 
 
-
-
-# Function that extract entries matching a given regex from a list. ${OUTPUT} will store
-# the list of matching filenames.
+# Function that extract entries matching a given regex from a list.
+# ${OUTPUT} will store the list of matching filenames.
 function (list_extract OUTPUT REGEX)
 
     foreach(FILENAME ${ARGN})

@@ -11,8 +11,10 @@
 # 
 
 # Target name
-set(target fiblib)
+set(target baselib)
 message(STATUS "Lib ${target}")
+
+# Exit here if required dependencies are not met
 
 # Export file and macro
 string(TOUPPER ${target} target_upper)
@@ -28,11 +30,11 @@ set(include_path "${CMAKE_CURRENT_SOURCE_DIR}/include/${target}")
 set(source_path  "${CMAKE_CURRENT_SOURCE_DIR}/source")
 
 set(headers
-    ${include_path}/Fibonacci.h
+    ${include_path}/baselib.h
 )
 
 set(sources
-    ${source_path}/Fibonacci.cpp
+    ${source_path}/baselib.cpp
 )
 
 # Group source files

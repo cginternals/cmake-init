@@ -1,3 +1,4 @@
+
 To adapt this template to your own project, follow these steps:
 
 
@@ -9,10 +10,7 @@ In the root directory adapt/change/do the following:
 [ ] Edit README.md
 [ ] Edit GitConfig (origin etc.)
 [ ] Rename template-config.cmake -> <project>-config.cmake
-
-<project>-config.cmake:
-[ ]  Substitute template -> <project>
-[ ]  Substitute TEMPLATE -> <PROJECT>
+[ ] Rename template-files.cmake -> <project>-files.cmake
 
 CMakeLists.txt:
 [ ]  Set META_PROJECT_*
@@ -20,6 +18,7 @@ CMakeLists.txt:
 [ ]  Set META_AUTHOR_*
 [ ]  Adjust INSTALL_* to the desired install locations for all systems (defaults should be fine for a start)
 [ ]  Substitute template-config.cmake -> <project>-config.cmake
+[ ]  Substitute template-files.cmake -> <project>-files.cmake
 --------------------------------------------------------------------
 
 
@@ -27,29 +26,8 @@ CMakeLists.txt:
 --------------------------------------------------------------------
 In subdirectory "./source/" do:
 
-[ ] Rename source/template-version.h.in -> source/<project>-version.h.in
-source/CMakeLists.txt:
-[ ] Substitute template -> <project>
-source/<project>-version.h.in:
+source/version.h.in:
 [ ] Substitute TEMPLATE -> <PROJECT>
---------------------------------------------------------------------
-
-
-
---------------------------------------------------------------------
-In subdirectory "./source/fiblib" do:
-
-source/fiblib/CMakeLists.txt:
-[ ] Substitute TEMPLATE_STATIC -> <PROJECT>_STATIC
---------------------------------------------------------------------
-
-
-
---------------------------------------------------------------------
-In subdirectory "./source/fiblib/include/fiblib" do:
-
-source/fiblib/include/fiblib/fiblib_api.h:
-[ ] Substitute TEMPLATE_STATIC -> <PROJECT>_STATIC
 --------------------------------------------------------------------
 
 
