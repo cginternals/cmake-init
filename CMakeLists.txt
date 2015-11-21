@@ -154,12 +154,13 @@ endif()
 # 
 
 # Install cmake find script for the project
-install(FILES deploy/template-config.cmake DESTINATION ${INSTALL_ROOT})
-install(FILES template-files.cmake         DESTINATION ${INSTALL_ROOT})
+install(FILES deploy/${META_PROJECT_NAME}-config.cmake DESTINATION ${INSTALL_ROOT})
+install(FILES ${META_PROJECT_NAME}-files.cmake         DESTINATION ${INSTALL_ROOT})
 
 # Install the project meta files
 install(FILES AUTHORS DESTINATION ${INSTALL_ROOT})
 install(FILES LICENSE DESTINATION ${INSTALL_ROOT})
+install(FILES README.md DESTINATION ${INSTALL_ROOT})
 
 # Install runtime data
 install(DIRECTORY ${CMAKE_SOURCE_DIR}/data DESTINATION ${INSTALL_DATA})

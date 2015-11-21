@@ -8,28 +8,29 @@ In the root directory adapt/change/do the following:
 [ ] Edit AUTHORS
 [ ] Edit LICENSE
 [ ] Edit README.md
-[ ] Edit GitConfig (origin etc.)
-[ ] Rename template-config.cmake -> <project>-config.cmake
-[ ] Rename template-files.cmake -> <project>-files.cmake
+[ ] Rename ./template-config.cmake -> <project>-config.cmake
+[ ] Rename deploy/template-config.cmake -> <project>-config.cmake
+[ ] Rename ./template-files.cmake -> <project>-files.cmake
 
 CMakeLists.txt:
 [ ]  Set META_PROJECT_*
 [ ]  Set META_VERSION_*
 [ ]  Set META_AUTHOR_*
 [ ]  Adjust INSTALL_* to the desired install locations for all systems (defaults should be fine for a start)
-[ ]  Substitute template-config.cmake -> <project>-config.cmake
-[ ]  Substitute template-files.cmake -> <project>-files.cmake
 --------------------------------------------------------------------
 
 
-
 --------------------------------------------------------------------
-In subdirectory "./source/" do:
-
-source/version.h.in:
-[ ] Substitute TEMPLATE -> <PROJECT>
+In subdirectory "./deploy/" do:
+deploy/CMakeLists.txt:
+[ ] Substitute pack-template.cmake -> pack-<project>.cmake
+[ ] Exchange deploy/logo.ico
+[ ] Exchange deploy/logo.bmp
+[ ] Rename deploy/pack-template.cmake -> deploy/pack-<project>.cmake
+deploy/pack-<project>.cmake:
+[ ] Adjust OPTION_PACK_GENERATOR to your liking for all systems
+[ ] Adjust package options, e.g., CPACK_DEBIAN_PACKAGE_DEPENDS, CPACK_DEBIAN_PACKAGE_SECTION, CPACK_DEBIAN_PACKAGE_PRIORITY, CPACK_RPM_PACKAGE_LICENSE, CPACK_RPM_PACKAGE_GROUP, ...
 --------------------------------------------------------------------
-
 
 
 --------------------------------------------------------------------
@@ -39,21 +40,6 @@ source/fibcmd/main.cpp:
 [ ] Substitute template-version.h -> <project>-version.h
 [ ] Substitute TEMPLATE_VERSION -> <PROJECT>_VERSION
 --------------------------------------------------------------------
-
-
-
---------------------------------------------------------------------
-In subdirectory "./packages/" do:
-packages/CMakeLists.txt:
-[ ] Substitute pack-template.cmake -> pack-<project>.cmake
-[ ] Exchange packages/logo.ico
-[ ] Exchange packages/logo.bmp
-[ ] Rename packages/pack-template.cmake -> packages/pack-<project>.cmake
-packages/pack-<project>.cmake:
-[ ] Adjust OPTION_PACK_GENERATOR to your liking for all systems
-[ ] Adjust package options, e.g., CPACK_DEBIAN_PACKAGE_DEPENDS, CPACK_DEBIAN_PACKAGE_SECTION, CPACK_DEBIAN_PACKAGE_PRIORITY, CPACK_RPM_PACKAGE_LICENSE, CPACK_RPM_PACKAGE_GROUP, ...
---------------------------------------------------------------------
-
 
 
 --------------------------------------------------------------------
@@ -69,7 +55,9 @@ docs/doxygen/doxyfile.in:
 General stuff left to do:
 
 [ ] Rename and adjust projects in source/
-[ ] Remove data/example.txt
+[ ] Add new projects to source/CMakeLists.txt
+[ ] Add new projects to ./{project}-files.cmake
+[ ] Remove data/DATA_FOLDER
 [ ] Populate data/
 [ ] Remove ADAPT
 --------------------------------------------------------------------
