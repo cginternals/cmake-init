@@ -1,14 +1,9 @@
 
-include(ExternalProject)
+# 
+# Setup test environment
+# 
 
-
-# Check if tests are enabled
-if(NOT OPTION_BUILD_TESTS)
-    return()
-endif()
-
-# This policy was introduced in 3.0.0 and does not allow targets named "test" or "help" ...
-# Since we do not rely on cmake testing we stick to the old policy for now.
+# DISABLE CMP0037: Target names should not be reserved and should match a validity pattern.
 if(POLICY CMP0037)
     cmake_policy(SET CMP0037 OLD)
 endif()
@@ -75,9 +70,17 @@ target_link_libraries(gtest-dev
     pthread
 )
 
+
+# 
 # Target 'test'
+# 
+
 add_custom_target(test)
 set_target_properties(test PROPERTIES EXCLUDE_FROM_DEFAULT_BUILD 1)
 
+
+# 
 # Tests
+# 
+
 add_test_without_ctest(fiblib-test)

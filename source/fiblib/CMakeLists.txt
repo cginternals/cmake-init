@@ -14,7 +14,9 @@
 set(target fiblib)
 message(STATUS "Lib ${target}")
 
-# Export file and macro
+# Exit here if required dependencies are not met
+
+# Set API export file and macro
 string(TOUPPER ${target} target_upper)
 set(export_file  "include/${target}/${target}_api.h")
 set(export_macro "${target_upper}_API")
@@ -61,7 +63,7 @@ add_library(${META_PROJECT_NAME}::${target} ALIAS ${target})
 install(EXPORT ${target}-export NAMESPACE ${META_PROJECT_NAME}:: DESTINATION cmake/${target})
 export (EXPORT ${target}-export NAMESPACE ${META_PROJECT_NAME}::)
 
-# Create export header
+# Create API export header
 generate_export_header(${target}
     EXPORT_FILE_NAME  ${export_file}
     EXPORT_MACRO_NAME ${export_macro}

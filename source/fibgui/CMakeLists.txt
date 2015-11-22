@@ -7,9 +7,15 @@ find_package(Qt5Core    5.1 QUIET)
 find_package(Qt5Gui     5.1 QUIET)
 find_package(Qt5Widgets 5.1 QUIET)
 
+# Enable automoc
 set(CMAKE_AUTOMOC ON)
 set(AUTOMOC_MOC_OPTIONS PROPERTIES FOLDER CMakeAutomocTargets)
 set_property(GLOBAL PROPERTY AUTOMOC_FOLDER CMakeAutomocTargets)
+
+# ENABLE CMP0020: Automatically link Qt executables to qtmain target on Windows.
+if (POLICY CMP0020)
+    cmake_policy(SET CMP0020 NEW)
+endif()
 
 
 # 
@@ -50,8 +56,6 @@ add_executable(${target}
 # Create namespaced alias
 add_executable(${META_PROJECT_NAME}::${target} ALIAS ${target})
 
-# [TODO] Make this global or put it in every project
-set_target_properties(${target} PROPERTIES CXX_STANDARD 11)
 
 # 
 # Includes
@@ -90,9 +94,11 @@ target_compile_definitions(${target}
 # Compile options
 # 
 
+# [TODO] Make this global or put it in every project
 set_target_properties(${target}
     PROPERTIES
     POSITION_INDEPENDENT_CODE ON
+    CXX_STANDARD              11
 )
 
 target_compile_options(${target}

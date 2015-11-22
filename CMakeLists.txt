@@ -16,6 +16,7 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 # Include cmake modules
 include(GenerateExportHeader)
+include(ExternalProject)
 include(cmake/Custom.cmake)
 #include(cmake/GitRevision.cmake)
 
@@ -182,5 +183,9 @@ install(DIRECTORY ${CMAKE_SOURCE_DIR}/data DESTINATION ${INSTALL_DATA})
 # 
 
 add_subdirectory(source)
-add_subdirectory(docs)
+
+if(OPTION_BUILD_DOCS)
+    add_subdirectory(docs)
+endif()
+
 add_subdirectory(deploy)

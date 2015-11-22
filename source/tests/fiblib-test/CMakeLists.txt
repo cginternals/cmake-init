@@ -1,37 +1,16 @@
 
+# 
+# Executable name and options
+# 
+
+# Target name
 set(target fiblib-test)
 message(STATUS "Test ${target}")
 
 
-# Includes
-
-include_directories(
-    
-)
-
-include_directories(
-    BEFORE
-    ${CMAKE_SOURCE_DIR}/source/fiblib/include
-)
-
-
-# Libraries
-
-set(libs
-    ${GMOCK_LIBRARIES}
-    ${GTEST_LIBRARIES}
-    fiblib
-)
-
-
-# Compiler definitions
-
-if (OPTION_BUILD_STATIC)
-    add_definitions("-D${META_PROJECT_NAME_UPPER}_STATIC")
-endif()
-
-
+# 
 # Sources
+# 
 
 set(sources
     main.cpp
@@ -39,20 +18,59 @@ set(sources
 )
 
 
+# 
+# Create executable
+# 
+
 # Build executable
+add_executable(${target}
+    ${sources}
+)
 
-add_executable(${target} ${sources})
+# Create namespaced alias
+add_executable(${META_PROJECT_NAME}::${target} ALIAS ${target})
 
-target_link_libraries(${target} ${libs} gmock-dev gtest-dev)
 
-target_compile_options(${target} PRIVATE ${DEFAULT_COMPILE_FLAGS})
+# 
+# Includes
+# 
+
+target_include_directories(${target}
+    PRIVATE
+    ${PROJECT_BINARY_DIR}/source/include
+)
+
+
+# 
+# Libraries
+# 
+
+target_link_libraries(${target}
+    PRIVATE
+    template::fiblib
+    gmock-dev
+    gtest-dev
+)
+
+
+# 
+# Compile definitions
+# 
+
+target_compile_definitions(${target}
+    PRIVATE
+)
+
+
+# 
+# Compile options
+# 
 
 set_target_properties(${target}
     PROPERTIES
-    LINKER_LANGUAGE              CXX
-    FOLDER                      "${IDE_FOLDER}"
-    COMPILE_DEFINITIONS_DEBUG   "${DEFAULT_COMPILE_DEFS_DEBUG}"
-    COMPILE_DEFINITIONS_RELEASE "${DEFAULT_COMPILE_DEFS_RELEASE}"
-    LINK_FLAGS_DEBUG            "${DEFAULT_LINKER_FLAGS_DEBUG}"
-    LINK_FLAGS_RELEASE          "${DEFAULT_LINKER_FLAGS_RELEASE}"
-    DEBUG_POSTFIX               "d${DEBUG_POSTFIX}")
+    POSITION_INDEPENDENT_CODE ON
+)
+
+target_compile_options(${target}
+    PRIVATE
+)

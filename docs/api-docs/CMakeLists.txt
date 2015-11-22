@@ -1,17 +1,37 @@
 
-# Path to doxygen input
-set(doxyfile_in doxyfile.in)
+# 
+# Find doxygen
+# 
 
-# Set project variables
-set(doxyfile     ${CMAKE_CURRENT_BINARY_DIR}/doxyfile)
-set(doxyfile_hhp ${CMAKE_CURRENT_BINARY_DIR}/html/index.hhp)
-
-# Check if doxygen is available
 find_package(Doxygen)
 if(NOT DOXYGEN_FOUND)
     message(STATUS "Disabled generation of doxygen documentation (missing doxygen).")
     return()
 endif()
+
+
+# 
+# Target name
+# 
+
+set(target api-docs)
+message(STATUS "Doc ${target}")
+
+
+# 
+# Input file
+# 
+
+set(doxyfile_in doxyfile.in)
+
+
+# 
+# Create documentation
+# 
+
+# Set project variables
+set(doxyfile     ${CMAKE_CURRENT_BINARY_DIR}/doxyfile)
+set(doxyfile_hhp ${CMAKE_CURRENT_BINARY_DIR}/html/index.hhp)
 
 # Get filename and path of doxyfile
 get_filename_component(name ${doxyfile_in} NAME)
@@ -35,7 +55,6 @@ add_custom_command(
 )
 
 # Declare target
-add_custom_target(api-docs DEPENDS ${doxyfile_hhp})
-set_target_properties(api-docs PROPERTIES EXCLUDE_FROM_DEFAULT_BUILD 1)
-add_dependencies(docs api-docs)
-
+add_custom_target(${target} DEPENDS ${doxyfile_hhp})
+set_target_properties(${target} PROPERTIES EXCLUDE_FROM_DEFAULT_BUILD 1)
+add_dependencies(docs ${target})
