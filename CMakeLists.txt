@@ -45,6 +45,7 @@ option(BUILD_SHARED_LIBS        "Build shared instead of static libraries."    O
 option(OPTION_PORTABLE_INSTALL  "Install into a self-contained directory."    OFF)
 option(OPTION_BUILD_TESTS       "Build tests (if gmock and gtest are found)."  ON)
 option(OPTION_BUILD_DOCS        "Build documentation."                        OFF)
+option(OPTION_QT_EXAMPLE        "Build Qt example application."                ON)
 
 
 # 

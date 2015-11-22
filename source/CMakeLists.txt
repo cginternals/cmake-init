@@ -25,6 +25,9 @@ add_subdirectory(fiblib)
 # Applications
 set(IDE_FOLDER "Applications")
 add_subdirectory(fibcmd)
+if (OPTION_QT_EXAMPLE)
+    add_subdirectory(fibgui)
+endif()
 
 # Tests
 set(IDE_FOLDER "Tests")
