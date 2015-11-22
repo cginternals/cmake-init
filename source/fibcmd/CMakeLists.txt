@@ -40,6 +40,20 @@ add_executable(${META_PROJECT_NAME}::${target} ALIAS ${target})
 
 
 # 
+# Project options
+# 
+
+set_target_properties(${target}
+    PROPERTIES
+    FOLDER                     "${IDE_FOLDER}"
+    DEBUG_POSTFIX              "d"
+    CXX_STANDARD               11
+    LINKER_LANGUAGE            CXX
+    POSITION_INDEPENDENT_CODE  ON
+)
+
+
+# 
 # Includes
 # 
 
@@ -55,6 +69,7 @@ target_include_directories(${target}
 
 target_link_libraries(${target}
     PRIVATE
+    ${SYSTEM_LIBRARIES}
     template::baselib
     template::fiblib
 )
@@ -66,6 +81,7 @@ target_link_libraries(${target}
 
 target_compile_definitions(${target}
     PRIVATE
+    ${DEFAULT_COMPILE_DEFINITIONS}
 )
 
 
@@ -73,13 +89,9 @@ target_compile_definitions(${target}
 # Compile options
 # 
 
-set_target_properties(${target}
-    PROPERTIES
-    POSITION_INDEPENDENT_CODE ON
-)
-
 target_compile_options(${target}
     PRIVATE
+    ${DEFAULT_COMPILE_OPTIONS}
 )
 
 

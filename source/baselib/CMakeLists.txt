@@ -71,21 +71,31 @@ generate_export_header(${target}
 
 
 # 
+# Project options
+# 
+
+set_target_properties(${target}
+    PROPERTIES
+    FOLDER                     "${IDE_FOLDER}"
+    DEBUG_POSTFIX              "d"
+    CXX_STANDARD               11
+    LINKER_LANGUAGE            CXX
+    POSITION_INDEPENDENT_CODE  ON
+)
+
+# 
 # Includes
 # 
 
 target_include_directories(${target}
-    PUBLIC
-    # Includes that are needed for this project AND for any downstream project using this library
-
-    PRIVATE
-    # Includes that are needed internally for this project
+    PRIVATE    # Includes that are needed internally for this project
     ${PROJECT_BINARY_DIR}/source/include
     ${CMAKE_CURRENT_SOURCE_DIR}/include
     ${CMAKE_CURRENT_BINARY_DIR}/include
 
-    INTERFACE
-    # Includes for downstream projects to use this project
+    PUBLIC     # Includes that are needed for this project AND for any downstream project using this library
+
+    INTERFACE  # Includes for downstream projects to use this project
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/include>
     $<INSTALL_INTERFACE:include>
@@ -97,15 +107,12 @@ target_include_directories(${target}
 # 
 
 target_link_libraries(${target}
-    PUBLIC
-    # Libraries that are needed for this project AND for any downstream project using this library
+    PRIVATE    # Libraries that are needed internally for this project
+    ${SYSTEM_LIBRARIES}
 
-    PRIVATE
-    # Libraries that are needed internally for this project
-#   ${THIRDPARTY_LIBRARY}
+    PUBLIC     # Libraries that are needed for this project AND for any downstream project using this library
 
-    INTERFACE
-    # Libraries for downstream projects to use this library
+    INTERFACE  # Libraries for downstream projects to use this library
 )
 
 
@@ -114,15 +121,13 @@ target_link_libraries(${target}
 # 
 
 target_compile_definitions(${target}
-    PUBLIC
-    # Definitions that are needed for this project AND for any downstream project using this library
+    PRIVATE    # Definitions that are needed internally for this project
+
+    PUBLIC     # Definitions that are needed for this project AND for any downstream project using this library
     $<$<NOT:$<BOOL:${BUILD_SHARED_LIBS}>>:${target_upper}_STATIC_DEFINE>
+    ${DEFAULT_COMPILE_DEFINITIONS}
 
-    PRIVATE
-    # Definitions that are needed internally for this project
-
-    INTERFACE
-    # Definitions for downstream projects to use this library
+    INTERFACE  # Definitions for downstream projects to use this library
 )
 
 
@@ -130,20 +135,13 @@ target_compile_definitions(${target}
 # Compile options
 # 
 
-set_target_properties(${target}
-    PROPERTIES
-    POSITION_INDEPENDENT_CODE ON
-)
-
 target_compile_options(${target}
-    PUBLIC
-    # Options that are needed for this project AND for any downstream project using this library
+    PRIVATE    # Options that are needed internally for this project
 
-    PRIVATE
-    # Options that are needed internally for this project
+    PUBLIC     # Options that are needed for this project AND for any downstream project using this library
+    ${DEFAULT_COMPILE_OPTIONS}
 
-    INTERFACE
-    # Options for downstream projects to use this library
+    INTERFACE  # Options for downstream projects to use this library
 )
 
 

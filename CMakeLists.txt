@@ -70,27 +70,10 @@ project(${META_PROJECT_NAME} C CXX)
 
 
 # 
-# Platform and architecture setup
+# Compiler settings and options
 # 
 
-# Architecture (32/64 bit)
-set(X64 OFF)
-if(CMAKE_SIZEOF_VOID_P EQUAL 8)
-    set(X64 ON)
-endif()
-
-# Load configuration for the specific platform (compile flags, etc.)
-#if(MSVC)
-#    include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/PlatformWindowsMSVC.cmake)
-#elseif(WIN32 AND CMAKE_COMPILER_IS_GNUCXX)
-#    include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/PlatformWindowsGCC.cmake)
-#elseif(APPLE)
-#    include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/PlatformMacOS.cmake)
-#elseif(UNIX)
-#    include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/PlatformLinuxGCC.cmake)
-#else()
-#    message(WARNING "Unsupported platform/compiler combination")
-#endif()
+include(cmake/CompileOptions.cmake)
 
 
 # 

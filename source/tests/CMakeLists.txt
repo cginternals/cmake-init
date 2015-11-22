@@ -40,7 +40,6 @@ target_include_directories(gmock-dev
 target_link_libraries(gmock-dev
     INTERFACE
     ${GMOCK_BINARY_DIR}/${CMAKE_STATIC_LIBRARY_PREFIX}gmock${CMAKE_STATIC_LIBRARY_SUFFIX}
-    pthread
 )
 
 # Download and build gtest
@@ -62,12 +61,13 @@ add_library(gtest-dev INTERFACE)
 target_include_directories(gtest-dev
     INTERFACE
     ${GTEST_SOURCE_DIR}/include
+    ${SYSTEM_LIBRARIES}
 )
 
 target_link_libraries(gtest-dev
     INTERFACE
     ${GTEST_BINARY_DIR}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest${CMAKE_STATIC_LIBRARY_SUFFIX}
-    pthread
+    ${SYSTEM_LIBRARIES}
 )
 
 
