@@ -44,6 +44,7 @@ set(META_AUTHOR_MAINTAINER   "stefan.buschmann@cginternals.com")
 option(BUILD_SHARED_LIBS        "Build shared instead of static libraries."    ON)
 option(OPTION_PORTABLE_INSTALL  "Install into a self-contained directory."    OFF)
 option(OPTION_BUILD_TESTS       "Build tests (if gmock and gtest are found)."  ON)
+option(OPTION_BUILD_DOCS        "Build documentation."                        OFF)
 
 
 # 

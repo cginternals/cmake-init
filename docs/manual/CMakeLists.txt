@@ -15,13 +15,13 @@ set(pdf    "${CMAKE_CURRENT_BINARY_DIR}/cmake-init.pdf")
 
 # Invoke LaTeX
 add_custom_command(
-    OUTPUT              ${pdf}
-    DEPENDS             ${source}
-    WORKING_DIRECTORY   "${CMAKE_CURRENT_BINARY_DIR}"
-    COMMAND             ${PDFLATEX_COMPILER} \"${source}\"
-    COMMAND             ${PDFLATEX_COMPILER} \"${source}\"
-    COMMAND             ${PDFLATEX_COMPILER} \"${source}\"
-    COMMENT             "Creating LaTeX documentation."
+    OUTPUT            ${pdf}
+    DEPENDS           ${source}
+    WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
+    COMMAND           ${PDFLATEX_COMPILER} \"${source}\"
+    COMMAND           ${PDFLATEX_COMPILER} \"${source}\"
+    COMMAND           ${PDFLATEX_COMPILER} \"${source}\"
+    COMMENT           "Creating LaTeX documentation."
 )
 
 # Declare target
@@ -30,4 +30,4 @@ set_target_properties(${target} PROPERTIES EXCLUDE_FROM_DEFAULT_BUILD 1)
 add_dependencies(docs ${target})
 
 # Deploy
-# install(FILES ${pdf} DESTINATION "${INSTALL_DOC}")
+install(FILES ${pdf} DESTINATION "${INSTALL_DOC}")
