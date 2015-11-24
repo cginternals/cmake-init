@@ -26,7 +26,7 @@ void printInfo()
     #endif
 
     // Export macro
-    std::cout << "Export def:   " xstr(BASELIB_API) << std::endl;
+    std::cout << "Export def:   " << xstr(BASELIB_API) << std::endl;
 }
 
 
