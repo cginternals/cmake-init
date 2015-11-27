@@ -1,4 +1,6 @@
 
+#include <template/template-meta.h>
+
 #include <baselib/baselib.h>
 
 #include <iostream>
@@ -27,6 +29,9 @@ void printInfo()
 
     // Export macro
     std::cout << "Export def:   " << xstr(BASELIB_API) << std::endl;
+
+    // Data directory
+    std::cout << "Data path:    " << TEMPLATE_DATA_PATH << std::endl;
 }
 
 
