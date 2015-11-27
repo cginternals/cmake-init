@@ -2,12 +2,23 @@
 #pragma once
 
 
+#include <string>
+
 #include <baselib/baselib_api.h>
 
 
 namespace baselib
 {
 
+
+/**
+*  @brief
+*    Get data path for baselib
+*
+*  @return
+*    Path to data directory
+*/
+BASELIB_API std::string dataPath();
 
 /**
 *  @brief

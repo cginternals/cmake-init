@@ -14,6 +14,11 @@ namespace baselib
 {
 
 
+std::string dataPath()
+{
+    return std::string(TEMPLATE_DATA_PATH);
+}
+
 void printInfo()
 {
     // Library name
