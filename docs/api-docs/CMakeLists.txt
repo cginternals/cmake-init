@@ -55,6 +55,5 @@ add_custom_command(
 )
 
 # Declare target
-add_custom_target(${target} DEPENDS ${doxyfile_hhp})
-set_target_properties(${target} PROPERTIES EXCLUDE_FROM_DEFAULT_BUILD 1)
+add_custom_target(${target} ALL DEPENDS ${doxyfile_hhp})
 add_dependencies(docs ${target})
