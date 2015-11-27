@@ -3,6 +3,10 @@
 # Target 'docs'
 # 
 
+if(NOT OPTION_BUILD_DOCS)
+    return()
+endif()
+
 add_custom_target(docs)
 
 

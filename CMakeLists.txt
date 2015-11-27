@@ -166,9 +166,5 @@ install(DIRECTORY ${CMAKE_SOURCE_DIR}/data DESTINATION ${INSTALL_DATA} COMPONENT
 # 
 
 add_subdirectory(source)
-
-if(OPTION_BUILD_DOCS)
-    add_subdirectory(docs)
-endif()
-
+add_subdirectory(docs)
 add_subdirectory(deploy)
