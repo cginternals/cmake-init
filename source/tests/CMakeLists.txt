@@ -3,6 +3,11 @@
 # Setup test environment
 # 
 
+# Check if tests are enabled
+if(NOT OPTION_BUILD_TESTS)
+    return()
+endif()
+
 # DISABLE CMP0037: Target names should not be reserved and should match a validity pattern.
 if(POLICY CMP0037)
     cmake_policy(SET CMP0037 OLD)

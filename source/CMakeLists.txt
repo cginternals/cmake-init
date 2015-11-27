@@ -22,18 +22,13 @@ set(IDE_FOLDER "")
 add_subdirectory(baselib)
 add_subdirectory(fiblib)
 
-# Applications
-set(IDE_FOLDER "Applications")
-add_subdirectory(fibcmd)
-if(OPTION_QT_EXAMPLE)
-    add_subdirectory(fibgui)
-endif()
+# Examples
+set(IDE_FOLDER "Examples")
+add_subdirectory(examples)
 
 # Tests
-if(OPTION_BUILD_TESTS)
-    set(IDE_FOLDER "Tests")
-    add_subdirectory(tests)
-endif()
+set(IDE_FOLDER "Tests")
+add_subdirectory(tests)
 
 
 # 
