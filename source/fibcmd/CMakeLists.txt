@@ -45,6 +45,7 @@ add_executable(${META_PROJECT_NAME}::${target} ALIAS ${target})
 
 set_target_properties(${target}
     PROPERTIES
+    ${DEFAULT_PROJECT_OPTIONS}
     FOLDER                     "${IDE_FOLDER}"
     DEBUG_POSTFIX              "d"
     CXX_STANDARD               11
@@ -54,11 +55,12 @@ set_target_properties(${target}
 
 
 # 
-# Includes
+# Include directories
 # 
 
 target_include_directories(${target}
     PRIVATE
+    ${DEFAULT_INCLUDE_DIRECTORIES}
     ${PROJECT_BINARY_DIR}/source/include
 )
 
@@ -69,7 +71,7 @@ target_include_directories(${target}
 
 target_link_libraries(${target}
     PRIVATE
-    ${SYSTEM_LIBRARIES}
+    ${DEFAULT_LIBRARIES}
     template::baselib
     template::fiblib
 )
@@ -92,6 +94,16 @@ target_compile_definitions(${target}
 target_compile_options(${target}
     PRIVATE
     ${DEFAULT_COMPILE_OPTIONS}
+)
+
+
+# 
+# Linker options
+# 
+
+target_link_libraries(${target}
+    PRIVATE
+    ${DEFAULT_LINKER_OPTIONS}
 )
 
 

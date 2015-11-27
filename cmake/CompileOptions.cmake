@@ -27,28 +27,49 @@ endif()
 
 
 # 
+# Project options
+# 
+
+set(DEFAULT_PROJECT_OPTIONS)
+
+
+# 
+# Include directories
+# 
+set(DEFAULT_INCLUDE_DIRECTORIES)
+
+
+
+# 
+# Libraries
+# 
+
+set(DEFAULT_LIBRARIES)
+
+
+# 
 # Compile definitions
 # 
 
-set(DEFAULT_COMPILE_DEFINITIONS
-)
+set(DEFAULT_COMPILE_DEFINITIONS)
 
 
 # 
 # Compile options
 # 
 
-set(DEFAULT_COMPILE_OPTIONS
-)
+set(DEFAULT_COMPILE_OPTIONS)
 
 
 # 
-# System libraries
+# Linker options
 # 
+
+set(DEFAULT_LINKER_OPTIONS)
 
 # Use pthreads on linux and mingw
 if(PLATFORM_LINUX OR MINGW)
-    set(SYSTEM_LIBRARIES
+    set(DEFAULT_LINKER_OPTIONS
         -pthread
     )
 endif()

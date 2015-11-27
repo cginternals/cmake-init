@@ -76,6 +76,7 @@ generate_export_header(${target}
 
 set_target_properties(${target}
     PROPERTIES
+    ${DEFAULT_PROJECT_OPTIONS}
     FOLDER                     "${IDE_FOLDER}"
     DEBUG_POSTFIX              "d"
     CXX_STANDARD               11
@@ -85,7 +86,7 @@ set_target_properties(${target}
 
 
 # 
-# Includes
+# Include directories
 # 
 
 target_include_directories(${target}
@@ -95,6 +96,7 @@ target_include_directories(${target}
     ${CMAKE_CURRENT_BINARY_DIR}/include
 
     PUBLIC     # Includes that are needed for this project AND for any downstream project using this library
+    ${DEFAULT_INCLUDE_DIRECTORIES}
 
     INTERFACE  # Includes for downstream projects to use this project
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
@@ -109,9 +111,9 @@ target_include_directories(${target}
 
 target_link_libraries(${target}
     PRIVATE    # Libraries that are needed internally for this project
-    ${SYSTEM_LIBRARIES}
 
     PUBLIC     # Libraries that are needed for this project AND for any downstream project using this library
+    ${DEFAULT_LIBRARIES}
 
     INTERFACE  # Libraries for downstream projects to use this library
 )
@@ -141,6 +143,20 @@ target_compile_options(${target}
 
     PUBLIC     # Options that are needed for this project AND for any downstream project using this library
     ${DEFAULT_COMPILE_OPTIONS}
+
+    INTERFACE  # Options for downstream projects to use this library
+)
+
+
+# 
+# Linker options
+# 
+
+target_link_libraries(${target}
+    PRIVATE    # Options that are needed internally for this project
+
+    PUBLIC     # Options that are needed for this project AND for any downstream project using this library
+    ${DEFAULT_LINKER_OPTIONS}
 
     INTERFACE  # Options for downstream projects to use this library
 )
