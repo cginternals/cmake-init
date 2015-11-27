@@ -1,9 +1,11 @@
 
+#include <iostream>
+#include <fstream>
+
+#include <template/template-version.h>
 #include <template/template-meta.h>
 
 #include <baselib/baselib.h>
-
-#include <iostream>
 
 
 #define xstr(s) str(s)
@@ -21,9 +23,15 @@ std::string dataPath()
 
 void printInfo()
 {
+    std::string dataPath = TEMPLATE_DATA_PATH;
+
     // Library name
     std::cout << "Library template::baselib" << std::endl;
     std::cout << "========================================" << std::endl;
+
+    // Library version
+    std::cout << "Version: " << TEMPLATE_VERSION << std::endl;
+    std::cout << std::endl;
 
     // Library type (static or dynamic)
     #ifdef BASELIB_STATIC_DEFINE
@@ -37,6 +45,26 @@ void printInfo()
 
     // Data directory
     std::cout << "Data path:    " << TEMPLATE_DATA_PATH << std::endl;
+    std::cout << std::endl;
+
+    // Read file
+    std::cout << "Data directory access" << std::endl;
+    std::cout << "========================================" << std::endl;
+
+    std::string fileName = dataPath + "/DATA_FOLDER";
+    std::cout << "Reading from '" << fileName << "': " << std::endl;
+    std::cout << std::endl;
+
+    std::ifstream f(fileName);
+    if (f.is_open()) {
+        std::string line;
+        while (getline(f, line)) {
+            std::cout << line << '\n';
+        }
+        f.close();
+    } else {
+        std::cout << "Unable to open file." << std::endl;
+    }
 }
 
 
