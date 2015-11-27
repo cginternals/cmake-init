@@ -51,4 +51,7 @@ add_dependencies(docs ${target})
 # 
 
 # PDF file
-install(FILES ${pdf} DESTINATION "${INSTALL_DOC}")
+install(FILES ${pdf}
+    DESTINATION "${INSTALL_DOC}"
+    COMPONENT docs
+)

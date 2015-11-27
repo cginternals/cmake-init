@@ -135,4 +135,5 @@ target_link_libraries(${target}
 # Executable
 install(TARGETS ${target}
     RUNTIME DESTINATION ${INSTALL_BIN}
+    COMPONENT examples
 )

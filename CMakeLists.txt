@@ -146,19 +146,19 @@ endif()
 # 
 
 # Install cmake find script for the project
-install(FILES ${META_PROJECT_NAME}-config.cmake DESTINATION ${INSTALL_ROOT})
+install(FILES ${META_PROJECT_NAME}-config.cmake DESTINATION ${INSTALL_ROOT} COMPONENT dev)
 
 # Install the project meta files
-install(FILES AUTHORS DESTINATION ${INSTALL_ROOT})
-install(FILES LICENSE DESTINATION ${INSTALL_ROOT})
-install(FILES README.md DESTINATION ${INSTALL_ROOT})
+install(FILES AUTHORS DESTINATION ${INSTALL_ROOT} COMPONENT runtime)
+install(FILES LICENSE DESTINATION ${INSTALL_ROOT} COMPONENT runtime)
+install(FILES README.md DESTINATION ${INSTALL_ROOT} COMPONENT runtime)
 
 # Install runtime data
-install(DIRECTORY ${CMAKE_SOURCE_DIR}/data DESTINATION ${INSTALL_DATA})
+install(DIRECTORY ${CMAKE_SOURCE_DIR}/data DESTINATION ${INSTALL_DATA} COMPONENT runtime)
 
 # Add a revision file containing the git-head tag for cpack and install. The function
 # "create_revision_file (...)" is defined in cmake/GitRevision.cmake
-#create_revision_file(${CMAKE_BINARY_DIR}/revision ${INSTALL_ROOT})
+#create_revision_file(${CMAKE_BINARY_DIR}/revision ${INSTALL_ROOT} COMPONENT runtime)
 
 
 # 

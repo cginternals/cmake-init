@@ -166,16 +166,31 @@ target_link_libraries(${target}
 # Deployment
 # 
 
-# Library
-install(TARGETS ${target}
-    EXPORT  ${target}-export
-    RUNTIME DESTINATION ${INSTALL_BIN}
-    LIBRARY DESTINATION ${INSTALL_SHARED}
-    ARCHIVE DESTINATION ${INSTALL_LIB}
-)
+if(BUILD_SHARED_LIBS)
+    # Library (runtime)
+    install(TARGETS ${target}
+        EXPORT  ${target}-export
+        RUNTIME DESTINATION ${INSTALL_BIN}
+        LIBRARY DESTINATION ${INSTALL_SHARED}
+        COMPONENT runtime
+    )
+else()
+    # Library (dev)
+    install(TARGETS ${target}
+        EXPORT  ${target}-export
+        ARCHIVE DESTINATION ${INSTALL_LIB}
+        COMPONENT dev
+    )
+endif()
 
 # Header files
-install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/${target} DESTINATION ${INSTALL_INCLUDE})
+install(DIRECTORY
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/${target} DESTINATION ${INSTALL_INCLUDE}
+    COMPONENT dev
+)
 
 # Generated header files
-install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/include/${target} DESTINATION ${INSTALL_INCLUDE})
+install(DIRECTORY
+    ${CMAKE_CURRENT_BINARY_DIR}/include/${target} DESTINATION ${INSTALL_INCLUDE}
+    COMPONENT dev
+)
