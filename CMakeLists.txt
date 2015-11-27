@@ -32,7 +32,7 @@ set(META_VERSION_MAJOR       "2")
 set(META_VERSION_MINOR       "0")
 set(META_VERSION_PATCH       "0")
 set(META_VERSION             "${META_VERSION_MAJOR}.${META_VERSION_MINOR}.${META_VERSION_PATCH}")
-set(META_AUTHOR_ORGANIZATION "cginternals GmbH")
+set(META_AUTHOR_ORGANIZATION "CG Internals GmbH")
 set(META_AUTHOR_DOMAIN       "https://github.com/cginternals/cmake-init/")
 set(META_AUTHOR_MAINTAINER   "stefan.buschmann@cginternals.com")
 

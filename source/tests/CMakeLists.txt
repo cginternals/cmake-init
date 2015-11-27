@@ -13,13 +13,14 @@ function(add_test_without_ctest target)
     add_subdirectory(${target})
     add_dependencies(test ${target})
     add_custom_command(TARGET test POST_BUILD 
-        COMMAND $<TARGET_FILE:${target}> --gtest_output=xml:gtests.xml)
+        COMMAND $<TARGET_FILE:${target}> --gtest_output=xml:gtests-${target}.xml)
 endfunction()
 
 # Download and build gmock
 ExternalProject_Add(gmock
     URL             "http://googlemock.googlecode.com/files/gmock-1.7.0.zip"
     URL_HASH        "SHA1=f9d9dd882a25f4069ed9ee48e70aff1b53e3c5a5"
+    PREFIX          "gmock"
     INSTALL_COMMAND ""
 )
 
@@ -34,40 +35,13 @@ add_library(gmock-dev INTERFACE)
 
 target_include_directories(gmock-dev
     INTERFACE
+    ${GMOCK_SOURCE_DIR}/gtest/include
     ${GMOCK_SOURCE_DIR}/include
 )
 
 target_link_libraries(gmock-dev
     INTERFACE
     ${GMOCK_BINARY_DIR}/${CMAKE_STATIC_LIBRARY_PREFIX}gmock${CMAKE_STATIC_LIBRARY_SUFFIX}
-)
-
-# Download and build gtest
-ExternalProject_Add(gtest
-    URL             "http://googletest.googlecode.com/files/gtest-1.7.0.zip"
-    URL_HASH        "SHA1=f85f6d2481e2c6c4a18539e391aa4ea8ab0394af"
-    INSTALL_COMMAND ""
-)
-
-ExternalProject_Get_Property(gtest source_dir)
-set(GTEST_SOURCE_DIR "${source_dir}")
-
-ExternalProject_Get_Property(gtest binary_dir)
-set(GTEST_BINARY_DIR "${binary_dir}")
-
-# Create interface library to link against gtest
-add_library(gtest-dev INTERFACE)
-
-target_include_directories(gtest-dev
-    INTERFACE
-    ${GTEST_SOURCE_DIR}/include
-    ${SYSTEM_LIBRARIES}
-)
-
-target_link_libraries(gtest-dev
-    INTERFACE
-    ${GTEST_BINARY_DIR}/${CMAKE_STATIC_LIBRARY_PREFIX}gtest${CMAKE_STATIC_LIBRARY_SUFFIX}
-    ${SYSTEM_LIBRARIES}
 )
 
 

@@ -64,7 +64,6 @@ target_link_libraries(${target}
     ${SYSTEM_LIBRARIES}
     template::fiblib
     gmock-dev
-    gtest-dev
 )
 
 

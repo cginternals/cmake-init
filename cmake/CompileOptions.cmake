@@ -49,6 +49,6 @@ set(DEFAULT_COMPILE_OPTIONS
 # Use pthreads on linux and mingw
 if(PLATFORM_LINUX OR MINGW)
     set(SYSTEM_LIBRARIES
-        pthread
+        -pthread
     )
 endif()
