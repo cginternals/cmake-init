@@ -51,7 +51,7 @@ void printInfo()
     std::cout << "Data directory access" << std::endl;
     std::cout << "========================================" << std::endl;
 
-    std::string fileName = dataPath + "/DATA_FOLDER";
+    std::string fileName = dataPath + "/DATA_FOLDER.txt";
     std::cout << "Reading from '" << fileName << "': " << std::endl;
     std::cout << std::endl;
 

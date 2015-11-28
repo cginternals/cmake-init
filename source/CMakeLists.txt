@@ -9,11 +9,11 @@ string(TOUPPER ${META_PROJECT_NAME} META_PROJECT_NAME_UPPER)
 # Determine data path
 if(OPTION_INSTALL)
     if(OPTION_PORTABLE_INSTALL)
-        # Configure project to be run from an installed location
-        set(DATA_PATH "${CMAKE_INSTALL_PREFIX}/${INSTALL_DATA}/data")
-    else()
         # Configure project to be run from a portable location
         set(DATA_PATH "data")
+    else()
+        # Configure project to be run from an installed location
+        set(DATA_PATH "${CMAKE_INSTALL_PREFIX}/${INSTALL_DATA}/data")
     endif()
 else()
     # Configure project to be run from the source tree

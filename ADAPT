@@ -56,7 +56,7 @@ General stuff left to do:
 [ ] Add new projects to source/CMakeLists.txt
 [ ] Add new projects to ./{project}-config.cmake
 [ ] Add new projects to docs/api-docs/doxyfile.in
-[ ] Remove data/DATA_FOLDER
+[ ] Remove data/DATA_FOLDER.txt
 [ ] Populate data/
 [ ] Remove ADAPT
 --------------------------------------------------------------------
