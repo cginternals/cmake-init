@@ -12,9 +12,9 @@
 
 # Target name
 set(target fibcmd)
-message(STATUS "App ${target}")
 
 # Exit here if required dependencies are not met
+message(STATUS "App ${target}")
 
 
 # 

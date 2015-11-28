@@ -24,12 +24,13 @@ endif()
 
 # Target name
 set(target fibgui)
-message(STATUS "App ${target}")
 
 # Exit here if required dependencies are not met
 if (NOT Qt5Core_FOUND)
-    message("Example ${target} skipped: Qt5 not found")
+    message(STATUS "Example ${target} skipped: Qt5 not found")
     return()
+else()
+    message(STATUS "App ${target}")
 endif()
 
 
