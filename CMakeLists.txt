@@ -85,6 +85,7 @@ set(project ${META_PROJECT_NAME})
 
 if(WIN32)
     set(INSTALL_ROOT      ".")                      # C:\Programme\<project>
+    set(INSTALL_CMAKE     "cmake")                  # C:\Programme\<project>
     set(INSTALL_DATA      "bin")                    # C:\Programme\<project>
     set(INSTALL_BIN       "bin")                    # C:\Programme\<project>
     set(INSTALL_SHARED    ".")                      # C:\Programme\<project>
@@ -96,6 +97,7 @@ if(WIN32)
     set(INSTALL_INIT      ".")                      # Not available under Windows
 else()
     set(INSTALL_ROOT      "share/${project}")       # /usr/[local]/share/<project>
+    set(INSTALL_CMAKE     "share/${project}/cmake") # /usr/[local]/share/<project>
     set(INSTALL_DATA      "share/${project}")       # /usr/[local]/share/<project>
     set(INSTALL_BIN       "bin")                    # /usr/[local]/bin
     set(INSTALL_SHARED    "lib")                    # /usr/[local]/lib
@@ -110,6 +112,7 @@ else()
     if(OPTION_PORTABLE_INSTALL)
         # Put binaries in root directory and keep data directory name
         set(INSTALL_ROOT ".")                       # /<INSTALL_PREFIX>
+        set(INSTALL_CMAKE "cmake")                  # /<INSTALL_PREFIX>
         set(INSTALL_DATA ".")                       # /<INSTALL_PREFIX>
         set(INSTALL_BIN ".")                        # /<INSTALL_PREFIX>
 

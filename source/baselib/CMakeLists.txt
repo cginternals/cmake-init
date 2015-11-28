@@ -60,7 +60,7 @@ add_library(${target}
 add_library(${META_PROJECT_NAME}::${target} ALIAS ${target})
 
 # Export library for downstream projects
-export(TARGETS ${target} NAMESPACE ${META_PROJECT_NAME}:: FILE ${target}.cmake)
+export(TARGETS ${target} NAMESPACE ${META_PROJECT_NAME}:: FILE ${PROJECT_BINARY_DIR}/cmake/${target}/${target}-export.cmake)
 
 # Create API export header
 generate_export_header(${target}
@@ -198,7 +198,7 @@ if(OPTION_INSTALL)
     # CMake config
     install(EXPORT ${target}-export
         NAMESPACE   ${META_PROJECT_NAME}::
-        DESTINATION cmake/${target}
+        DESTINATION ${INSTALL_CMAKE}/${target}
         COMPONENT   dev
     )
 

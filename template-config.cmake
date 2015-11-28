@@ -37,5 +37,5 @@ if(MODULE_FOUND)
 endif()
 
 # Try common build locations
-find_modules("build/source")
-find_modules("build-debug/source")
+find_modules("build/cmake")
+find_modules("build-debug/cmake")
