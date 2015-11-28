@@ -50,5 +50,9 @@ add_subdirectory(tests)
 # Deployment
 # 
 
-# Deploy generated headers
-install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/include/${META_PROJECT_NAME} DESTINATION include COMPONENT dev)
+if(OPTION_INSTALL)
+
+    # Deploy generated headers
+    install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/include/${META_PROJECT_NAME} DESTINATION include COMPONENT dev)
+
+endif()

@@ -3,6 +3,10 @@
 # Target 'pack'
 # 
 
+if(NOT OPTION_INSTALL)
+    return()
+endif()
+
 add_custom_target(pack)
 set_target_properties(pack PROPERTIES EXCLUDE_FROM_DEFAULT_BUILD 1)
 

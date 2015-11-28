@@ -64,7 +64,7 @@ then
     echo "# Configuration option 'install'" >> ".localconfig/install"
     echo "" >> ".localconfig/install"
     echo "# Enable installation" >> ".localconfig/install"
-    echo "CMAKE_OPTIONS=\"\${CMAKE_OPTIONS} -DOPTION_INSTALL=ON\"" >> ".localconfig/portable"
+    echo "CMAKE_OPTIONS=\"\${CMAKE_OPTIONS} -DOPTION_INSTALL=ON\"" >> ".localconfig/install"
 
     touch ".localconfig/portable"
     echo "#!/bin/bash" >> ".localconfig/portable"

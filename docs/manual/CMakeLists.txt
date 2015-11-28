@@ -50,8 +50,12 @@ add_dependencies(docs ${target})
 # Deployment
 # 
 
-# PDF file
-install(FILES ${pdf}
-    DESTINATION "${INSTALL_DOC}"
-    COMPONENT docs
-)
+if(OPTION_INSTALL)
+
+    # PDF file
+    install(FILES ${pdf}
+        DESTINATION "${INSTALL_DOC}"
+        COMPONENT docs
+    )
+
+endif()

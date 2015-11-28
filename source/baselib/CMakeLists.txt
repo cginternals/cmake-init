@@ -60,8 +60,7 @@ add_library(${target}
 add_library(${META_PROJECT_NAME}::${target} ALIAS ${target})
 
 # Export library for downstream projects
-install(EXPORT ${target}-export NAMESPACE ${META_PROJECT_NAME}:: DESTINATION cmake/${target})
-export (EXPORT ${target}-export NAMESPACE ${META_PROJECT_NAME}::)
+export(TARGETS ${target} NAMESPACE ${META_PROJECT_NAME}:: FILE ${target}.cmake)
 
 # Create API export header
 generate_export_header(${target}
@@ -165,31 +164,42 @@ target_link_libraries(${target}
 # Deployment
 # 
 
-if(BUILD_SHARED_LIBS)
-    # Library (runtime)
-    install(TARGETS ${target}
-        EXPORT  ${target}-export
-        RUNTIME DESTINATION ${INSTALL_BIN}
-        LIBRARY DESTINATION ${INSTALL_SHARED}
-        COMPONENT runtime
-    )
-else()
-    # Library (dev)
-    install(TARGETS ${target}
-        EXPORT  ${target}-export
-        ARCHIVE DESTINATION ${INSTALL_LIB}
+if(OPTION_INSTALL)
+
+    if(BUILD_SHARED_LIBS)
+        # Library (runtime)
+        install(TARGETS ${target}
+            EXPORT ${target}-export
+            RUNTIME DESTINATION ${INSTALL_BIN}
+            LIBRARY DESTINATION ${INSTALL_SHARED}
+            COMPONENT runtime
+        )
+    else()
+        # Library (dev)
+        install(TARGETS ${target}
+            EXPORT ${target}-export
+            ARCHIVE DESTINATION ${INSTALL_LIB}
+            COMPONENT dev
+        )
+    endif()
+
+    # Header files
+    install(DIRECTORY
+        ${CMAKE_CURRENT_SOURCE_DIR}/include/${target} DESTINATION ${INSTALL_INCLUDE}
         COMPONENT dev
     )
+
+    # Generated header files
+    install(DIRECTORY
+        ${CMAKE_CURRENT_BINARY_DIR}/include/${target} DESTINATION ${INSTALL_INCLUDE}
+        COMPONENT dev
+    )
+
+    # CMake config
+    install(EXPORT ${target}-export
+        NAMESPACE   ${META_PROJECT_NAME}::
+        DESTINATION cmake/${target}
+        COMPONENT   dev
+    )
+
 endif()
-
-# Header files
-install(DIRECTORY
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/${target} DESTINATION ${INSTALL_INCLUDE}
-    COMPONENT dev
-)
-
-# Generated header files
-install(DIRECTORY
-    ${CMAKE_CURRENT_BINARY_DIR}/include/${target} DESTINATION ${INSTALL_INCLUDE}
-    COMPONENT dev
-)
