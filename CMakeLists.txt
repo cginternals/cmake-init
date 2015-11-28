@@ -96,36 +96,40 @@ if(WIN32)
     set(INSTALL_ICONS     ".")                      # Not available under Windows
     set(INSTALL_INIT      ".")                      # Not available under Windows
 else()
-    set(INSTALL_ROOT      "share/${project}")       # /usr/[local]/share/<project>
-    set(INSTALL_CMAKE     "share/${project}/cmake") # /usr/[local]/share/<project>
-    set(INSTALL_DATA      "share/${project}")       # /usr/[local]/share/<project>
-    set(INSTALL_BIN       "bin")                    # /usr/[local]/bin
-    set(INSTALL_SHARED    "lib")                    # /usr/[local]/lib
-    set(INSTALL_LIB       "lib")                    # /usr/[local]/lib
-    set(INSTALL_INCLUDE   "include")                # /usr/[local]/include
-    set(INSTALL_DOC       "share/doc/${project}")   # /usr/[local]/share/doc/<project>
-    set(INSTALL_SHORTCUTS "share/applications")     # /usr/[local]/share/applications
-    set(INSTALL_ICONS     "share/pixmaps")          # /usr/[local]/share/pixmaps
-    set(INSTALL_INIT      "/etc/init")              # /etc/init (upstart init scripts)
+    # Unix (Linux or OS X)
+    if("${CMAKE_INSTALL_PREFIX}" STREQUAL "/usr" OR "${CMAKE_INSTALL_PREFIX}" STREQUAL "/usr/local")
+        # Install into the system (/usr/bin or /usr/local/bin)
+        set(INSTALL_ROOT      "share/${project}")       # /usr/[local]/share/<project>
+        set(INSTALL_CMAKE     "share/${project}/cmake") # /usr/[local]/share/<project>
+        set(INSTALL_DATA      "share/${project}")       # /usr/[local]/share/<project>
+        set(INSTALL_BIN       "bin")                    # /usr/[local]/bin
+        set(INSTALL_SHARED    "lib")                    # /usr/[local]/lib
+        set(INSTALL_LIB       "lib")                    # /usr/[local]/lib
+        set(INSTALL_INCLUDE   "include")                # /usr/[local]/include
+        set(INSTALL_DOC       "share/doc/${project}")   # /usr/[local]/share/doc/<project>
+        set(INSTALL_SHORTCUTS "share/applications")     # /usr/[local]/share/applications
+        set(INSTALL_ICONS     "share/pixmaps")          # /usr/[local]/share/pixmaps
+        set(INSTALL_INIT      "/etc/init")              # /etc/init (upstart init scripts)
 
-    # Adjust target paths for portable installs
-    if(OPTION_PORTABLE_INSTALL)
-        # Put binaries in root directory and keep data directory name
-        set(INSTALL_ROOT ".")                       # /<INSTALL_PREFIX>
-        set(INSTALL_CMAKE "cmake")                  # /<INSTALL_PREFIX>
-        set(INSTALL_DATA ".")                       # /<INSTALL_PREFIX>
-        set(INSTALL_BIN ".")                        # /<INSTALL_PREFIX>
+        if (APPLE)
+            set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/${INSTALL_LIB}") # Add rpath of project libraries
+            set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)                       # Add rpaths of depending libraries
+        endif()
+    else()
+        # Install into a single directory, assuming it is not in the system PATH
+        set(INSTALL_ROOT      ".")                      # /<INSTALL_PREFIX>
+        set(INSTALL_CMAKE     "cmake")                  # /<INSTALL_PREFIX>/cmake
+        set(INSTALL_DATA      ".")                      # /<INSTALL_PREFIX>
+        set(INSTALL_BIN       ".")                      # /<INSTALL_PREFIX>
+        set(INSTALL_SHARED    "lib")                    # /<INSTALL_PREFIX>/lib
+        set(INSTALL_LIB       "lib")                    # /<INSTALL_PREFIX>/lib
+        set(INSTALL_INCLUDE   "include")                # /<INSTALL_PREFIX>/include
+        set(INSTALL_DOC       "doc")                    # /<INSTALL_PREFIX>/doc
+        set(INSTALL_SHORTCUTS "misc")                   # /<INSTALL_PREFIX>/misc
+        set(INSTALL_ICONS     "misc")                   # /<INSTALL_PREFIX>/misc
+        set(INSTALL_INIT      "misc")                   # /<INSTALL_PREFIX>/misc
 
-        # Do not put any files in global places
-        set(INSTALL_DOC       "doc")
-        set(INSTALL_SHORTCUTS "misc")
-        set(INSTALL_ICONS     "misc")
-        set(INSTALL_INIT      "misc")
-
-        # We have to change the RPATH of binaries to achieve a usable local install.
-        # [TODO] For binaries, "$ORIGIN/lib" is right, so that libraries are found in ./lib.
-        # However, I have not yet tested what happens when libraries use other libraries.
-        # In that case, they might need the rpath $ORIGIN instead ...
+        # We have to change the RPATH of binaries to achieve a usable install.
         set(CMAKE_SKIP_BUILD_RPATH FALSE)            # Use automatic rpath for build
         set(CMAKE_BUILD_WITH_INSTALL_RPATH FALSE)    # Use specific rpath for INSTALL
         set(CMAKE_INSTALL_RPATH_USE_LINK_PATH FALSE) # NO automatic rpath for INSTALL
@@ -135,11 +139,6 @@ else()
             set(CMAKE_INSTALL_RPATH "@executable_path/${INSTALL_LIB}")
         else()
             set(CMAKE_INSTALL_RPATH "$ORIGIN/${INSTALL_LIB}")       
-        endif()
-    else()
-        if (APPLE)
-            set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/${INSTALL_LIB}") # Add rpath of project libraries
-            set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)                       # Add rpaths of depending libraries
         endif()
     endif()
 endif()
