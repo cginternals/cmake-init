@@ -53,6 +53,7 @@ set_target_properties(${target}
 target_include_directories(${target}
     PRIVATE
     ${DEFAULT_INCLUDE_DIRECTORIES}
+    ${GMOCK_INCLUDE_DIRECTORIES}
     ${PROJECT_BINARY_DIR}/source/include
 )
 
@@ -65,7 +66,7 @@ target_link_libraries(${target}
     PRIVATE
     ${DEFAULT_LIBRARIES}
     template::fiblib
-    gmock-dev
+    gmock
 )
 
 

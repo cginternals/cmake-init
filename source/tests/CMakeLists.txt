@@ -21,34 +21,19 @@ function(add_test_without_ctest target)
         COMMAND $<TARGET_FILE:${target}> --gtest_output=xml:gtests-${target}.xml)
 endfunction()
 
-# Download and build gmock
-ExternalProject_Add(gmock
-    URL             "http://googlemock.googlecode.com/files/gmock-1.7.0.zip"
-    URL_HASH        "SHA1=f9d9dd882a25f4069ed9ee48e70aff1b53e3c5a5"
-    PREFIX          "gmock"
-    INSTALL_COMMAND ""
+# Build gmock
+set(gmock_build_tests           OFF CACHE BOOL "")
+set(gtest_build_samples         OFF CACHE BOOL "")
+set(gtest_build_tests           OFF CACHE BOOL "")
+set(gtest_disable_pthreads      OFF CACHE BOOL "")
+set(gtest_force_shared_crt      OFF CACHE BOOL "")
+set(gtest_hide_internal_symbols ON CACHE BOOL "")
+add_subdirectory(googletest)
+
+set(GMOCK_INCLUDE_DIRECTORIES
+    ${PROJECT_SOURCE_DIR}/source/tests/googletest/googletest/include
+    ${PROJECT_SOURCE_DIR}/source/tests/googletest/googlemock/include
 )
-
-ExternalProject_Get_Property(gmock source_dir)
-set(GMOCK_SOURCE_DIR "${source_dir}")
-
-ExternalProject_Get_Property(gmock binary_dir)
-set(GMOCK_BINARY_DIR "${binary_dir}")
-
-# Create interface library to link against gmock
-add_library(gmock-dev INTERFACE)
-
-target_include_directories(gmock-dev
-    INTERFACE
-    ${GMOCK_SOURCE_DIR}/gtest/include
-    ${GMOCK_SOURCE_DIR}/include
-)
-
-target_link_libraries(gmock-dev
-    INTERFACE
-    ${GMOCK_BINARY_DIR}/${CMAKE_STATIC_LIBRARY_PREFIX}gmock${CMAKE_STATIC_LIBRARY_SUFFIX}
-)
-
 
 # 
 # Target 'test'
