@@ -35,7 +35,7 @@ add_subdirectory(googletest/googlemock)
 add_library(gmock-dev INTERFACE)
 
 target_include_directories(gmock-dev
-    INTERFACE
+    SYSTEM INTERFACE
     ${CMAKE_CURRENT_SOURCE_DIR}/googletest/googletest/include
     ${CMAKE_CURRENT_SOURCE_DIR}/googletest/googlemock/include
 )
