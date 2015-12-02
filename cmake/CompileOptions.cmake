@@ -60,6 +60,75 @@ set(DEFAULT_COMPILE_DEFINITIONS)
 
 set(DEFAULT_COMPILE_OPTIONS)
 
+if (PLATFORM_LINUX AND "${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+    set(DEFAULT_COMPILE_OPTIONS ${DEFAULT_COMPILE_OPTIONS}
+        -Wall
+        -Wextra
+        -Wunused
+        -Wpedantic
+        
+        -Wctor-dtor-privacy
+        -Wdelete-non-virtual-dtor
+        -Wnarrowing
+        -Wnon-virtual-dtor
+        -Wreorder
+        -Weffc++
+        -Wstrict-null-sentinel
+        -Woverloaded-virtual
+        -Wdouble-promotion
+        -Wformat
+        -Wignored-qualifiers
+        -Wmain
+        -Wmissing-braces
+        -Wparentheses
+        -Wsequence-point
+        -Wreturn-type
+        -Wreturn-local-addr
+        -Wswitch
+        -Wswitch-default
+        -Wuninitialized
+        -Wmaybe-uninitialized
+        -Wfloat-equal
+        -Wshadow
+        -Wpointer-arith
+        -Wtype-limits
+        -Wcast-align
+        -Wconversion
+        -Wzero-as-null-pointer-constant
+        -Wuseless-cast
+        -Wempty-body
+        -Wsign-compare
+        -Wsign-conversion
+        -Wfloat-conversion
+        -Wsizeof-pointer-memaccess
+        -Waddress
+        -Wlogical-op
+        -Wmissing-declarations
+        -Wmissing-field-initializers
+        -Wpadded
+        -Wredundant-decls
+        -Winline
+        -Wlong-long
+        -Wvector-operation-performance
+        
+        -Wno-pragmas
+        -Wno-attributes
+    )
+    
+    if (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 5.0)
+        set(DEFAULT_COMPILE_OPTIONS ${DEFAULT_COMPILE_OPTIONS}
+            -Wsuggest-attribute
+            -Wsuggest-final-types
+            -Wsuggest-final-methods
+            -Wsuggest-override
+            -Wbool-compare
+            -Wcast-equal
+            -Wsized-deallocation
+            -Wlogical-not-parentheses
+        )
+    endif()
+endif ()
+
 
 # 
 # Linker options
