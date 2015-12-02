@@ -94,10 +94,10 @@ target_link_libraries(gtest_main gtest)
 ########################################################################
 #
 # Install rules
-install(TARGETS gtest gtest_main
-  DESTINATION lib)
-install(DIRECTORY ${gtest_SOURCE_DIR}/include/gtest
-  DESTINATION include)
+#install(TARGETS gtest gtest_main
+#  DESTINATION lib)
+#install(DIRECTORY ${gtest_SOURCE_DIR}/include/gtest
+#  DESTINATION include)
 
 ########################################################################
 #
