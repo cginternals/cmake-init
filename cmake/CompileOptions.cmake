@@ -60,13 +60,13 @@ set(DEFAULT_COMPILE_DEFINITIONS)
 
 set(DEFAULT_COMPILE_OPTIONS)
 
-if (PLATFORM_LINUX AND "${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+if (PLATFORM_LINUX AND "${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU") # GCC 4.9 and 5.1
     set(DEFAULT_COMPILE_OPTIONS ${DEFAULT_COMPILE_OPTIONS}
         -Wall
         -Wextra
         -Wunused
         -Wpedantic
-        
+
         -Wctor-dtor-privacy
         -Wdelete-non-virtual-dtor
         -Wnarrowing
@@ -110,12 +110,12 @@ if (PLATFORM_LINUX AND "${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
         -Winline
         -Wlong-long
         -Wvector-operation-performance
-        
+
         -Wno-pragmas
         -Wno-attributes
     )
     
-    if (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 5.0)
+    if (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 5.0) # GCC 5.1
         set(DEFAULT_COMPILE_OPTIONS ${DEFAULT_COMPILE_OPTIONS}
             -Wsuggest-attribute
             -Wsuggest-final-types
@@ -127,6 +127,57 @@ if (PLATFORM_LINUX AND "${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
             -Wlogical-not-parentheses
         )
     endif()
+endif ()
+
+if (PLATFORM_LINUX AND PLATFORM_LINUX AND "${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang") # Clang 3.5 and 3.6
+    set(DEFAULT_COMPILE_OPTIONS ${DEFAULT_COMPILE_OPTIONS}
+        -Wall
+        -Wextra
+        -Wunused
+        -Wpedantic
+
+        -Wctor-dtor-privacy
+        -Wdelete-non-virtual-dtor
+        -Wnarrowing
+        -Wnon-virtual-dtor
+        -Wreorder
+        -Weffc++
+        -Woverloaded-virtual
+        -Wformat
+        -Wignored-qualifiers
+        -Wmain
+        -Wmissing-braces
+        -Wparentheses
+        -Wsequence-point
+        -Wreturn-type
+        -Wreturn-stack-address
+        -Wswitch
+        -Wswitch-default
+        -Wuninitialized
+        -Wfloat-equal
+        -Wshadow
+        -Wpointer-arith
+        -Wtype-limits
+        -Wcast-align
+        -Wconversion
+        -Wint-to-void-pointer-cast
+        -Wempty-body
+        -Wsign-compare
+        -Wsign-conversion
+        -Wfloat-conversion
+        -Wsizeof-pointer-memaccess
+        -Waddress
+        -Wmissing-declarations
+        -Wmissing-field-initializers
+        -Wpadded
+        -Wredundant-decls
+        -Winline
+        -Wlong-long
+        -Wlogical-not-parentheses
+
+        -Wno-pragmas
+        -Wno-attributes
+    )
 endif ()
 
 
