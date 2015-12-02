@@ -173,6 +173,7 @@ if(OPTION_INSTALL)
             EXPORT ${target}-export
             RUNTIME DESTINATION ${INSTALL_BIN}
             LIBRARY DESTINATION ${INSTALL_SHARED}
+            ARCHIVE DESTINATION ${INSTALL_LIB}
             COMPONENT runtime
         )
     else()
