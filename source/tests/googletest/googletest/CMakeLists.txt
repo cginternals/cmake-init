@@ -112,26 +112,26 @@ endif()
 ########################################################################
 #
 # Install rules
-if(INSTALL_GTEST)
-  install(TARGETS gtest gtest_main
-    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
-  install(DIRECTORY ${gtest_SOURCE_DIR}/include/gtest
-    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+# if(INSTALL_GTEST)
+#   install(TARGETS gtest gtest_main
+#     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+#     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+#     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
+#   install(DIRECTORY ${gtest_SOURCE_DIR}/include/gtest
+#     DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
-  # configure and install pkgconfig files
-  configure_file(
-    cmake/gtest.pc.in
-    "${CMAKE_BINARY_DIR}/gtest.pc"
-    @ONLY)
-  configure_file(
-    cmake/gtest_main.pc.in
-    "${CMAKE_BINARY_DIR}/gtest_main.pc"
-    @ONLY)
-  install(FILES "${CMAKE_BINARY_DIR}/gtest.pc" "${CMAKE_BINARY_DIR}/gtest_main.pc"
-    DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
-endif()
+#   # configure and install pkgconfig files
+#   configure_file(
+#     cmake/gtest.pc.in
+#     "${CMAKE_BINARY_DIR}/gtest.pc"
+#     @ONLY)
+#   configure_file(
+#     cmake/gtest_main.pc.in
+#     "${CMAKE_BINARY_DIR}/gtest_main.pc"
+#     @ONLY)
+#   install(FILES "${CMAKE_BINARY_DIR}/gtest.pc" "${CMAKE_BINARY_DIR}/gtest_main.pc"
+#     DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
+# endif()
 
 ########################################################################
 #
