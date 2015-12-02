@@ -167,22 +167,22 @@ target_link_libraries(${target}
 
 if(OPTION_INSTALL)
 
-    if(BUILD_SHARED_LIBS)
-        # Library (runtime)
-        install(TARGETS ${target}
-            EXPORT ${target}-export
-            RUNTIME DESTINATION ${INSTALL_BIN}
-            LIBRARY DESTINATION ${INSTALL_SHARED}
-            COMPONENT runtime
-        )
-    else()
-        # Library (dev)
-        install(TARGETS ${target}
-            EXPORT ${target}-export
-            ARCHIVE DESTINATION ${INSTALL_LIB}
-            COMPONENT dev
-        )
-    endif()
+    # Library (runtime)
+    install(TARGETS ${target}
+        RUNTIME DESTINATION ${INSTALL_BIN}
+        LIBRARY DESTINATION ${INSTALL_SHARED}
+        ARCHIVE DESTINATION ${INSTALL_LIB}
+        COMPONENT runtime
+    )
+
+    # Library (dev)
+    install(TARGETS ${target}
+        EXPORT ${target}-export
+        RUNTIME DESTINATION ${INSTALL_BIN}
+        LIBRARY DESTINATION ${INSTALL_SHARED}
+        ARCHIVE DESTINATION ${INSTALL_LIB}
+        COMPONENT dev
+    )
 
     # Header files
     install(DIRECTORY
