@@ -44,6 +44,7 @@ set(DEFAULT_COMPILE_DEFINITIONS)
 
 set(DEFAULT_COMPILE_OPTIONS)
 
+# MSVC compiler options
 if ("${CMAKE_CXX_COMPILER_ID}" MATCHES "MSVC")
 
     set(DEFAULT_COMPILE_OPTIONS ${DEFAULT_COMPILE_OPTIONS}
@@ -92,7 +93,8 @@ if ("${CMAKE_CXX_COMPILER_ID}" MATCHES "MSVC")
     )
 endif ()
 
-if ("${CMAKE_CXX_COMPILER_ID}" MATCHES "GNU") # GCC 4.7 and above
+# GCC and Clang compiler options
+if ("${CMAKE_CXX_COMPILER_ID}" MATCHES "GNU" OR "${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang")
     set(DEFAULT_COMPILE_OPTIONS ${DEFAULT_COMPILE_OPTIONS}
         -Wall
         -Wextra
@@ -105,33 +107,21 @@ if ("${CMAKE_CXX_COMPILER_ID}" MATCHES "GNU") # GCC 4.7 and above
         -Wswitch
         -Wswitch-default
         -Wuninitialized
-        -Wmaybe-uninitialized
         -Wmissing-field-initializers
         
-        $<$<VERSION_GREATER:$<CXX_COMPILER_VERSION>,4.8>:
-            -Wpedantic
-            -Wreturn-local-addr
+        $<$<CXX_COMPILER_ID:GNU>:
+            -Wmaybe-uninitialized
+            
+            $<$<VERSION_GREATER:$<CXX_COMPILER_VERSION>,4.8>:
+                -Wpedantic
+                -Wreturn-local-addr
+            >
         >
-    )
-endif ()
-
-if ("${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang") # Clang 3.4 and above
-    set(DEFAULT_COMPILE_OPTIONS ${DEFAULT_COMPILE_OPTIONS}
-        -Wall
-        -Wextra
-        -Wunused
-        -Wpedantic
-
-        -Wreorder
-        -Wignored-qualifiers
-        -Wmissing-braces
-        -Wreturn-type
-        -Wreturn-stack-address
-        -Wswitch
-        -Wswitch-default
-        -Wuninitialized
-        -Wmissing-field-initializers
-
+        
+        $<$<CXX_COMPILER_ID:Clang>:
+            -Wreturn-stack-address
+        >
+        
         $<$<PLATFORM_ID:"Darwin">:
             -pthread
         >
@@ -145,8 +135,8 @@ endif ()
 
 set(DEFAULT_LINKER_OPTIONS)
 
-# Use pthreads on linux and mingw
-if("${CMAKE_CXX_COMPILER_ID}" MATCHES "GNU" OR ("${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang" AND "${CMAKE_SYSTEM_NAME}" MATCHES "Linux"))
+# Use pthreads on mingw and linux
+if("${CMAKE_CXX_COMPILER_ID}" MATCHES "GNU" OR "${CMAKE_SYSTEM_NAME}" MATCHES "Linux")
     set(DEFAULT_LINKER_OPTIONS
         -pthread
     )
