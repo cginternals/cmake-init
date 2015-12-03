@@ -146,7 +146,6 @@ if (PLATFORM_LINUX AND "${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU") # GCC 4.9 and 
         -Wempty-body
         -Wsign-compare
         -Wsign-conversion
-        -Wfloat-conversion
         -Wsizeof-pointer-memaccess
         -Waddress
         -Wlogical-op
@@ -162,21 +161,25 @@ if (PLATFORM_LINUX AND "${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU") # GCC 4.9 and 
         -Wno-attributes
     )
     
+    if (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 4.9) # GCC 4.9
+        set(DEFAULT_COMPILE_OPTIONS ${DEFAULT_COMPILE_OPTIONS}
+            -Wfloat-conversion
+        )
+    endif()
+    
     if (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 5.0) # GCC 5.1
         set(DEFAULT_COMPILE_OPTIONS ${DEFAULT_COMPILE_OPTIONS}
-            -Wsuggest-attribute
             -Wsuggest-final-types
             -Wsuggest-final-methods
             -Wsuggest-override
             -Wbool-compare
-            -Wcast-equal
             -Wsized-deallocation
             -Wlogical-not-parentheses
         )
     endif()
 endif ()
 
-if (PLATFORM_LINUX AND PLATFORM_LINUX AND "${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang") # Clang 3.5 and 3.6
+if (PLATFORM_LINUX AND PLATFORM_LINUX AND "${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang") # Clang 4.3, 3.5 and 3.6
     set(DEFAULT_COMPILE_OPTIONS ${DEFAULT_COMPILE_OPTIONS}
         -Wall
         -Wextra
@@ -211,7 +214,6 @@ if (PLATFORM_LINUX AND PLATFORM_LINUX AND "${CMAKE_CXX_COMPILER_ID}" STREQUAL "C
         -Wempty-body
         -Wsign-compare
         -Wsign-conversion
-        -Wfloat-conversion
         -Wsizeof-pointer-memaccess
         -Waddress
         -Wmissing-declarations
@@ -222,9 +224,15 @@ if (PLATFORM_LINUX AND PLATFORM_LINUX AND "${CMAKE_CXX_COMPILER_ID}" STREQUAL "C
         -Wlong-long
         -Wlogical-not-parentheses
 
-        -Wno-pragmas
         -Wno-attributes
     )
+    
+    if (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 3.5) # Clang 3.5 and 3.6
+        set(DEFAULT_COMPILE_OPTIONS ${DEFAULT_COMPILE_OPTIONS}
+            -Wno-pragmas
+            -Wfloat-conversion
+        )
+    endif ()
 endif ()
 
 
