@@ -15,29 +15,29 @@ MainWindow::MainWindow()
     setCentralWidget(content);
 
     // Create layout
-    QBoxLayout * boxLayout = new QVBoxLayout();
-    content->setLayout(boxLayout);
+    QBoxLayout * layout = new QVBoxLayout();
+    content->setLayout(layout);
 
     // Add title
     QLabel * title = new QLabel(content);
     title->setText("Please enter n:");
-    boxLayout->addWidget(title);
+    layout->addWidget(title);
 
     // Add input field
     QSpinBox * editNumber = new QSpinBox(content);
     editNumber->setMinimum(0);
-    boxLayout->addWidget(editNumber);
+    layout->addWidget(editNumber);
 
     // Add result
     QLabel * result = new QLabel(content);
     result->setText("Fib(0) = 0");
-    boxLayout->addWidget(result);
+    layout->addWidget(result);
 
     // When input changes, calculate and output the fibonacci number
     connect(editNumber, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), [result] (int n)
     {
         fiblib::Fibonacci fib;
-        result->setText("Fib(" + QString::number(n) + ") = " + QString::number(fib(static_cast<unsigned int>(n))));
+        result->setText("Fib(" + QString::number(n) + ") = " + QString::number(fib(n)));
     });
 }
 
