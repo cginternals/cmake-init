@@ -13,11 +13,7 @@
 *.a
 
 # Build dir
-build
-build.release
-build.debug
-build-release
-build-debug
+build*
 debug_build
 release_build
 /bin
