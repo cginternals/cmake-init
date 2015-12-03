@@ -24,7 +24,6 @@ set(DEFAULT_PROJECT_OPTIONS)
 set(DEFAULT_INCLUDE_DIRECTORIES)
 
 
-
 # 
 # Libraries
 # 
@@ -99,65 +98,19 @@ if ("${CMAKE_CXX_COMPILER_ID}" MATCHES "GNU") # GCC 4.7 and above
         -Wextra
         -Wunused
 
-        -Wctor-dtor-privacy
-        -Wdelete-non-virtual-dtor
-        -Wnarrowing
-        -Wnon-virtual-dtor
         -Wreorder
-        -Weffc++
-        -Wstrict-null-sentinel
-        -Woverloaded-virtual
-        -Wdouble-promotion
-        -Wformat
         -Wignored-qualifiers
-        -Wmain
         -Wmissing-braces
-        -Wparentheses
-        -Wsequence-point
         -Wreturn-type
         -Wswitch
         -Wswitch-default
         -Wuninitialized
         -Wmaybe-uninitialized
-        -Wfloat-equal
-        -Wshadow
-        -Wpointer-arith
-        -Wtype-limits
-        -Wcast-align
-        -Wconversion
-        -Wempty-body
-        -Wsign-compare
-        -Wsign-conversion
-        -Waddress
-        -Wlogical-op
-        -Wmissing-declarations
         -Wmissing-field-initializers
-        -Wredundant-decls
-        -Winline
-        -Wlong-long
-        -Wvector-operation-performance
-
-        -Wno-pragmas
-        -Wno-attributes
         
         $<$<VERSION_GREATER:$<CXX_COMPILER_VERSION>,4.8>:
             -Wpedantic
             -Wreturn-local-addr
-            -Wuseless-cast
-            -Wsizeof-pointer-memaccess
-        >
-        
-        $<$<VERSION_GREATER:$<CXX_COMPILER_VERSION>,4.9>:
-            -Wfloat-conversion
-        >
-        
-        $<$<VERSION_GREATER:$<CXX_COMPILER_VERSION>,5.0>:
-            -Wsuggest-final-types
-            -Wsuggest-final-methods
-            -Wsuggest-override
-            -Wbool-compare
-            -Wsized-deallocation
-            -Wlogical-not-parentheses
         >
     )
 endif ()
@@ -169,50 +122,16 @@ if ("${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang") # Clang 3.4 and above
         -Wunused
         -Wpedantic
 
-        -Wctor-dtor-privacy
-        -Wdelete-non-virtual-dtor
-        -Wnarrowing
-        -Wnon-virtual-dtor
         -Wreorder
-        -Weffc++
-        -Woverloaded-virtual
-        -Wformat
         -Wignored-qualifiers
-        -Wmain
         -Wmissing-braces
-        -Wparentheses
-        -Wsequence-point
         -Wreturn-type
         -Wreturn-stack-address
         -Wswitch
         -Wswitch-default
         -Wuninitialized
-        -Wfloat-equal
-        -Wshadow
-        -Wpointer-arith
-        -Wtype-limits
-        -Wcast-align
-        -Wconversion
-        -Wint-to-void-pointer-cast
-        -Wempty-body
-        -Wsign-compare
-        -Wsign-conversion
-        -Wsizeof-pointer-memaccess
-        -Waddress
-        -Wmissing-declarations
         -Wmissing-field-initializers
-        -Wredundant-decls
-        -Winline
-        -Wlong-long
-        -Wlogical-not-parentheses
 
-        -Wno-attributes
-        
-        $<$<VERSION_GREATER:$<CXX_COMPILER_VERSION>,3.5>:
-            -Wno-pragmas
-            -Wfloat-conversion
-        >
-        
         $<$<PLATFORM_ID:"Darwin">:
             -pthread
         >
