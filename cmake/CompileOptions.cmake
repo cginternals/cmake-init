@@ -210,6 +210,10 @@ if ("${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang") # Clang 3.4 and above
             -Wno-pragmas
             -Wfloat-conversion
         >
+        
+        $<$<PLATFORM_ID:"Darwin">:
+            -pthread
+        >
     )
 endif ()
 
@@ -221,7 +225,7 @@ endif ()
 set(DEFAULT_LINKER_OPTIONS)
 
 # Use pthreads on linux and mingw
-if("${CMAKE_CXX_COMPILER_ID}" MATCHES "GNU" OR "${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang")
+if("${CMAKE_CXX_COMPILER_ID}" MATCHES "GNU" OR ("${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang" AND "${CMAKE_SYSTEM_NAME}" MATCHES "Linux"))
     set(DEFAULT_LINKER_OPTIONS
         -pthread
     )
