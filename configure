@@ -39,7 +39,7 @@ then
     echo "# Configuration option 'debug'" >> ".localconfig/debug"
     echo "" >> ".localconfig/debug"
     echo "# Build directory and build type" >> ".localconfig/debug"
-    echo "BUILD_DIR=\"${BUILD_DIR}-debug\"" >> ".localconfig/debug"
+    echo "BUILD_DIR=\"\${BUILD_DIR}-debug\"" >> ".localconfig/debug"
     echo "BUILD_TYPE=\"Debug\"" >> ".localconfig/debug"
 
     touch ".localconfig/examples"
