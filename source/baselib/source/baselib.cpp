@@ -8,10 +8,6 @@
 #include <baselib/baselib.h>
 
 
-#define xstr(s) str(s)
-#define str(s)  #s
-
-
 namespace baselib
 {
 
@@ -39,9 +35,6 @@ void printInfo()
     #else
         std::cout << "Library type: SHARED" << std::endl;
     #endif
-
-    // Export macro
-	// std::cout << "Export def:   " << xstr(BASELIB_API) << std::endl;
 
     // Data directory
     std::cout << "Data path:    " << TEMPLATE_DATA_PATH << std::endl;
