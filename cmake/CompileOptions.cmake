@@ -3,7 +3,7 @@
 # Platform and architecture setup
 # 
 
-# Architecture (32/64 bit)
+# Determine architecture (32/64 bit)
 set(X64 OFF)
 if(CMAKE_SIZEOF_VOID_P EQUAL 8)
     set(X64 ON)
@@ -20,6 +20,7 @@ set(DEFAULT_PROJECT_OPTIONS)
 # 
 # Include directories
 # 
+
 set(DEFAULT_INCLUDE_DIRECTORIES)
 
 
@@ -45,6 +46,7 @@ set(DEFAULT_COMPILE_DEFINITIONS)
 set(DEFAULT_COMPILE_OPTIONS)
 
 if ("${CMAKE_CXX_COMPILER_ID}" MATCHES "MSVC")
+
     set(DEFAULT_COMPILE_OPTIONS ${DEFAULT_COMPILE_OPTIONS}
         /MP # -> build with multiple processes
         /nologo       # -> no compiler banner

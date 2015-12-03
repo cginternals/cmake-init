@@ -4,11 +4,16 @@
 # 
 
 # CMake version
-cmake_minimum_required(VERSION 3.0 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.2 FATAL_ERROR)
 
 # ENABLE CMP0028: Double colon in target name means ALIAS or IMPORTED target.
 if (POLICY CMP0028)
     cmake_policy(SET CMP0028 NEW)
+endif()
+
+# ENABLE CMP0054: Only interpret if() arguments as variables or keywords when unquoted.
+if (POLICY CMP0054)
+    cmake_policy(SET CMP0054 NEW)
 endif()
 
 # Add include path to custom cmake modules
@@ -28,7 +33,7 @@ include(cmake/Custom.cmake)
 # Meta information about the project
 set(META_PROJECT_NAME        "template")
 set(META_PROJECT_DESCRIPTION "CMake Project Template")
-set(META_VERSION_MAJOR       "2")
+set(META_VERSION_MAJOR       "1")
 set(META_VERSION_MINOR       "0")
 set(META_VERSION_PATCH       "0")
 set(META_VERSION             "${META_VERSION_MAJOR}.${META_VERSION_MINOR}.${META_VERSION_PATCH}")
@@ -53,9 +58,6 @@ option(OPTION_BUILD_EXAMPLES    "Build examples."                             OF
 # 
 # Declare project
 # 
-
-# Limit supported configuration types
-set(CMAKE_CONFIGURATION_TYPES "Debug;Release" CACHE STRING "Limited Configs" FORCE)
 
 # Set output directories
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
