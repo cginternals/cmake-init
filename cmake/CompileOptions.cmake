@@ -107,12 +107,11 @@ if (PLATFORM_WINDOWS AND MSVC)
     )
 endif ()
 
-if (PLATFORM_LINUX AND "${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU") # GCC 4.9 and 5.1
+if (PLATFORM_LINUX AND "${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU") # GCC 4.7 and above
     set(DEFAULT_COMPILE_OPTIONS ${DEFAULT_COMPILE_OPTIONS}
         -Wall
         -Wextra
         -Wunused
-        -Wpedantic
 
         -Wctor-dtor-privacy
         -Wdelete-non-virtual-dtor
@@ -130,7 +129,6 @@ if (PLATFORM_LINUX AND "${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU") # GCC 4.9 and 
         -Wparentheses
         -Wsequence-point
         -Wreturn-type
-        -Wreturn-local-addr
         -Wswitch
         -Wswitch-default
         -Wuninitialized
@@ -142,11 +140,9 @@ if (PLATFORM_LINUX AND "${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU") # GCC 4.9 and 
         -Wcast-align
         -Wconversion
         -Wzero-as-null-pointer-constant
-        -Wuseless-cast
         -Wempty-body
         -Wsign-compare
         -Wsign-conversion
-        -Wsizeof-pointer-memaccess
         -Waddress
         -Wlogical-op
         -Wmissing-declarations
@@ -161,13 +157,22 @@ if (PLATFORM_LINUX AND "${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU") # GCC 4.9 and 
         -Wno-attributes
     )
     
-    if (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 4.9) # GCC 4.9
+    if (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 4.8) # GCC 4.8 and above
+        set(DEFAULT_COMPILE_OPTIONS ${DEFAULT_COMPILE_OPTIONS}
+            -Wpedantic
+            -Wreturn-local-addr
+            -Wuseless-cast
+            -Wsizeof-pointer-memaccess
+        )
+    endif()
+    
+    if (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 4.9) # GCC 4.9 and above
         set(DEFAULT_COMPILE_OPTIONS ${DEFAULT_COMPILE_OPTIONS}
             -Wfloat-conversion
         )
     endif()
     
-    if (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 5.0) # GCC 5.1
+    if (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 5.0) # GCC 5.1 and above
         set(DEFAULT_COMPILE_OPTIONS ${DEFAULT_COMPILE_OPTIONS}
             -Wsuggest-final-types
             -Wsuggest-final-methods
@@ -179,7 +184,7 @@ if (PLATFORM_LINUX AND "${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU") # GCC 4.9 and 
     endif()
 endif ()
 
-if (PLATFORM_LINUX AND PLATFORM_LINUX AND "${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang") # Clang 4.3, 3.5 and 3.6
+if (PLATFORM_LINUX AND PLATFORM_LINUX AND "${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang") # Clang 3.4 and above
     set(DEFAULT_COMPILE_OPTIONS ${DEFAULT_COMPILE_OPTIONS}
         -Wall
         -Wextra
@@ -227,7 +232,7 @@ if (PLATFORM_LINUX AND PLATFORM_LINUX AND "${CMAKE_CXX_COMPILER_ID}" STREQUAL "C
         -Wno-attributes
     )
     
-    if (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 3.5) # Clang 3.5 and 3.6
+    if (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 3.5) # Clang 3.5 and above
         set(DEFAULT_COMPILE_OPTIONS ${DEFAULT_COMPILE_OPTIONS}
             -Wno-pragmas
             -Wfloat-conversion
