@@ -1,21 +1,5 @@
 
 # 
-# Identify platform
-# 
-
-if(WIN32 OR MINGW)
-    set(PLATFORM_WINDOWS 1)
-elseif(APPLE)
-    set(PLATFORM_APPLE 1)
-elseif(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
-    set(PLATFORM_LINUX 1)
-endif()
-if(UNIX)
-    set(PLATFORM_UNIX 1)
-endif()
-
-
-# 
 # Platform and architecture setup
 # 
 
@@ -60,7 +44,7 @@ set(DEFAULT_COMPILE_DEFINITIONS)
 
 set(DEFAULT_COMPILE_OPTIONS)
 
-if (PLATFORM_WINDOWS AND MSVC)
+if ("${CMAKE_CXX_COMPILER_ID}" MATCHES "MSVC")
     set(DEFAULT_COMPILE_OPTIONS ${DEFAULT_COMPILE_OPTIONS}
         /MP # -> build with multiple processes
         /nologo       # -> no compiler banner
@@ -107,7 +91,7 @@ if (PLATFORM_WINDOWS AND MSVC)
     )
 endif ()
 
-if (PLATFORM_LINUX AND "${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU") # GCC 4.7 and above
+if ("${CMAKE_CXX_COMPILER_ID}" MATCHES "GNU") # GCC 4.7 and above
     set(DEFAULT_COMPILE_OPTIONS ${DEFAULT_COMPILE_OPTIONS}
         -Wall
         -Wextra
@@ -139,7 +123,6 @@ if (PLATFORM_LINUX AND "${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU") # GCC 4.7 and 
         -Wtype-limits
         -Wcast-align
         -Wconversion
-        -Wzero-as-null-pointer-constant
         -Wempty-body
         -Wsign-compare
         -Wsign-conversion
@@ -147,7 +130,6 @@ if (PLATFORM_LINUX AND "${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU") # GCC 4.7 and 
         -Wlogical-op
         -Wmissing-declarations
         -Wmissing-field-initializers
-        -Wpadded
         -Wredundant-decls
         -Winline
         -Wlong-long
@@ -155,36 +137,30 @@ if (PLATFORM_LINUX AND "${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU") # GCC 4.7 and 
 
         -Wno-pragmas
         -Wno-attributes
-    )
-    
-    if (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 4.8) # GCC 4.8 and above
-        set(DEFAULT_COMPILE_OPTIONS ${DEFAULT_COMPILE_OPTIONS}
+        
+        $<$<VERSION_GREATER:$<CXX_COMPILER_VERSION>,4.8>:
             -Wpedantic
             -Wreturn-local-addr
             -Wuseless-cast
             -Wsizeof-pointer-memaccess
-        )
-    endif()
-    
-    if (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 4.9) # GCC 4.9 and above
-        set(DEFAULT_COMPILE_OPTIONS ${DEFAULT_COMPILE_OPTIONS}
+        >
+        
+        $<$<VERSION_GREATER:$<CXX_COMPILER_VERSION>,4.9>:
             -Wfloat-conversion
-        )
-    endif()
-    
-    if (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 5.0) # GCC 5.1 and above
-        set(DEFAULT_COMPILE_OPTIONS ${DEFAULT_COMPILE_OPTIONS}
+        >
+        
+        $<$<VERSION_GREATER:$<CXX_COMPILER_VERSION>,5.0>:
             -Wsuggest-final-types
             -Wsuggest-final-methods
             -Wsuggest-override
             -Wbool-compare
             -Wsized-deallocation
             -Wlogical-not-parentheses
-        )
-    endif()
+        >
+    )
 endif ()
 
-if (PLATFORM_LINUX AND PLATFORM_LINUX AND "${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang") # Clang 3.4 and above
+if ("${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang") # Clang 3.4 and above
     set(DEFAULT_COMPILE_OPTIONS ${DEFAULT_COMPILE_OPTIONS}
         -Wall
         -Wextra
@@ -223,21 +199,18 @@ if (PLATFORM_LINUX AND PLATFORM_LINUX AND "${CMAKE_CXX_COMPILER_ID}" STREQUAL "C
         -Waddress
         -Wmissing-declarations
         -Wmissing-field-initializers
-        -Wpadded
         -Wredundant-decls
         -Winline
         -Wlong-long
         -Wlogical-not-parentheses
 
         -Wno-attributes
-    )
-    
-    if (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 3.5) # Clang 3.5 and above
-        set(DEFAULT_COMPILE_OPTIONS ${DEFAULT_COMPILE_OPTIONS}
+        
+        $<$<VERSION_GREATER:$<CXX_COMPILER_VERSION>,3.5>:
             -Wno-pragmas
             -Wfloat-conversion
-        )
-    endif ()
+        >
+    )
 endif ()
 
 
@@ -248,7 +221,7 @@ endif ()
 set(DEFAULT_LINKER_OPTIONS)
 
 # Use pthreads on linux and mingw
-if(PLATFORM_LINUX OR MINGW)
+if("${CMAKE_CXX_COMPILER_ID}" MATCHES "GNU" OR "${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang")
     set(DEFAULT_LINKER_OPTIONS
         -pthread
     )
