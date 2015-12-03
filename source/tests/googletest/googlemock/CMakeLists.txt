@@ -99,6 +99,9 @@ cxx_library(gmock_main
             src/gmock-all.cc
             src/gmock_main.cc)
 
+set_target_properties(gmock_main PROPERTIES FOLDER "Tests")
+set_target_properties(gmock      PROPERTIES FOLDER "Tests")
+
 # If the CMake version supports it, attach header directory information
 # to the targets for when we are part of a parent build (ie being pulled
 # in via add_subdirectory() rather than being a standalone build).

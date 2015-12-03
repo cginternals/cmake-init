@@ -100,6 +100,8 @@ endif()
 cxx_library(gtest "${cxx_strict}" src/gtest-all.cc)
 cxx_library(gtest_main "${cxx_strict}" src/gtest_main.cc)
 target_link_libraries(gtest_main gtest)
+set_target_properties(gtest_main PROPERTIES FOLDER "Tests")
+set_target_properties(gtest      PROPERTIES FOLDER "Tests")
 
 # If the CMake version supports it, attach header directory information
 # to the targets for when we are part of a parent build (ie being pulled
