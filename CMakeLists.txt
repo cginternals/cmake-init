@@ -6,24 +6,17 @@
 # CMake version
 cmake_minimum_required(VERSION 3.2 FATAL_ERROR)
 
-# ENABLE CMP0028: Double colon in target name means ALIAS or IMPORTED target.
-if (POLICY CMP0028)
-    cmake_policy(SET CMP0028 NEW)
-endif()
-
-# ENABLE CMP0054: Only interpret if() arguments as variables or keywords when unquoted.
-if (POLICY CMP0054)
-    cmake_policy(SET CMP0054 NEW)
-endif()
-
-# Add include path to custom cmake modules
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
-
 # Include cmake modules
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 include(GenerateExportHeader)
 include(ExternalProject)
 include(cmake/Custom.cmake)
 include(cmake/GetGitRevisionDescription.cmake)
+
+# Set policies
+set_policy(CMP0028 NEW) # ENABLE  CMP0028: Double colon in target name means ALIAS or IMPORTED target.
+set_policy(CMP0054 NEW) # ENABLE  CMP0054: Only interpret if() arguments as variables or keywords when unquoted.
+set_policy(CMP0042 OLD) # DISABLE CMP0042: MACOSX_RPATH is enabled by default.
 
 
 # 
