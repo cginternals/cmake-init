@@ -28,3 +28,19 @@ The files of cmake-init are an instantiation of the templates containing:
 | Jenkins | Windows 8.1 | MSVC 2015 | BUILD_TESTS | [![Build Status](http://jenkins.hpi3d.de/buildStatus/icon?job=cmake-init-windows-msvc2015)](http://jenkins.hpi3d.de/job/cmake-init-windows-msvc2015) |
 
 
+## Design Decisions
+
+ToDo: revisit!
+
+#### Console vs. Windows App (Windows only)
+
+decisions:
+* we do not use the msvc subsystem linker flag
+* we do not use the add_executable win32 property
+* instead the ```set_target_properties``` with the ```WIN32_EXECUTABLE``` flag on target executable is used
+* we use the same subsystem for all configurations of a single target (no switching between, e.g., debug and release)
+
+rationale:
+typically, only released 'feature' applications are required to decide on their subsystem, and in the case of 'gui-heavy' applications the windows subsystem is preferred (since the std output is probably piped into widgets, logfiles, or even discard).
+
+furthermore, console output is usually more relevant for development/debugging purposes, already using console or IDE with appropriate console output handling
