@@ -23,23 +23,29 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 include(GenerateExportHeader)
 include(ExternalProject)
 include(cmake/Custom.cmake)
-#include(cmake/GitRevision.cmake)
+include(cmake/GetGitRevisionDescription.cmake)
 
 
 # 
 # Project description and (meta) information
 # 
 
+# Get git revision
+get_git_head_revision(GIT_REFSPEC GIT_SHA1)
+string(SUBSTRING "${GIT_SHA1}" 0 12 GIT_REV)
+
 # Meta information about the project
 set(META_PROJECT_NAME        "template")
 set(META_PROJECT_DESCRIPTION "CMake Project Template")
-set(META_VERSION_MAJOR       "1")
-set(META_VERSION_MINOR       "0")
-set(META_VERSION_PATCH       "0")
-set(META_VERSION             "${META_VERSION_MAJOR}.${META_VERSION_MINOR}.${META_VERSION_PATCH}")
 set(META_AUTHOR_ORGANIZATION "CG Internals GmbH")
 set(META_AUTHOR_DOMAIN       "https://github.com/cginternals/cmake-init/")
 set(META_AUTHOR_MAINTAINER   "stefan.buschmann@cginternals.com")
+set(META_VERSION_MAJOR       "1")
+set(META_VERSION_MINOR       "0")
+set(META_VERSION_PATCH       "0")
+set(META_VERSION_REVISION    "${GIT_REV}")
+set(META_VERSION             "${META_VERSION_MAJOR}.${META_VERSION_MINOR}.${META_VERSION_PATCH} (${META_VERSION_REVISION})")
+set(META_NAME_VERSION        "${META_PROJECT_NAME} v${META_VERSION}")
 
 
 # 
@@ -70,6 +76,9 @@ set(IDE_FOLDER "")
 
 # Declare project
 project(${META_PROJECT_NAME} C CXX)
+
+# Create version file
+file(WRITE "${PROJECT_BINARY_DIR}/VERSION" "${META_NAME_VERSION}")
 
 
 # 
@@ -151,6 +160,9 @@ endif()
 # 
 
 if(OPTION_INSTALL)
+
+    # Install version file
+    install(FILES "${PROJECT_BINARY_DIR}/VERSION" DESTINATION ${INSTALL_ROOT} COMPONENT runtime)
 
     # Install cmake find script for the project
     install(FILES ${META_PROJECT_NAME}-config.cmake DESTINATION ${INSTALL_ROOT} COMPONENT dev)
