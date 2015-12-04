@@ -72,6 +72,7 @@ set_target_properties(${target}
     CXX_STANDARD               11
     LINKER_LANGUAGE            CXX
     POSITION_INDEPENDENT_CODE  ON
+    WIN32_EXECUTABLE           ON
 )
 
 
