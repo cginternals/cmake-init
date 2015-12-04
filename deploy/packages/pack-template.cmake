@@ -14,7 +14,7 @@ endif()
 
 # Output packages
 #set(CPACK_ARCHIVE_COMPONENT_INSTALL ON)
-if(WIN32)
+if("${CMAKE_SYSTEM_NAME}" MATCHES "Windows")
     set(OPTION_PACK_GENERATOR "ZIP;NSIS" CACHE STRING "Package targets")
 else()
     set(OPTION_PACK_GENERATOR "ZIP;TGZ;DEB" CACHE STRING "Package targets")
@@ -80,7 +80,7 @@ set(CPACK_PACKAGE_RELOCATABLE           OFF)
 
 # NSIS package information
 
-if(WIN32 AND CPACK_PACKAGE_ICON)
+if("${CMAKE_SYSTEM_NAME}" MATCHES "Windows" AND CPACK_PACKAGE_ICON)
     # NOTE: for using MUI (UN)WELCOME images we suggest to replace nsis defaults,
     # since there is currently no way to do so without manipulating the installer template (which we won't).
     # http://public.kitware.com/pipermail/cmake-developers/2013-January/006243.html
@@ -165,9 +165,9 @@ endif()
 set(CPACK_INSTALL_CMAKE_PROJECTS        "${CMAKE_BINARY_DIR};${project_root};ALL;/")
 set(CPACK_PACKAGE_INSTALL_DIRECTORY     "${package_name}")
 set(CPACK_PACKAGE_INSTALL_REGISTRY_KEY  "${package_name}")
-if(NOT WIN32 AND NOT OPTION_PORTABLE_INSTALL)
-    set(CPACK_INSTALL_PREFIX            "/usr/")
-endif()
+#if(NOT WIN32 AND NOT OPTION_PORTABLE_INSTALL)
+#    set(CPACK_INSTALL_PREFIX            "/usr/")
+#endif()
 
 
 # Set generator
@@ -178,7 +178,7 @@ set(CPACK_GENERATOR ${OPTION_PACK_GENERATOR})
 
 # CPack
 
-if(NOT WIN32)
+if(NOT "${CMAKE_SYSTEM_NAME}" MATCHES "Windows")
     # Important: Must be set to install files to absolute path (e.g., /etc)
     # -> CPACK_[RPM_]PACKAGE_RELOCATABLE = OFF
     set(CPACK_SET_DESTDIR ON)

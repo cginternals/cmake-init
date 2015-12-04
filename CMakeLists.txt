@@ -94,7 +94,7 @@ include(cmake/CompileOptions.cmake)
 
 set(project ${META_PROJECT_NAME})
 
-if(WIN32)
+if("${CMAKE_SYSTEM_NAME}" MATCHES "Windows")
     set(INSTALL_ROOT      ".")                      # C:\Programme\<project>
     set(INSTALL_CMAKE     "cmake")                  # C:\Programme\<project>
     set(INSTALL_DATA      "bin")                    # C:\Programme\<project>
