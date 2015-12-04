@@ -183,7 +183,5 @@ endif()
 # 
 
 add_subdirectory(source)
-message("PROJECT_SOURCE_DIR = ${PROJECT_SOURCE_DIR}")
-message("PROJECT_BINARY_DIR = ${PROJECT_BINARY_DIR}")
 add_subdirectory(docs)
 add_subdirectory(deploy)
