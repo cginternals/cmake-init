@@ -36,6 +36,7 @@ public:
 
 protected slots:
     void on_editNumber_valueChanged(int value);
+    void on_about();
 
 
 protected:

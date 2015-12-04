@@ -63,52 +63,22 @@
     <addaction name="separator"/>
     <addaction name="quitAction"/>
    </widget>
-   <widget class="QMenu" name="painterMenu">
-    <property name="title">
-     <string>&amp;Painter</string>
-    </property>
-   </widget>
-   <widget class="QMenu" name="canvasMenu">
-    <property name="title">
-     <string>Can&amp;vas</string>
-    </property>
-   </widget>
-   <widget class="QMenu" name="cameraMenu">
-    <property name="title">
-     <string>&amp;Camera</string>
-    </property>
-    <widget class="QMenu" name="selectNavigationMenu">
-     <property name="title">
-      <string>Select &amp;Navigation</string>
-     </property>
-    </widget>
-    <addaction name="selectNavigationMenu"/>
-   </widget>
    <widget class="QMenu" name="helpMenu">
     <property name="title">
      <string>&amp;Help</string>
     </property>
     <addaction name="aboutAction"/>
    </widget>
-   <widget class="QMenu" name="menuTools">
-    <property name="title">
-     <string>Tools</string>
-    </property>
-   </widget>
    <addaction name="fileMenu"/>
-   <addaction name="painterMenu"/>
-   <addaction name="canvasMenu"/>
-   <addaction name="cameraMenu"/>
-   <addaction name="menuTools"/>
    <addaction name="helpMenu"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="aboutAction">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="text">
-    <string>About ...</string>
+    <string>&amp;About ...</string>
    </property>
    <property name="menuRole">
     <enum>QAction::AboutRole</enum>
@@ -127,5 +97,18 @@
   </action>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>quitAction</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>close()</slot>
+  </connection>
+  <connection>
+   <sender>aboutAction</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>on_about()</slot>
+  </connection>
+ </connections>
 </ui>
