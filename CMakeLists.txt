@@ -65,17 +65,17 @@ option(OPTION_BUILD_EXAMPLES    "Build examples."                             OF
 # Declare project
 # 
 
-# Set output directories
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
-
 # Generate folders for IDE targets (e.g., VisualStudio solutions)
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 set(IDE_FOLDER "")  
 
 # Declare project
 project(${META_PROJECT_NAME} C CXX)
+
+# Set output directories
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR})
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR})
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR})
 
 # Create version file
 file(WRITE "${PROJECT_BINARY_DIR}/VERSION" "${META_NAME_VERSION}")
@@ -173,11 +173,7 @@ if(OPTION_INSTALL)
     install(FILES README.md DESTINATION ${INSTALL_ROOT} COMPONENT runtime)
 
     # Install runtime data
-    install(DIRECTORY ${CMAKE_SOURCE_DIR}/data DESTINATION ${INSTALL_DATA} COMPONENT runtime)
-
-    # Add a revision file containing the git-head tag for cpack and install. The function
-    # "create_revision_file (...)" is defined in cmake/GitRevision.cmake
-    #create_revision_file(${CMAKE_BINARY_DIR}/revision ${INSTALL_ROOT} COMPONENT runtime)
+    install(DIRECTORY ${PROJECT_SOURCE_DIR}/data DESTINATION ${INSTALL_DATA} COMPONENT runtime)
 
 endif()
 
@@ -187,5 +183,7 @@ endif()
 # 
 
 add_subdirectory(source)
+message("PROJECT_SOURCE_DIR = ${PROJECT_SOURCE_DIR}")
+message("PROJECT_BINARY_DIR = ${PROJECT_BINARY_DIR}")
 add_subdirectory(docs)
 add_subdirectory(deploy)

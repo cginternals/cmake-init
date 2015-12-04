@@ -59,7 +59,7 @@ set(package_maintainer  ${META_AUTHOR_MAINTAINER})
 
 # Package specific options
 
-set(CMAKE_MODULE_PATH                   ${CMAKE_SOURCE_DIR}/packages/${project_name})
+set(CMAKE_MODULE_PATH                   ${PROJECT_SOURCE_DIR}/packages/${project_name})
 
 
 # Package information
@@ -71,11 +71,11 @@ set(CPACK_PACKAGE_VERSION               "${META_VERSION}")
 set(CPACK_PACKAGE_VERSION_MAJOR         "${META_VERSION_MAJOR}")
 set(CPACK_PACKAGE_VERSION_MINOR         "${META_VERSION_MINOR}")
 set(CPACK_PACKAGE_VERSION_PATCH         "${META_VERSION_PATCH}")
-set(CPACK_RESOURCE_FILE_LICENSE         "${CMAKE_SOURCE_DIR}/LICENSE")
-set(CPACK_RESOURCE_FILE_README          "${CMAKE_SOURCE_DIR}/README.md")
-set(CPACK_RESOURCE_FILE_WELCOME         "${CMAKE_SOURCE_DIR}/README.md")
-set(CPACK_PACKAGE_DESCRIPTION_FILE      "${CMAKE_SOURCE_DIR}/README.md")
-set(CPACK_PACKAGE_ICON                  "${CMAKE_SOURCE_DIR}/packages/logo.bmp")
+set(CPACK_RESOURCE_FILE_LICENSE         "${PROJECT_SOURCE_DIR}/LICENSE")
+set(CPACK_RESOURCE_FILE_README          "${PROJECT_SOURCE_DIR}/README.md")
+set(CPACK_RESOURCE_FILE_WELCOME         "${PROJECT_SOURCE_DIR}/README.md")
+set(CPACK_PACKAGE_DESCRIPTION_FILE      "${PROJECT_SOURCE_DIR}/README.md")
+set(CPACK_PACKAGE_ICON                  "${PROJECT_SOURCE_DIR}/packages/logo.bmp")
 set(CPACK_PACKAGE_RELOCATABLE           OFF)
 
 # NSIS package information
@@ -99,8 +99,8 @@ if(X64)
     set(CPACK_NSIS_INSTALL_ROOT "$PROGRAMFILES64")
 endif()
 #set(CPACK_NSIS_DISPLAY_NAME             "${package_name}-${META_VERSION}")
-set(CPACK_NSIS_MUI_ICON    "${CMAKE_SOURCE_DIR}/packages/logo.ico")
-set(CPACK_NSIS_MUI_UNIICON "${CMAKE_SOURCE_DIR}/packages/logo.ico")
+set(CPACK_NSIS_MUI_ICON    "${PROJECT_SOURCE_DIR}/packages/logo.ico")
+set(CPACK_NSIS_MUI_UNIICON "${PROJECT_SOURCE_DIR}/packages/logo.ico")
 
 # Debian package information
 
@@ -162,7 +162,7 @@ endif()
 
 # Install files
 
-set(CPACK_INSTALL_CMAKE_PROJECTS        "${CMAKE_BINARY_DIR};${project_root};ALL;/")
+set(CPACK_INSTALL_CMAKE_PROJECTS        "${PROJECT_BINARY_DIR};${project_root};ALL;/")
 set(CPACK_PACKAGE_INSTALL_DIRECTORY     "${package_name}")
 set(CPACK_PACKAGE_INSTALL_REGISTRY_KEY  "${package_name}")
 #if(NOT WIN32 AND NOT OPTION_PORTABLE_INSTALL)
@@ -172,7 +172,7 @@ set(CPACK_PACKAGE_INSTALL_REGISTRY_KEY  "${package_name}")
 
 # Set generator
 
-set(CPACK_OUTPUT_CONFIG_FILE "${CMAKE_BINARY_DIR}/CPackConfig-${project_name}.cmake")
+set(CPACK_OUTPUT_CONFIG_FILE "${PROJECT_BINARY_DIR}/CPackConfig-${project_name}.cmake")
 set(CPACK_GENERATOR ${OPTION_PACK_GENERATOR})
 
 
@@ -191,8 +191,8 @@ include(CPack)
 
 add_custom_target(
     pack-${project_name}
-    COMMAND ${CPACK_COMMAND} --config ${CMAKE_BINARY_DIR}/CPackConfig-${project_name}.cmake
-    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+    COMMAND ${CPACK_COMMAND} --config ${PROJECT_BINARY_DIR}/CPackConfig-${project_name}.cmake
+    WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
 )
 set_target_properties(pack-${project_name} PROPERTIES EXCLUDE_FROM_DEFAULT_BUILD 1)
 

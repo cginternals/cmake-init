@@ -17,7 +17,7 @@ if(OPTION_INSTALL)
     endif()
 else()
     # Configure project to be run from the source tree
-    set(DATA_PATH "${CMAKE_SOURCE_DIR}/data")
+    set(DATA_PATH "${PROJECT_SOURCE_DIR}/data")
 endif()
 message(STATUS "Using data path '${DATA_PATH}'")
 
