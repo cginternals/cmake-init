@@ -3,6 +3,12 @@
 
 
 #include <QMainWindow>
+#include <QScopedPointer>
+
+
+namespace Ui {
+    class MainWindow;
+}
 
 
 /**
@@ -26,4 +32,12 @@ public:
     *    Destructor
     */
     virtual ~MainWindow();
+
+
+protected slots:
+    void on_editNumber_valueChanged(int value);
+
+
+protected:
+    const QScopedPointer<Ui::MainWindow> m_ui;
 };

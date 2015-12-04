@@ -3,12 +3,13 @@
 # External dependencies
 # 
 
-find_package(Qt5Core    5.1 QUIET)
-find_package(Qt5Gui     5.1 QUIET)
-find_package(Qt5Widgets 5.1 QUIET)
+find_package(Qt5Core    5.1)
+find_package(Qt5Gui     5.1)
+find_package(Qt5Widgets 5.1)
 
 # Enable automoc
 set(CMAKE_AUTOMOC ON)
+SET(CMAKE_AUTOUIC ON)
 set(AUTOMOC_MOC_OPTIONS PROPERTIES FOLDER CMakeAutomocTargets)
 set_property(GLOBAL PROPERTY AUTOMOC_FOLDER CMakeAutomocTargets)
 
@@ -42,6 +43,7 @@ set(sources
     main.cpp
     MainWindow.cpp
     MainWindow.h
+    MainWindow.ui
 )
 
 
@@ -80,6 +82,7 @@ set_target_properties(${target}
 target_include_directories(${target}
     PRIVATE
     ${DEFAULT_INCLUDE_DIRECTORIES}
+    ${CMAKE_CURRENT_BINARY_DIR}
     ${PROJECT_BINARY_DIR}/source/include
 )
 
