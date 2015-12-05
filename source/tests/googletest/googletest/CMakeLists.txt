@@ -84,6 +84,8 @@ endif()
 # Defines the gtest & gtest_main libraries.  User tests should link
 # with one of them.
 
+set(CMAKE_MACOSX_RPATH OFF)
+
 # Google Test libraries.  We build them using more strict warnings than what
 # are used for other targets, to ensure that gtest can be compiled by a user
 # aggressive about warnings.
