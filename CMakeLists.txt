@@ -46,12 +46,13 @@ set(META_NAME_VERSION        "${META_PROJECT_NAME} v${META_VERSION} (${META_VERS
 # 
 
 # Project options
-option(BUILD_SHARED_LIBS        "Build shared instead of static libraries."    ON)
-option(OPTION_INSTALL           "Build project for installing/packaging."     OFF)
-option(OPTION_PORTABLE_INSTALL  "Install into a self-contained directory."    OFF)
-option(OPTION_BUILD_TESTS       "Build tests (if gmock and gtest are found)."  ON)
-option(OPTION_BUILD_DOCS        "Build documentation."                        OFF)
-option(OPTION_BUILD_EXAMPLES    "Build examples."                             OFF)
+option(BUILD_SHARED_LIBS            "Build shared instead of static libraries."           ON)
+option(OPTION_INSTALL               "Build project for installing/packaging."            OFF)
+option(OPTION_PORTABLE_INSTALL      "Create a portable (relocatable) install."           OFF)
+option(OPTION_SELFCONTAINED_INSTALL "Create a self-contained install with dependencies." OFF)
+option(OPTION_BUILD_TESTS           "Build tests (if gmock and gtest are found)."         ON)
+option(OPTION_BUILD_DOCS            "Build documentation."                               OFF)
+option(OPTION_BUILD_EXAMPLES        "Build examples."                                    OFF)
 
 
 # 
