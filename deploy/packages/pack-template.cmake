@@ -82,12 +82,17 @@ endif()
 get_filename_component(CPACK_PATH ${CMAKE_COMMAND} PATH)
 set(CPACK_COMMAND "${CPACK_PATH}/cpack")
 
+# Set install prefix
+if(OPTION_PORTABLE_INSTALL)
+    set(CPACK_INSTALL_PREFIX ".")
+endif()
+
 # Package project
 set(project_name ${META_PROJECT_NAME})   # Name of package project
 set(project_root ${META_PROJECT_NAME})   # Name of root project that is to be installed
 
 # Package information
-string(TOLOWER ${META_PROJECT_NAME} package_name)          # Package name
+string(TOLOWER ${META_PROJECT_NAME} package_name)
 set(package_description ${META_PROJECT_DESCRIPTION})
 set(package_vendor      ${META_AUTHOR_ORGANIZATION})
 set(package_maintainer  ${META_AUTHOR_MAINTAINER}) 
@@ -211,7 +216,7 @@ set(CPACK_RPM_PACKAGE_RELOCATABLE                     OFF)
 set(CPACK_PACKAGE_FILE_NAME "${package_name}-${CPACK_PACKAGE_VERSION}")
 
 # Install files
-set(CPACK_INSTALL_CMAKE_PROJECTS        "${PROJECT_BINARY_DIR};${project_root};ALL;/")
+#set(CPACK_INSTALL_CMAKE_PROJECTS        "${PROJECT_BINARY_DIR};${project_root};ALL;/")
 set(CPACK_PACKAGE_INSTALL_DIRECTORY     "${package_name}")
 set(CPACK_PACKAGE_INSTALL_REGISTRY_KEY  "${package_name}")
 
@@ -228,7 +233,9 @@ set(CPACK_GENERATOR ${OPTION_PACK_GENERATOR})
 if(NOT "${CMAKE_SYSTEM_NAME}" MATCHES "Windows")
     # Important: Must be set to install files to absolute path (e.g., /etc)
     # -> CPACK_[RPM_]PACKAGE_RELOCATABLE = OFF
-    set(CPACK_SET_DESTDIR ON)
+
+    # But this breaks rpath on portable installs
+    #set(CPACK_SET_DESTDIR ON)
 endif()
 set(CPack_CMake_INCLUDED FALSE)
 include(CPack)

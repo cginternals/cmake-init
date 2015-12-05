@@ -90,9 +90,9 @@ set(project ${META_PROJECT_NAME})
 
 if("${CMAKE_SYSTEM_NAME}" MATCHES "Windows")
     set(INSTALL_ROOT      ".")                      # C:\Programme\<project>
-    set(INSTALL_CMAKE     "cmake")                  # C:\Programme\<project>
-    set(INSTALL_DATA      "bin")                    # C:\Programme\<project>
-    set(INSTALL_BIN       "bin")                    # C:\Programme\<project>
+    set(INSTALL_CMAKE     "cmake")                  # C:\Programme\<project>\cmake
+    set(INSTALL_DATA      "bin")                    # C:\Programme\<project>\bin
+    set(INSTALL_BIN       "bin")                    # C:\Programme\<project>\bin
     set(INSTALL_SHARED    ".")                      # C:\Programme\<project>
     set(INSTALL_LIB       "lib")                    # C:\Programme\<project>\lib
     set(INSTALL_INCLUDE   "include")                # C:\Programme\<project>\include
@@ -102,25 +102,7 @@ if("${CMAKE_SYSTEM_NAME}" MATCHES "Windows")
     set(INSTALL_INIT      ".")                      # Not available under Windows
 else()
     # Unix (Linux or OS X)
-    if("${CMAKE_INSTALL_PREFIX}" STREQUAL "/usr" OR "${CMAKE_INSTALL_PREFIX}" STREQUAL "/usr/local")
-        # Install into the system (/usr/bin or /usr/local/bin)
-        set(INSTALL_ROOT      "share/${project}")       # /usr/[local]/share/<project>
-        set(INSTALL_CMAKE     "share/${project}/cmake") # /usr/[local]/share/<project>
-        set(INSTALL_DATA      "share/${project}")       # /usr/[local]/share/<project>
-        set(INSTALL_BIN       "bin")                    # /usr/[local]/bin
-        set(INSTALL_SHARED    "lib")                    # /usr/[local]/lib
-        set(INSTALL_LIB       "lib")                    # /usr/[local]/lib
-        set(INSTALL_INCLUDE   "include")                # /usr/[local]/include
-        set(INSTALL_DOC       "share/doc/${project}")   # /usr/[local]/share/doc/<project>
-        set(INSTALL_SHORTCUTS "share/applications")     # /usr/[local]/share/applications
-        set(INSTALL_ICONS     "share/pixmaps")          # /usr/[local]/share/pixmaps
-        set(INSTALL_INIT      "/etc/init")              # /etc/init (upstart init scripts)
-
-        if (APPLE)
-            set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/${INSTALL_LIB}") # Add rpath of project libraries
-            set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)                       # Add rpaths of depending libraries
-        endif()
-    else()
+    if(OPTION_PORTABLE_INSTALL)
         # Install into a single directory, assuming it is not in the system PATH
         set(INSTALL_ROOT      ".")                      # /<INSTALL_PREFIX>
         set(INSTALL_CMAKE     "cmake")                  # /<INSTALL_PREFIX>/cmake
@@ -144,6 +126,24 @@ else()
             set(CMAKE_INSTALL_RPATH "@executable_path/${INSTALL_LIB}")
         else()
             set(CMAKE_INSTALL_RPATH "$ORIGIN/${INSTALL_LIB}")       
+        endif()
+    else()
+        # Install into the system (/usr/bin or /usr/local/bin)
+        set(INSTALL_ROOT      "share/${project}")       # /usr/[local]/share/<project>
+        set(INSTALL_CMAKE     "share/${project}/cmake") # /usr/[local]/share/<project>
+        set(INSTALL_DATA      "share/${project}")       # /usr/[local]/share/<project>
+        set(INSTALL_BIN       "bin")                    # /usr/[local]/bin
+        set(INSTALL_SHARED    "lib")                    # /usr/[local]/lib
+        set(INSTALL_LIB       "lib")                    # /usr/[local]/lib
+        set(INSTALL_INCLUDE   "include")                # /usr/[local]/include
+        set(INSTALL_DOC       "share/doc/${project}")   # /usr/[local]/share/doc/<project>
+        set(INSTALL_SHORTCUTS "share/applications")     # /usr/[local]/share/applications
+        set(INSTALL_ICONS     "share/pixmaps")          # /usr/[local]/share/pixmaps
+        set(INSTALL_INIT      "/etc/init")              # /etc/init (upstart init scripts)
+
+        if (APPLE)
+            set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/${INSTALL_LIB}") # Add rpath of project libraries
+            set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)                       # Add rpaths of depending libraries
         endif()
     endif()
 endif()
