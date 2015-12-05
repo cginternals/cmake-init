@@ -85,6 +85,8 @@ endif()
 # Defines the gmock & gmock_main libraries.  User tests should link
 # with one of them.
 
+set(CMAKE_MACOSX_RPATH OFF)
+
 # Google Mock libraries.  We build them using more strict warnings than what
 # are used for other targets, to ensure that Google Mock can be compiled by
 # a user aggressive about warnings.
