@@ -161,8 +161,8 @@ if(OPTION_INSTALL)
     install(FILES ${META_PROJECT_NAME}-config.cmake DESTINATION ${INSTALL_ROOT} COMPONENT dev)
 
     # Install the project meta files
-    install(FILES AUTHORS DESTINATION ${INSTALL_ROOT} COMPONENT runtime)
-    install(FILES LICENSE DESTINATION ${INSTALL_ROOT} COMPONENT runtime)
+    install(FILES AUTHORS   DESTINATION ${INSTALL_ROOT} COMPONENT runtime)
+    install(FILES LICENSE   DESTINATION ${INSTALL_ROOT} COMPONENT runtime)
     install(FILES README.md DESTINATION ${INSTALL_ROOT} COMPONENT runtime)
 
     # Install runtime data
