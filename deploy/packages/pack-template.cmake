@@ -111,7 +111,7 @@ set(CPACK_RESOURCE_FILE_LICENSE         "${PROJECT_SOURCE_DIR}/LICENSE")
 set(CPACK_RESOURCE_FILE_README          "${PROJECT_SOURCE_DIR}/README.md")
 set(CPACK_RESOURCE_FILE_WELCOME         "${PROJECT_SOURCE_DIR}/README.md")
 set(CPACK_PACKAGE_DESCRIPTION_FILE      "${PROJECT_SOURCE_DIR}/README.md")
-set(CPACK_PACKAGE_ICON                  "${PROJECT_SOURCE_DIR}/packages/logo.bmp")
+set(CPACK_PACKAGE_ICON                  "${PROJECT_SOURCE_DIR}/deploy/images/logo.bmp")
 set(CPACK_PACKAGE_RELOCATABLE           OFF)
 
 
@@ -142,8 +142,8 @@ endif()
 
 # Package options
 #set(CPACK_NSIS_DISPLAY_NAME "${package_name}-${META_VERSION}")
-set(CPACK_NSIS_MUI_ICON      "${PROJECT_SOURCE_DIR}/packages/logo.ico")
-set(CPACK_NSIS_MUI_UNIICON   "${PROJECT_SOURCE_DIR}/packages/logo.ico")
+set(CPACK_NSIS_MUI_ICON      "${PROJECT_SOURCE_DIR}/deploy/images/logo.ico")
+set(CPACK_NSIS_MUI_UNIICON   "${PROJECT_SOURCE_DIR}/deploy/images/logo.ico")
 
 # Optional Preliminaries (i.e., silent Visual Studio Redistributable install)
 if(NOT INSTALL_MSVC_REDIST_FILEPATH)
