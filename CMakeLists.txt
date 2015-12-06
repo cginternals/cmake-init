@@ -14,9 +14,9 @@ include(cmake/Custom.cmake)
 include(cmake/GetGitRevisionDescription.cmake)
 
 # Set policies
-set_policy(CMP0028 NEW) # ENABLE  CMP0028: Double colon in target name means ALIAS or IMPORTED target.
-set_policy(CMP0054 NEW) # ENABLE  CMP0054: Only interpret if() arguments as variables or keywords when unquoted.
-set_policy(CMP0042 OLD) # DISABLE CMP0042: MACOSX_RPATH is enabled by default.
+set_policy(CMP0028 NEW) # ENABLE CMP0028: Double colon in target name means ALIAS or IMPORTED target.
+set_policy(CMP0054 NEW) # ENABLE CMP0054: Only interpret if() arguments as variables or keywords when unquoted.
+set_policy(CMP0042 NEW) # ENABLE CMP0042: MACOSX_RPATH is enabled by default.
 
 
 # 
@@ -128,8 +128,8 @@ else()
         set(CMAKE_INSTALL_RPATH_USE_LINK_PATH FALSE) # NO automatic rpath for INSTALL
 
         # Libraries are relative to binary
-        if (APPLE)
-            set(CMAKE_INSTALL_RPATH "@executable_path/${INSTALL_LIB}")
+        if(APPLE)
+            set(CMAKE_INSTALL_RPATH "@loader_path/../../../${INSTALL_LIB}")
         else()
             set(CMAKE_INSTALL_RPATH "$ORIGIN/${INSTALL_LIB}")       
         endif()

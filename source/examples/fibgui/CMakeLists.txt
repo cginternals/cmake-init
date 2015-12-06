@@ -143,6 +143,7 @@ if(OPTION_INSTALL)
     # Executable
     install(TARGETS ${target}
         RUNTIME DESTINATION ${INSTALL_BIN} COMPONENT examples
+        BUNDLE  DESTINATION ${INSTALL_BIN} COMPONENT examples
     )
 
 endif()
