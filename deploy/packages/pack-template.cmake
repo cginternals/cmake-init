@@ -24,7 +24,7 @@ else()
         set(OPTION_PACK_GENERATOR "NSIS" CACHE STRING "Package targets")
     elseif("${CMAKE_SYSTEM_NAME}" MATCHES "Darwin")
         # MacOS X installer
-        set(OPTION_PACK_GENERATOR "PackageMaker" CACHE STRING "Package targets")
+        set(OPTION_PACK_GENERATOR "DragNDrop" CACHE STRING "Package targets")
     else()
         # Linux package
         set(OPTION_PACK_GENERATOR "DEB;RPM" CACHE STRING "Package targets")
