@@ -101,8 +101,14 @@ if("${CMAKE_SYSTEM_NAME}" MATCHES "Windows")
     set(INSTALL_ICONS     ".")                      # Not available under Windows
     set(INSTALL_INIT      ".")                      # Not available under Windows
 else()
+    # Check for system dir install
+    set(system_dir_install FALSE)
+    if("${CMAKE_INSTALL_PREFIX}" STREQUAL "/usr" OR "${CMAKE_INSTALL_PREFIX}" STREQUAL "/usr/local")
+        set(system_dir_install TRUE)
+    endif()
+
     # Unix (Linux or OS X)
-    if(OPTION_PORTABLE_INSTALL)
+    if(OPTION_PORTABLE_INSTALL OR NOT system_dir_install)
         # Install into a single directory, assuming it is not in the system PATH
         set(INSTALL_ROOT      ".")                      # /<INSTALL_PREFIX>
         set(INSTALL_CMAKE     "cmake")                  # /<INSTALL_PREFIX>/cmake
