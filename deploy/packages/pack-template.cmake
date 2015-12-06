@@ -13,22 +13,9 @@ endif()
 # 
 
 # Output packages
-if (OPTION_SELFCONTAINED_INSTALL)
-    # Create a self-contained installation package with all dependencies
-    if("${CMAKE_SYSTEM_NAME}" MATCHES "Windows")
-        # Windows installer
-        set(OPTION_PACK_GENERATOR "NSIS" CACHE STRING "Package targets")
-    elseif("${CMAKE_SYSTEM_NAME}" MATCHES "Darwin")
-        # MacOS X installer
-        set(OPTION_PACK_GENERATOR "PackageMaker" CACHE STRING "Package targets")
-    else()
-        # Linux installer and archive
-        set(OPTION_PACK_GENERATOR "STGZ;TGZ" CACHE STRING "Package targets")
-    endif()
-    set(OPTION_COMPONENT_INSTALL OFF)
-elseif(OPTION_PORTABLE_INSTALL)
+if(OPTION_PORTABLE_INSTALL)
     # Create a relocatable installation without any dependencies
-    set(OPTION_PACK_GENERATOR "ZIP;TGZ" CACHE STRING "Package targets")
+    set(OPTION_PACK_GENERATOR "ZIP;TGZ;STGZ" CACHE STRING "Package targets")
     set(OPTION_COMPONENT_INSTALL OFF)
 else()
     # Create a system installation package
@@ -41,6 +28,12 @@ else()
     else()
         # Linux package
         set(OPTION_PACK_GENERATOR "DEB;RPM" CACHE STRING "Package targets")
+    endif()
+
+    # Install component-wise?
+    if(OPTION_SELFCONTAINED_INSTALL)
+        set(OPTION_COMPONENT_INSTALL OFF)
+    else()
         set(OPTION_COMPONENT_INSTALL ON)
     endif()
 endif()
@@ -84,7 +77,9 @@ set(CPACK_COMMAND "${CPACK_PATH}/cpack")
 
 # Set install prefix
 if(OPTION_PORTABLE_INSTALL)
-    set(CPACK_INSTALL_PREFIX ".")
+    set(CPACK_PACKAGING_INSTALL_PREFIX "")
+else()
+    set(CPACK_PACKAGING_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 endif()
 
 # Package project
@@ -219,6 +214,8 @@ set(CPACK_PACKAGE_FILE_NAME "${package_name}-${CPACK_PACKAGE_VERSION}")
 #set(CPACK_INSTALL_CMAKE_PROJECTS        "${PROJECT_BINARY_DIR};${project_root};ALL;/")
 set(CPACK_PACKAGE_INSTALL_DIRECTORY     "${package_name}")
 set(CPACK_PACKAGE_INSTALL_REGISTRY_KEY  "${package_name}")
+set(CPACK_INCLUDE_TOPLEVEL_DIRECTORY           OFF)
+set(CPACK_COMPONENT_INCLUDE_TOPLEVEL_DIRECTORY OFF)
 
 # Set component installation mode
 set(CPACK_DEB_COMPONENT_INSTALL         ${OPTION_COMPONENT_INSTALL})
