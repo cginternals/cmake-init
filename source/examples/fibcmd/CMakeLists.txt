@@ -32,6 +32,7 @@ set(sources
 
 # Build executable
 add_executable(${target}
+    MACOSX_BUNDLE
     ${sources}
 )
 
@@ -115,8 +116,8 @@ if(OPTION_INSTALL)
 
     # Executable
     install(TARGETS ${target}
-        RUNTIME DESTINATION ${INSTALL_BIN}
-        COMPONENT examples
+        RUNTIME DESTINATION ${INSTALL_BIN} COMPONENT examples
+        BUNDLE  DESTINATION ${INSTALL_BIN} COMPONENT examples
     )
 
 endif()

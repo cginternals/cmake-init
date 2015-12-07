@@ -44,3 +44,39 @@ rationale:
 typically, only released 'feature' applications are required to decide on their subsystem, and in the case of 'gui-heavy' applications the windows subsystem is preferred (since the std output is probably piped into widgets, logfiles, or even discard).
 
 furthermore, console output is usually more relevant for development/debugging purposes, already using console or IDE with appropriate console output handling
+
+
+
+ToDo: Add missing content, bring into markdown form
+
+
+Scenarios covered in cmake-init:
+
+1) Development
+
+The project is contained in a source directory for active development.
+
+Binaries 
+
+
+2) Installation
+
+The project is installed globally on a system.
+
+Binaries: 
+  Windows: C:\Program Files\projectname\projectname.exe
+  Linux:   /usr/bin/mybin
+           /usr/share/myproject/
+
+  Mac:     /usr/bin/projectname
+
+
+3) Portable Installation
+
+The project is installed in a self-contained directory, ready for being moved or copied to another location or computer.
+
+
+4) Package
+
+The project is packed into a container for installation.
+
