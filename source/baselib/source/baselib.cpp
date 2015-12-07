@@ -3,7 +3,6 @@
 #include <fstream>
 
 #include <template/template-version.h>
-#include <template/template-meta.h>
 
 #include <baselib/baselib.h>
 
@@ -12,14 +11,9 @@ namespace baselib
 {
 
 
-std::string dataPath()
-{
-    return std::string(TEMPLATE_DATA_PATH);
-}
-
 void printInfo()
 {
-    std::string dataPath = TEMPLATE_DATA_PATH;
+    std::string dataPath = "data";
 
     // Library name
     std::cout << "Library template::baselib" << std::endl;
@@ -37,7 +31,7 @@ void printInfo()
     #endif
 
     // Data directory
-    std::cout << "Data path:    " << TEMPLATE_DATA_PATH << std::endl;
+    std::cout << "Data path:    " << dataPath << std::endl;
     std::cout << std::endl;
 
     // Read file
