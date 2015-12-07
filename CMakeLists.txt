@@ -10,8 +10,9 @@ cmake_minimum_required(VERSION 3.2 FATAL_ERROR)
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 include(GenerateExportHeader)
 include(ExternalProject)
-include(cmake/Custom.cmake)
 include(cmake/GetGitRevisionDescription.cmake)
+include(cmake/ModuleInformation.cmake)
+include(cmake/Custom.cmake)
 
 # Set policies
 set_policy(CMP0028 NEW) # ENABLE CMP0028: Double colon in target name means ALIAS or IMPORTED target.

@@ -1,0 +1,8 @@
+{
+    "name": "${MODULE_NAME}",
+    "version": "${MODULE_VERSION}",
+    "description": "${MODULE_DESCRIPTION}",
+    "author": "${MODULE_AUTHOR}",
+    "type": "${MODULE_TYPE}",
+    "dataDir": "${MODULE_DATA_DIR}"
+}

@@ -161,6 +161,28 @@ target_link_libraries(${target}
 
 
 # 
+# Module information file
+# 
+
+# Set module information
+set(MODULE_NAME        "${target}")
+set(MODULE_VERSION     "${META_VERSION}")
+set(MODULE_DESCRIPTION "${META_PROJECT_DESCRIPTION}")
+set(MODULE_AUTHOR      "${META_AUTHOR_ORGANIZATION}")
+set(MODULE_TYPE        "Plugin")
+
+# Generate module-info for build tree
+set(MODULE_DATA_DIR "${PROJECT_SOURCE_DIR}/data")
+add_module_info(${target} "${CMAKE_CURRENT_SOURCE_DIR}/${target}-module.json.in")
+
+# Generate module-info for installation
+set(MODULE_DATA_DIR "${CMAKE_INSTALL_PREFIX}/${INSTALL_DATA}/data")
+generate_module_info(
+    "${CMAKE_CURRENT_SOURCE_DIR}/${target}-module.json.in"
+    "${PROJECT_BINARY_DIR}/${target}-module.install.json")
+
+
+# 
 # Deployment
 # 
 
