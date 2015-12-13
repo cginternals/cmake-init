@@ -47,13 +47,11 @@ set(META_NAME_VERSION        "${META_PROJECT_NAME} v${META_VERSION} (${META_VERS
 # 
 
 # Project options
-option(BUILD_SHARED_LIBS            "Build shared instead of static libraries."           ON)
-option(OPTION_INSTALL               "Build project for installing/packaging."            OFF)
-option(OPTION_PORTABLE_INSTALL      "Create a portable (relocatable) install."           OFF)
-option(OPTION_SELFCONTAINED_INSTALL "Create a self-contained install with dependencies." OFF)
-option(OPTION_BUILD_TESTS           "Build tests (if gmock and gtest are found)."         ON)
-option(OPTION_BUILD_DOCS            "Build documentation."                               OFF)
-option(OPTION_BUILD_EXAMPLES        "Build examples."                                    OFF)
+option(BUILD_SHARED_LIBS     "Build shared instead of static libraries."              ON)
+option(OPTION_SELF_CONTAINED "Create a self-contained install with all dependencies." OFF)
+option(OPTION_BUILD_TESTS    "Build tests (if gmock and gtest are found)."            ON)
+option(OPTION_BUILD_DOCS     "Build documentation."                                   OFF)
+option(OPTION_BUILD_EXAMPLES "Build examples."                                        OFF)
 
 
 # 
@@ -103,13 +101,13 @@ if("${CMAKE_SYSTEM_NAME}" MATCHES "Windows")
     set(INSTALL_INIT      ".")                      # Not available under Windows
 else()
     # Check for system dir install
-    set(system_dir_install FALSE)
+    set(SYSTEM_DIR_INSTALL FALSE)
     if("${CMAKE_INSTALL_PREFIX}" STREQUAL "/usr" OR "${CMAKE_INSTALL_PREFIX}" STREQUAL "/usr/local")
-        set(system_dir_install TRUE)
+        set(SYSTEM_DIR_INSTALL TRUE)
     endif()
 
     # Unix (Linux or OS X)
-    if(OPTION_PORTABLE_INSTALL OR NOT system_dir_install)
+    if(NOT SYSTEM_DIR_INSTALL)
         # Install into a single directory, assuming it is not in the system PATH
         set(INSTALL_ROOT      ".")                      # /<INSTALL_PREFIX>
         set(INSTALL_CMAKE     "cmake")                  # /<INSTALL_PREFIX>/cmake
@@ -160,26 +158,22 @@ endif()
 # Deployment (global project files)
 # 
 
-if(OPTION_INSTALL)
+# Install version file
+install(FILES "${PROJECT_BINARY_DIR}/VERSION" DESTINATION ${INSTALL_ROOT} COMPONENT runtime)
 
-    # Install version file
-    install(FILES "${PROJECT_BINARY_DIR}/VERSION" DESTINATION ${INSTALL_ROOT} COMPONENT runtime)
+# Install cmake find script for the project
+install(FILES ${META_PROJECT_NAME}-config.cmake DESTINATION ${INSTALL_ROOT} COMPONENT dev)
 
-    # Install cmake find script for the project
-    install(FILES ${META_PROJECT_NAME}-config.cmake DESTINATION ${INSTALL_ROOT} COMPONENT dev)
+# Install the project meta files
+install(FILES AUTHORS   DESTINATION ${INSTALL_ROOT} COMPONENT runtime)
+install(FILES LICENSE   DESTINATION ${INSTALL_ROOT} COMPONENT runtime)
+install(FILES README.md DESTINATION ${INSTALL_ROOT} COMPONENT runtime)
 
-    # Install the project meta files
-    install(FILES AUTHORS   DESTINATION ${INSTALL_ROOT} COMPONENT runtime)
-    install(FILES LICENSE   DESTINATION ${INSTALL_ROOT} COMPONENT runtime)
-    install(FILES README.md DESTINATION ${INSTALL_ROOT} COMPONENT runtime)
+# Install runtime data
+install(DIRECTORY ${PROJECT_SOURCE_DIR}/data DESTINATION ${INSTALL_DATA} COMPONENT runtime)
 
-    # Install runtime data
-    install(DIRECTORY ${PROJECT_SOURCE_DIR}/data DESTINATION ${INSTALL_DATA} COMPONENT runtime)
-
-    # Install additional runtime dependencies
-    include(cmake/RuntimeDependencies.cmake)
-
-endif()
+# Install additional runtime dependencies
+include(cmake/RuntimeDependencies.cmake)
 
 
 # 

@@ -13,11 +13,7 @@ endif()
 # 
 
 # Output packages
-if(OPTION_PORTABLE_INSTALL)
-    # Create a relocatable installation without any dependencies
-    set(OPTION_PACK_GENERATOR "ZIP;TGZ;STGZ" CACHE STRING "Package targets")
-    set(OPTION_COMPONENT_INSTALL OFF)
-else()
+if(SYSTEM_DIR_INSTALL)
     # Create a system installation package
     if("${CMAKE_SYSTEM_NAME}" MATCHES "Windows")
         # Windows installer
@@ -31,11 +27,15 @@ else()
     endif()
 
     # Install component-wise?
-    if(OPTION_SELFCONTAINED_INSTALL)
+    if(OPTION_SELF_CONTAINED)
         set(OPTION_COMPONENT_INSTALL OFF)
     else()
         set(OPTION_COMPONENT_INSTALL ON)
     endif()
+else()
+    # Create a relocatable installation without any dependencies
+    set(OPTION_PACK_GENERATOR "ZIP;TGZ;STGZ" CACHE STRING "Package targets")
+    set(OPTION_COMPONENT_INSTALL OFF)
 endif()
 
 # Components
@@ -76,10 +76,10 @@ get_filename_component(CPACK_PATH ${CMAKE_COMMAND} PATH)
 set(CPACK_COMMAND "${CPACK_PATH}/cpack")
 
 # Set install prefix
-if(OPTION_PORTABLE_INSTALL)
-    set(CPACK_PACKAGING_INSTALL_PREFIX "")
-else()
+if(SYSTEM_DIR_INSTALL)
     set(CPACK_PACKAGING_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
+else()
+    set(CPACK_PACKAGING_INSTALL_PREFIX "")
 endif()
 
 # Package project
