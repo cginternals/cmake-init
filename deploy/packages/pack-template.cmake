@@ -9,10 +9,9 @@ endif()
 
 
 # 
-# Package configuration
+# Output packages
 # 
 
-# Output packages
 if("${CMAKE_SYSTEM_NAME}" MATCHES "Windows")
     # Windows installer
     set(OPTION_PACK_GENERATOR "NSIS;ZIP" CACHE STRING "Package targets")
@@ -29,11 +28,13 @@ elseif(UNIX AND SYSTEM_DIR_INSTALL)
         set(PACK_COMPONENT_INSTALL OFF)
         set(PACK_INCLUDE_TOPDIR OFF)
     endif()
-elseif("${CMAKE_SYSTEM_NAME}" MATCHES "Darwin")
+#elseif("${CMAKE_SYSTEM_NAME}" MATCHES "Darwin")
     # MacOS X disk image
-    set(OPTION_PACK_GENERATOR "DragNDrop" CACHE STRING "Package targets")
-    set(PACK_COMPONENT_INSTALL OFF)
-    set(PACK_INCLUDE_TOPDIR OFF)
+    # At the moment, DMG generator and CPACK_INCLUDE_TOPLEVEL_DIRECTORY=ON do not work together.
+    # Therefore, we disable dmg images for MacOS until we've found a solution
+#   set(OPTION_PACK_GENERATOR "DragNDrop" CACHE STRING "Package targets")
+#   set(PACK_COMPONENT_INSTALL OFF)
+#   set(PACK_INCLUDE_TOPDIR ON)
 else()
     # Default (portable package for any platform)
     set(OPTION_PACK_GENERATOR "ZIP;TGZ" CACHE STRING "Package targets")
@@ -41,7 +42,11 @@ else()
     set(PACK_INCLUDE_TOPDIR ON)
 endif()
 
-# Components
+
+# 
+# Package components
+# 
+
 set(CPACK_COMPONENTS_ALL runtime dev examples docs)
 
 set(CPACK_COMPONENT_RUNTIME_DISPLAY_NAME "Template library")
