@@ -139,6 +139,15 @@ endif()
 
 
 # 
+# Project modules
+# 
+
+add_subdirectory(source)
+add_subdirectory(docs)
+add_subdirectory(deploy)
+
+
+# 
 # Deployment (global project files)
 # 
 
@@ -155,15 +164,3 @@ install(FILES README.md DESTINATION ${INSTALL_ROOT} COMPONENT runtime)
 
 # Install runtime data
 install(DIRECTORY ${PROJECT_SOURCE_DIR}/data DESTINATION ${INSTALL_DATA} COMPONENT runtime)
-
-# Install additional runtime dependencies
-include(cmake/RuntimeDependencies.cmake)
-
-
-# 
-# Project modules
-# 
-
-add_subdirectory(source)
-add_subdirectory(docs)
-add_subdirectory(deploy)
