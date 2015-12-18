@@ -14,7 +14,13 @@ endif()
 # Project options
 # 
 
-set(DEFAULT_PROJECT_OPTIONS)
+set(DEFAULT_PROJECT_OPTIONS
+    DEBUG_POSTFIX             "d"
+    CXX_STANDARD              11
+    LINKER_LANGUAGE           "CXX"
+    POSITION_INDEPENDENT_CODE ON
+    CXX_VISIBILITY_PRESET     "hidden"
+)
 
 
 # 

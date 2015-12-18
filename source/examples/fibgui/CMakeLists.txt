@@ -68,12 +68,7 @@ add_executable(${META_PROJECT_NAME}::${target} ALIAS ${target})
 set_target_properties(${target}
     PROPERTIES
     ${DEFAULT_PROJECT_OPTIONS}
-    FOLDER                     "${IDE_FOLDER}"
-    DEBUG_POSTFIX              "d"
-    CXX_STANDARD               11
-    LINKER_LANGUAGE            CXX
-    POSITION_INDEPENDENT_CODE  ON
-    WIN32_EXECUTABLE           ON
+    FOLDER "${IDE_FOLDER}"
 )
 
 

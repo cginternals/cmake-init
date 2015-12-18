@@ -77,11 +77,6 @@ set_target_properties(${target}
     PROPERTIES
     ${DEFAULT_PROJECT_OPTIONS}
     FOLDER                     "${IDE_FOLDER}"
-    DEBUG_POSTFIX              "d"
-    CXX_STANDARD               11
-    LINKER_LANGUAGE            CXX
-    POSITION_INDEPENDENT_CODE  ON
-    CXX_VISIBILITY_PRESET      hidden
 )
 
 # 
@@ -126,7 +121,7 @@ target_compile_definitions(${target}
     PRIVATE    # Definitions that are needed internally for this project
 
     PUBLIC     # Definitions that are needed for this project AND for any downstream project using this library
-    $<$<NOT:$<BOOL:${BUILD_SHARED_LIBS}>>:${target_upper}_STATIC_DEFINE>
+    $<$<NOT:$<BOOL:${BUILD_SHARED_LIBS}>>:-D${target_upper}_STATIC_DEFINE>
     ${DEFAULT_COMPILE_DEFINITIONS}
 
     INTERFACE  # Definitions for downstream projects to use this library
