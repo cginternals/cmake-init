@@ -99,8 +99,8 @@ target_link_libraries(${target}
     Qt5::Core
     Qt5::Gui
     Qt5::Widgets
-    template::baselib
-    template::fiblib
+    ${META_PROJECT_NAME}::baselib
+    ${META_PROJECT_NAME}::fiblib
 )
 
 

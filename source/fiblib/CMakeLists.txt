@@ -81,6 +81,7 @@ set_target_properties(${target}
     CXX_STANDARD               11
     LINKER_LANGUAGE            CXX
     POSITION_INDEPENDENT_CODE  ON
+    CXX_VISIBILITY_PRESET      hidden
 )
 
 
@@ -170,7 +171,7 @@ set(MODULE_NAME        "${target}")
 set(MODULE_VERSION     "${META_VERSION}")
 set(MODULE_DESCRIPTION "${META_PROJECT_DESCRIPTION}")
 set(MODULE_AUTHOR      "${META_AUTHOR_ORGANIZATION}")
-set(MODULE_TYPE        "Plugin")
+set(MODULE_TYPE        "Library")
 
 # Generate module-info for build tree
 set(MODULE_DATA_DIR "${PROJECT_SOURCE_DIR}/data")

@@ -73,8 +73,8 @@ target_include_directories(${target}
 target_link_libraries(${target}
     PRIVATE
     ${DEFAULT_LIBRARIES}
-    template::baselib
-    template::fiblib
+    ${META_PROJECT_NAME}::baselib
+    ${META_PROJECT_NAME}::fiblib
 )
 
 

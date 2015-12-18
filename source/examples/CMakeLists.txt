@@ -1,6 +1,8 @@
 
 # Example applications
-if(OPTION_BUILD_EXAMPLES)
-    add_subdirectory(fibcmd)
-    add_subdirectory(fibgui)
+if(NOT OPTION_BUILD_EXAMPLES)
+    return()
 endif()
+
+add_subdirectory(fibcmd)
+add_subdirectory(fibgui)
