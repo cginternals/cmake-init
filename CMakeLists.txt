@@ -11,7 +11,6 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 include(GenerateExportHeader)
 include(ExternalProject)
 include(cmake/GetGitRevisionDescription.cmake)
-include(cmake/ModuleInformation.cmake)
 include(cmake/Custom.cmake)
 
 # Set policies
