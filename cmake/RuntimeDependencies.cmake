@@ -20,23 +20,24 @@ endif()
 
 
 
+# [WIP]
+
 # Paths to executables
-set(apps
-    "\${CMAKE_INSTALL_PREFIX}/${INSTALL_BIN}/fibgui${CMAKE_EXECUTABLE_SUFFIX}"
-)
+#set(apps
+#    "\${CMAKE_INSTALL_PREFIX}/${INSTALL_BIN}/fibgui${CMAKE_EXECUTABLE_SUFFIX}"
+#)
 
-# run Bundle utilities
-install(CODE "
-    include(\"${CMAKE_ROOT}/Modules/GetPrerequisites.cmake\")
+#install(CODE "
+#    include(\"${CMAKE_ROOT}/Modules/GetPrerequisites.cmake\")
 
-    foreach(app ${apps})
-        message(\"Dependencies for \${app}\")
+#    foreach(app ${apps})
+#        message(\"Dependencies for \${app}\")
 
-        get_prerequisites(\${app} prereqs 1 1 \"\" \"\")
-        foreach(lib \${prereqs})
-            message(\"- \${lib}\")
-        endforeach(lib)
-    endforeach(app)
-    "
-    COMPONENT runtime
-)
+#        get_prerequisites(\${app} prereqs 1 1 \"\" \"\")
+#        foreach(lib \${prereqs})
+#            message(\"- \${lib}\")
+#        endforeach(lib)
+#    endforeach(app)
+#    "
+#    COMPONENT runtime
+#)

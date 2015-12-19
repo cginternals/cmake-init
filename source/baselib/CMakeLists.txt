@@ -76,7 +76,7 @@ generate_export_header(${target}
 set_target_properties(${target}
     PROPERTIES
     ${DEFAULT_PROJECT_OPTIONS}
-    FOLDER                     "${IDE_FOLDER}"
+    FOLDER "${IDE_FOLDER}"
 )
 
 # 
