@@ -77,10 +77,6 @@ set_target_properties(${target}
     PROPERTIES
     ${DEFAULT_PROJECT_OPTIONS}
     FOLDER                     "${IDE_FOLDER}"
-    DEBUG_POSTFIX              "d"
-    CXX_STANDARD               11
-    LINKER_LANGUAGE            CXX
-    POSITION_INDEPENDENT_CODE  ON
 )
 
 # 
@@ -125,7 +121,7 @@ target_compile_definitions(${target}
     PRIVATE    # Definitions that are needed internally for this project
 
     PUBLIC     # Definitions that are needed for this project AND for any downstream project using this library
-    $<$<NOT:$<BOOL:${BUILD_SHARED_LIBS}>>:${target_upper}_STATIC_DEFINE>
+    $<$<NOT:$<BOOL:${BUILD_SHARED_LIBS}>>:-D${target_upper}_STATIC_DEFINE>
     ${DEFAULT_COMPILE_DEFINITIONS}
 
     INTERFACE  # Definitions for downstream projects to use this library
@@ -164,33 +160,29 @@ target_link_libraries(${target}
 # Deployment
 # 
 
-if(OPTION_INSTALL)
+# Library
+install(TARGETS ${target}
+    EXPORT  "${target}-export"            COMPONENT dev
+    RUNTIME DESTINATION ${INSTALL_BIN}    COMPONENT runtime
+    LIBRARY DESTINATION ${INSTALL_SHARED} COMPONENT runtime
+    ARCHIVE DESTINATION ${INSTALL_LIB}    COMPONENT dev
+)
 
-    # Library
-    install(TARGETS ${target}
-        EXPORT  "${target}-export"            COMPONENT dev
-        RUNTIME DESTINATION ${INSTALL_BIN}    COMPONENT runtime
-        LIBRARY DESTINATION ${INSTALL_SHARED} COMPONENT runtime
-        ARCHIVE DESTINATION ${INSTALL_LIB}    COMPONENT dev
-    )
+# Header files
+install(DIRECTORY
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/${target} DESTINATION ${INSTALL_INCLUDE}
+    COMPONENT dev
+)
 
-    # Header files
-    install(DIRECTORY
-        ${CMAKE_CURRENT_SOURCE_DIR}/include/${target} DESTINATION ${INSTALL_INCLUDE}
-        COMPONENT dev
-    )
+# Generated header files
+install(DIRECTORY
+    ${CMAKE_CURRENT_BINARY_DIR}/include/${target} DESTINATION ${INSTALL_INCLUDE}
+    COMPONENT dev
+)
 
-    # Generated header files
-    install(DIRECTORY
-        ${CMAKE_CURRENT_BINARY_DIR}/include/${target} DESTINATION ${INSTALL_INCLUDE}
-        COMPONENT dev
-    )
-
-    # CMake config
-    install(EXPORT ${target}-export
-        NAMESPACE   ${META_PROJECT_NAME}::
-        DESTINATION ${INSTALL_CMAKE}/${target}
-        COMPONENT   dev
-    )
-
-endif()
+# CMake config
+install(EXPORT ${target}-export
+    NAMESPACE   ${META_PROJECT_NAME}::
+    DESTINATION ${INSTALL_CMAKE}/${target}
+    COMPONENT   dev
+)

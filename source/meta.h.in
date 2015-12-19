@@ -1,3 +1,0 @@
-
-// Path to the data directory
-#define ${META_PROJECT_NAME_UPPER}_DATA_PATH "@DATA_PATH@"

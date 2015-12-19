@@ -68,12 +68,7 @@ add_executable(${META_PROJECT_NAME}::${target} ALIAS ${target})
 set_target_properties(${target}
     PROPERTIES
     ${DEFAULT_PROJECT_OPTIONS}
-    FOLDER                     "${IDE_FOLDER}"
-    DEBUG_POSTFIX              "d"
-    CXX_STANDARD               11
-    LINKER_LANGUAGE            CXX
-    POSITION_INDEPENDENT_CODE  ON
-    WIN32_EXECUTABLE           ON
+    FOLDER "${IDE_FOLDER}"
 )
 
 
@@ -99,8 +94,8 @@ target_link_libraries(${target}
     Qt5::Core
     Qt5::Gui
     Qt5::Widgets
-    template::baselib
-    template::fiblib
+    ${META_PROJECT_NAME}::baselib
+    ${META_PROJECT_NAME}::fiblib
 )
 
 
@@ -138,11 +133,8 @@ target_link_libraries(${target}
 # Deployment
 # 
 
-if(OPTION_INSTALL)
-
-    # Executable
-    install(TARGETS ${target}
-        RUNTIME DESTINATION ${INSTALL_BIN} COMPONENT examples
-    )
-
-endif()
+# Executable
+install(TARGETS ${target}
+    RUNTIME DESTINATION ${INSTALL_BIN} COMPONENT examples
+    BUNDLE  DESTINATION ${INSTALL_BIN} COMPONENT examples
+)

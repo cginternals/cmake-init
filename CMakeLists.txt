@@ -10,13 +10,13 @@ cmake_minimum_required(VERSION 3.2 FATAL_ERROR)
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 include(GenerateExportHeader)
 include(ExternalProject)
-include(cmake/Custom.cmake)
 include(cmake/GetGitRevisionDescription.cmake)
+include(cmake/Custom.cmake)
 
 # Set policies
-set_policy(CMP0028 NEW) # ENABLE  CMP0028: Double colon in target name means ALIAS or IMPORTED target.
-set_policy(CMP0054 NEW) # ENABLE  CMP0054: Only interpret if() arguments as variables or keywords when unquoted.
-set_policy(CMP0042 OLD) # DISABLE CMP0042: MACOSX_RPATH is enabled by default.
+set_policy(CMP0028 NEW) # ENABLE CMP0028: Double colon in target name means ALIAS or IMPORTED target.
+set_policy(CMP0054 NEW) # ENABLE CMP0054: Only interpret if() arguments as variables or keywords when unquoted.
+set_policy(CMP0042 NEW) # ENABLE CMP0042: MACOSX_RPATH is enabled by default.
 
 
 # 
@@ -46,13 +46,11 @@ set(META_NAME_VERSION        "${META_PROJECT_NAME} v${META_VERSION} (${META_VERS
 # 
 
 # Project options
-option(BUILD_SHARED_LIBS            "Build shared instead of static libraries."           ON)
-option(OPTION_INSTALL               "Build project for installing/packaging."            OFF)
-option(OPTION_PORTABLE_INSTALL      "Create a portable (relocatable) install."           OFF)
-option(OPTION_SELFCONTAINED_INSTALL "Create a self-contained install with dependencies." OFF)
-option(OPTION_BUILD_TESTS           "Build tests (if gmock and gtest are found)."         ON)
-option(OPTION_BUILD_DOCS            "Build documentation."                               OFF)
-option(OPTION_BUILD_EXAMPLES        "Build examples."                                    OFF)
+option(BUILD_SHARED_LIBS     "Build shared instead of static libraries."              ON)
+option(OPTION_SELF_CONTAINED "Create a self-contained install with all dependencies." OFF)
+option(OPTION_BUILD_TESTS    "Build tests."                                           ON)
+option(OPTION_BUILD_DOCS     "Build documentation."                                   OFF)
+option(OPTION_BUILD_EXAMPLES "Build examples."                                        OFF)
 
 
 # 
@@ -86,98 +84,56 @@ include(cmake/CompileOptions.cmake)
 # Deployment/installation setup
 # 
 
+# Get project name
 set(project ${META_PROJECT_NAME})
 
-if("${CMAKE_SYSTEM_NAME}" MATCHES "Windows")
-    set(INSTALL_ROOT      ".")                      # C:\Programme\<project>
-    set(INSTALL_CMAKE     "cmake")                  # C:\Programme\<project>\cmake
-    set(INSTALL_DATA      "bin")                    # C:\Programme\<project>\bin
-    set(INSTALL_BIN       "bin")                    # C:\Programme\<project>\bin
-    set(INSTALL_SHARED    ".")                      # C:\Programme\<project>
-    set(INSTALL_LIB       "lib")                    # C:\Programme\<project>\lib
-    set(INSTALL_INCLUDE   "include")                # C:\Programme\<project>\include
-    set(INSTALL_DOC       "doc")                    # C:\Programme\<project>\doc
-    set(INSTALL_SHORTCUTS ".")                      # Not available under Windows
-    set(INSTALL_ICONS     ".")                      # Not available under Windows
-    set(INSTALL_INIT      ".")                      # Not available under Windows
-else()
-    # Check for system dir install
-    set(system_dir_install FALSE)
-    if("${CMAKE_INSTALL_PREFIX}" STREQUAL "/usr" OR "${CMAKE_INSTALL_PREFIX}" STREQUAL "/usr/local")
-        set(system_dir_install TRUE)
-    endif()
-
-    # Unix (Linux or OS X)
-    if(OPTION_PORTABLE_INSTALL OR NOT system_dir_install)
-        # Install into a single directory, assuming it is not in the system PATH
-        set(INSTALL_ROOT      ".")                      # /<INSTALL_PREFIX>
-        set(INSTALL_CMAKE     "cmake")                  # /<INSTALL_PREFIX>/cmake
-        set(INSTALL_DATA      ".")                      # /<INSTALL_PREFIX>
-        set(INSTALL_BIN       ".")                      # /<INSTALL_PREFIX>
-        set(INSTALL_SHARED    "lib")                    # /<INSTALL_PREFIX>/lib
-        set(INSTALL_LIB       "lib")                    # /<INSTALL_PREFIX>/lib
-        set(INSTALL_INCLUDE   "include")                # /<INSTALL_PREFIX>/include
-        set(INSTALL_DOC       "doc")                    # /<INSTALL_PREFIX>/doc
-        set(INSTALL_SHORTCUTS "misc")                   # /<INSTALL_PREFIX>/misc
-        set(INSTALL_ICONS     "misc")                   # /<INSTALL_PREFIX>/misc
-        set(INSTALL_INIT      "misc")                   # /<INSTALL_PREFIX>/misc
-
-        # We have to change the RPATH of binaries to achieve a usable install.
-        set(CMAKE_SKIP_BUILD_RPATH FALSE)            # Use automatic rpath for build
-        set(CMAKE_BUILD_WITH_INSTALL_RPATH FALSE)    # Use specific rpath for INSTALL
-        set(CMAKE_INSTALL_RPATH_USE_LINK_PATH FALSE) # NO automatic rpath for INSTALL
-
-        # Libraries are relative to binary
-        if (APPLE)
-            set(CMAKE_INSTALL_RPATH "@executable_path/${INSTALL_LIB}")
-        else()
-            set(CMAKE_INSTALL_RPATH "$ORIGIN/${INSTALL_LIB}")       
-        endif()
-    else()
-        # Install into the system (/usr/bin or /usr/local/bin)
-        set(INSTALL_ROOT      "share/${project}")       # /usr/[local]/share/<project>
-        set(INSTALL_CMAKE     "share/${project}/cmake") # /usr/[local]/share/<project>
-        set(INSTALL_DATA      "share/${project}")       # /usr/[local]/share/<project>
-        set(INSTALL_BIN       "bin")                    # /usr/[local]/bin
-        set(INSTALL_SHARED    "lib")                    # /usr/[local]/lib
-        set(INSTALL_LIB       "lib")                    # /usr/[local]/lib
-        set(INSTALL_INCLUDE   "include")                # /usr/[local]/include
-        set(INSTALL_DOC       "share/doc/${project}")   # /usr/[local]/share/doc/<project>
-        set(INSTALL_SHORTCUTS "share/applications")     # /usr/[local]/share/applications
-        set(INSTALL_ICONS     "share/pixmaps")          # /usr/[local]/share/pixmaps
-        set(INSTALL_INIT      "/etc/init")              # /etc/init (upstart init scripts)
-
-        if (APPLE)
-            set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/${INSTALL_LIB}") # Add rpath of project libraries
-            set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)                       # Add rpaths of depending libraries
-        endif()
-    endif()
+# Check for system dir install
+set(SYSTEM_DIR_INSTALL FALSE)
+if("${CMAKE_INSTALL_PREFIX}" STREQUAL "/usr" OR "${CMAKE_INSTALL_PREFIX}" STREQUAL "/usr/local")
+    set(SYSTEM_DIR_INSTALL TRUE)
 endif()
 
+# Installation paths
+if(UNIX AND SYSTEM_DIR_INSTALL)
+    # Install into the system (/usr/bin or /usr/local/bin)
+    set(INSTALL_ROOT      "share/${project}")       # /usr/[local]/share/<project>
+    set(INSTALL_CMAKE     "share/${project}/cmake") # /usr/[local]/share/<project>
+    set(INSTALL_DATA      "share/${project}")       # /usr/[local]/share/<project>
+    set(INSTALL_BIN       "bin")                    # /usr/[local]/bin
+    set(INSTALL_SHARED    "lib")                    # /usr/[local]/lib
+    set(INSTALL_LIB       "lib")                    # /usr/[local]/lib
+    set(INSTALL_INCLUDE   "include")                # /usr/[local]/include
+    set(INSTALL_DOC       "share/doc/${project}")   # /usr/[local]/share/doc/<project>
+    set(INSTALL_SHORTCUTS "share/applications")     # /usr/[local]/share/applications
+    set(INSTALL_ICONS     "share/pixmaps")          # /usr/[local]/share/pixmaps
+    set(INSTALL_INIT      "/etc/init")              # /etc/init (upstart init scripts)
+else()
+    # Install into local directory
+    set(INSTALL_ROOT      ".")                      # ./
+    set(INSTALL_CMAKE     "cmake")                  # ./cmake
+    set(INSTALL_DATA      ".")                      # ./bin
+    set(INSTALL_BIN       ".")                      # ./bin
+    set(INSTALL_SHARED    "lib")                    # ./lib
+    set(INSTALL_LIB       "lib")                    # ./lib
+    set(INSTALL_INCLUDE   "include")                # ./include
+    set(INSTALL_DOC       "doc")                    # ./doc
+    set(INSTALL_SHORTCUTS "misc")                   # ./misc
+    set(INSTALL_ICONS     "misc")                   # ./misc
+    set(INSTALL_INIT      "misc")                   # ./misc
+endif()
 
-# 
-# Deployment (global project files)
-# 
+# Set runtime path
+set(CMAKE_SKIP_BUILD_RPATH            FALSE) # Add absolute path to all dependencies for BUILD
+set(CMAKE_BUILD_WITH_INSTALL_RPATH    FALSE) # Use CMAKE_INSTALL_RPATH for INSTALL
+set(CMAKE_INSTALL_RPATH_USE_LINK_PATH FALSE) # Do NOT add path to dependencies for INSTALL
 
-if(OPTION_INSTALL)
-
-    # Install version file
-    install(FILES "${PROJECT_BINARY_DIR}/VERSION" DESTINATION ${INSTALL_ROOT} COMPONENT runtime)
-
-    # Install cmake find script for the project
-    install(FILES ${META_PROJECT_NAME}-config.cmake DESTINATION ${INSTALL_ROOT} COMPONENT dev)
-
-    # Install the project meta files
-    install(FILES AUTHORS   DESTINATION ${INSTALL_ROOT} COMPONENT runtime)
-    install(FILES LICENSE   DESTINATION ${INSTALL_ROOT} COMPONENT runtime)
-    install(FILES README.md DESTINATION ${INSTALL_ROOT} COMPONENT runtime)
-
-    # Install runtime data
-    install(DIRECTORY ${PROJECT_SOURCE_DIR}/data DESTINATION ${INSTALL_DATA} COMPONENT runtime)
-
-    # Install additional runtime dependencies
-    include(cmake/RuntimeDependencies.cmake)
-
+if(NOT SYSTEM_DIR_INSTALL)
+    # Find libraries relative to binary
+    if(APPLE)
+        set(CMAKE_INSTALL_RPATH "@loader_path/../../../${INSTALL_LIB}")
+    else()
+        set(CMAKE_INSTALL_RPATH "$ORIGIN/${INSTALL_LIB}")       
+    endif()
 endif()
 
 
@@ -188,3 +144,22 @@ endif()
 add_subdirectory(source)
 add_subdirectory(docs)
 add_subdirectory(deploy)
+
+
+# 
+# Deployment (global project files)
+# 
+
+# Install version file
+install(FILES "${PROJECT_BINARY_DIR}/VERSION" DESTINATION ${INSTALL_ROOT} COMPONENT runtime)
+
+# Install cmake find script for the project
+install(FILES ${META_PROJECT_NAME}-config.cmake DESTINATION ${INSTALL_ROOT} COMPONENT dev)
+
+# Install the project meta files
+install(FILES AUTHORS   DESTINATION ${INSTALL_ROOT} COMPONENT runtime)
+install(FILES LICENSE   DESTINATION ${INSTALL_ROOT} COMPONENT runtime)
+install(FILES README.md DESTINATION ${INSTALL_ROOT} COMPONENT runtime)
+
+# Install runtime data
+install(DIRECTORY ${PROJECT_SOURCE_DIR}/data DESTINATION ${INSTALL_DATA} COMPONENT runtime)

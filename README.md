@@ -52,31 +52,29 @@ ToDo: Add missing content, bring into markdown form
 
 Scenarios covered in cmake-init:
 
+
 1) Development
 
 The project is contained in a source directory for active development.
 
-Binaries 
+binaries: ./build
+rpath:    absolute paths to all dependencies
+datapath: ..
 
 
-2) Installation
-
-The project is installed globally on a system.
-
-Binaries: 
-  Windows: C:\Program Files\projectname\projectname.exe
-  Linux:   /usr/bin/mybin
-           /usr/share/myproject/
-
-  Mac:     /usr/bin/projectname
-
-
-3) Portable Installation
+2) Installation (default)
 
 The project is installed in a self-contained directory, ready for being moved or copied to another location or computer.
 
+binaries: ./bin
+rpath:    $ORIGIN/../lib
+datapath: ..
 
-4) Package
 
-The project is packed into a container for installation.
+3) Installation (unix system install)
 
+The project is installed globally on a system.
+
+binaries: /usr/[local/]bin
+rpath:    empty
+datapath: /usr/[local/]share/<projectname>
