@@ -60,7 +60,7 @@ target_include_directories(${target}
 target_link_libraries(${target}
     PRIVATE
     ${DEFAULT_LIBRARIES}
-    template::fiblib
+    ${META_PROJECT_NAME}::fiblib
     gmock-dev
 )
 

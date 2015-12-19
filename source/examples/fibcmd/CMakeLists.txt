@@ -14,7 +14,7 @@
 set(target fibcmd)
 
 # Exit here if required dependencies are not met
-message(STATUS "App ${target}")
+message(STATUS "Example ${target}")
 
 
 # 
