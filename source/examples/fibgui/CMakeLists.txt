@@ -31,7 +31,7 @@ if (NOT Qt5Core_FOUND)
     message(STATUS "Example ${target} skipped: Qt5 not found")
     return()
 else()
-    message(STATUS "App ${target}")
+    message(STATUS "Example ${target}")
 endif()
 
 

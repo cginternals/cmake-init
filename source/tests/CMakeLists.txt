@@ -16,6 +16,11 @@ endif()
 # Function: Build test and add command to execute it via target 'test'
 function(add_test_without_ctest target)
     add_subdirectory(${target})
+    
+    if(NOT TARGET ${target})
+        return()
+    endif()
+    
     add_dependencies(test ${target})
     add_custom_command(TARGET test POST_BUILD 
         COMMAND $<TARGET_FILE:${target}> --gtest_output=xml:gtests-${target}.xml)
