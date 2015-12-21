@@ -10,6 +10,7 @@ cmake_minimum_required(VERSION 3.2 FATAL_ERROR)
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 include(GenerateExportHeader)
 include(ExternalProject)
+include(WriteCompilerDetectionHeader)
 include(cmake/GetGitRevisionDescription.cmake)
 include(cmake/Custom.cmake)
 
