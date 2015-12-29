@@ -1,48 +1,36 @@
 
+# 
+# External dependencies
+# 
+
+# find_package(THIRDPARTY REQUIRED)
+
+
+# 
+# Library name and options
+# 
+
+# Target name
 set(target fiblib)
+
+# Exit here if required dependencies are not met
 message(STATUS "Lib ${target}")
 
-
-# External libraries
-
-# e.g., find_package(THIRDPARTY REQUIRED)
-
-
-# Includes
-
-include_directories(
-    # e.g., ${TRDP_INCLUDE_DIR}
-)
-
-include_directories(
-    BEFORE
-    ${CMAKE_CURRENT_SOURCE_DIR}/include
-)
+# Set API export file and macro
+string(TOUPPER ${target} target_upper)
+set(feature_file "include/${target}/${target}_features.h")
+set(export_file  "include/${target}/${target}_api.h")
+set(export_macro "${target_upper}_API")
 
 
-# Libraries
-
-set(libs
-    # e.g., ${THIRDPARTY_LIBRARY}
-)
-
-
-# Compiler definitions
-
-if (OPTION_BUILD_STATIC)
-    add_definitions("-D${META_PROJECT_NAME_UPPER}_STATIC")
-else()
-    add_definitions("-DFIBLIB_EXPORTS")
-endif()
-
-
+# 
 # Sources
+# 
 
 set(include_path "${CMAKE_CURRENT_SOURCE_DIR}/include/${target}")
-set(source_path "${CMAKE_CURRENT_SOURCE_DIR}/source")
+set(source_path  "${CMAKE_CURRENT_SOURCE_DIR}/source")
 
-set(api_includes
-    ${include_path}/fiblib_api.h
+set(headers
     ${include_path}/Fibonacci.h
 )
 
@@ -54,39 +42,159 @@ set(sources
 set(header_group "Header Files (API)")
 set(source_group "Source Files")
 source_group_by_path(${include_path} "\\\\.h$|\\\\.hpp$" 
-    ${header_group} ${api_includes})
-source_group_by_path(${source_path} "\\\\.cpp$|\\\\.c$|\\\\.h$|\\\\.hpp$" 
+    ${header_group} ${headers})
+source_group_by_path(${source_path}  "\\\\.cpp$|\\\\.c$|\\\\.h$|\\\\.hpp$" 
     ${source_group} ${sources})
 
 
+# 
+# Create library
+# 
+
 # Build library
+add_library(${target}
+    ${sources}
+    ${headers}
+)
 
-add_library(${target} ${api_includes} ${sources})
+# Create namespaced alias
+add_library(${META_PROJECT_NAME}::${target} ALIAS ${target})
 
-target_link_libraries(${target} ${libs})
+# Export library for downstream projects
+export(TARGETS ${target} NAMESPACE ${META_PROJECT_NAME}:: FILE ${PROJECT_BINARY_DIR}/cmake/${target}/${target}-export.cmake)
 
-target_compile_options(${target} PRIVATE ${DEFAULT_COMPILE_FLAGS})
+# Create feature detection header
+# Compilers: https://cmake.org/cmake/help/v3.1/variable/CMAKE_LANG_COMPILER_ID.html#variable:CMAKE_%3CLANG%3E_COMPILER_ID
+# Feature: https://cmake.org/cmake/help/v3.1/prop_gbl/CMAKE_CXX_KNOWN_FEATURES.html
+write_compiler_detection_header(
+    FILE ${feature_file}
+    PREFIX ${target_upper}
+    COMPILERS AppleClang Clang GNU MSVC
+    FEATURES cxx_alignas cxx_alignof cxx_constexpr cxx_final cxx_noexcept cxx_nullptr cxx_sizeof_member cxx_thread_local
+)
+
+# Create API export header
+generate_export_header(${target}
+    EXPORT_FILE_NAME  ${export_file}
+    EXPORT_MACRO_NAME ${export_macro}
+)
+
+
+# 
+# Project options
+# 
 
 set_target_properties(${target}
     PROPERTIES
-    LINKER_LANGUAGE              CXX
-    FOLDER                      "${IDE_FOLDER}"
-    COMPILE_DEFINITIONS_DEBUG   "${DEFAULT_COMPILE_DEFS_DEBUG}"
-    COMPILE_DEFINITIONS_RELEASE "${DEFAULT_COMPILE_DEFS_RELEASE}"
-    LINK_FLAGS_DEBUG            "${DEFAULT_LINKER_FLAGS_DEBUG}"
-    LINK_FLAGS_RELEASE          "${DEFAULT_LINKER_FLAGS_RELEASE}"
-    DEBUG_POSTFIX               "d${DEBUG_POSTFIX}"
-    INCLUDE_PATH	            ${include_path})
+    ${DEFAULT_PROJECT_OPTIONS}
+    FOLDER "${IDE_FOLDER}"
+)
 
 
+# 
+# Include directories
+# 
+
+target_include_directories(${target}
+    PRIVATE
+    ${PROJECT_BINARY_DIR}/source/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
+    ${CMAKE_CURRENT_BINARY_DIR}/include
+
+    PUBLIC
+    ${DEFAULT_INCLUDE_DIRECTORIES}
+
+    INTERFACE
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/include>
+    $<INSTALL_INTERFACE:include>
+)
+
+
+# 
+# Libraries
+# 
+
+target_link_libraries(${target}
+    PRIVATE
+
+    PUBLIC
+    ${DEFAULT_LIBRARIES}
+
+    INTERFACE
+)
+
+
+# 
+# Compile definitions
+# 
+
+target_compile_definitions(${target}
+    PRIVATE
+
+    PUBLIC
+    $<$<NOT:$<BOOL:${BUILD_SHARED_LIBS}>>:${target_upper}_STATIC_DEFINE>
+    ${DEFAULT_COMPILE_DEFINITIONS}
+
+    INTERFACE
+)
+
+
+# 
+# Compile options
+# 
+
+target_compile_options(${target}
+    PRIVATE
+
+    PUBLIC
+    ${DEFAULT_COMPILE_OPTIONS}
+
+    INTERFACE
+)
+
+
+# 
+# Linker options
+# 
+
+target_link_libraries(${target}
+    PRIVATE
+
+    PUBLIC
+    ${DEFAULT_LINKER_OPTIONS}
+
+    INTERFACE
+)
+
+
+# 
 # Deployment
+# 
 
 # Library
 install(TARGETS ${target}
-    RUNTIME DESTINATION ${INSTALL_BIN}
-    LIBRARY DESTINATION ${INSTALL_SHARED}
-    ARCHIVE DESTINATION ${INSTALL_LIB}
+    EXPORT  "${target}-export"            COMPONENT dev
+    RUNTIME DESTINATION ${INSTALL_BIN}    COMPONENT runtime
+    LIBRARY DESTINATION ${INSTALL_SHARED} COMPONENT runtime
+    ARCHIVE DESTINATION ${INSTALL_LIB}    COMPONENT dev
 )
 
 # Header files
-install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/${target} DESTINATION ${INSTALL_INCLUDE})
+install(DIRECTORY
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/${target} DESTINATION ${INSTALL_INCLUDE}
+    COMPONENT dev
+)
+
+# Generated header files
+install(DIRECTORY
+    ${CMAKE_CURRENT_BINARY_DIR}/include/${target} DESTINATION ${INSTALL_INCLUDE}
+    COMPONENT dev
+)
+
+# CMake config
+install(EXPORT ${target}-export
+    NAMESPACE   ${META_PROJECT_NAME}::
+    DESTINATION ${INSTALL_CMAKE}/${target}
+    COMPONENT   dev
+)

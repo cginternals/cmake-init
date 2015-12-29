@@ -1,37 +1,16 @@
 
+# 
+# Executable name and options
+# 
+
+# Target name
 set(target fiblib-test)
 message(STATUS "Test ${target}")
 
 
-# Includes
-
-include_directories(
-    
-)
-
-include_directories(
-    BEFORE
-    ${CMAKE_SOURCE_DIR}/source/fiblib/include
-)
-
-
-# Libraries
-
-set(libs
-    ${GMOCK_LIBRARIES}
-    ${GTEST_LIBRARIES}
-    fiblib
-)
-
-
-# Compiler definitions
-
-if (OPTION_BUILD_STATIC)
-    add_definitions("-D${META_PROJECT_NAME_UPPER}_STATIC")
-endif()
-
-
+# 
 # Sources
+# 
 
 set(sources
     main.cpp
@@ -39,20 +18,78 @@ set(sources
 )
 
 
+# 
+# Create executable
+# 
+
 # Build executable
+add_executable(${target}
+    ${sources}
+)
 
-add_executable(${target} ${sources})
+# Create namespaced alias
+add_executable(${META_PROJECT_NAME}::${target} ALIAS ${target})
 
-target_link_libraries(${target} ${libs})
 
-target_compile_options(${target} PRIVATE ${DEFAULT_COMPILE_FLAGS})
+# 
+# Project options
+# 
 
 set_target_properties(${target}
     PROPERTIES
-    LINKER_LANGUAGE              CXX
-    FOLDER                      "${IDE_FOLDER}"
-    COMPILE_DEFINITIONS_DEBUG   "${DEFAULT_COMPILE_DEFS_DEBUG}"
-    COMPILE_DEFINITIONS_RELEASE "${DEFAULT_COMPILE_DEFS_RELEASE}"
-    LINK_FLAGS_DEBUG            "${DEFAULT_LINKER_FLAGS_DEBUG}"
-    LINK_FLAGS_RELEASE          "${DEFAULT_LINKER_FLAGS_RELEASE}"
-    DEBUG_POSTFIX               "d${DEBUG_POSTFIX}")
+    ${DEFAULT_PROJECT_OPTIONS}
+    FOLDER "${IDE_FOLDER}"
+)
+
+
+# 
+# Include directories
+# 
+
+target_include_directories(${target}
+    PRIVATE
+    ${DEFAULT_INCLUDE_DIRECTORIES}
+    ${PROJECT_BINARY_DIR}/source/include
+)
+
+
+# 
+# Libraries
+# 
+
+target_link_libraries(${target}
+    PRIVATE
+    ${DEFAULT_LIBRARIES}
+    ${META_PROJECT_NAME}::fiblib
+    gmock-dev
+)
+
+
+# 
+# Compile definitions
+# 
+
+target_compile_definitions(${target}
+    PRIVATE
+    ${DEFAULT_COMPILE_DEFINITIONS}
+)
+
+
+# 
+# Compile options
+# 
+
+target_compile_options(${target}
+    PRIVATE
+    ${DEFAULT_COMPILE_OPTIONS}
+)
+
+
+# 
+# Linker options
+# 
+
+target_link_libraries(${target}
+    PRIVATE
+    ${DEFAULT_LINKER_OPTIONS}
+)

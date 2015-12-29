@@ -1,3 +1,4 @@
+
 To adapt this template to your own project, follow these steps:
 
 
@@ -7,51 +8,28 @@ In the root directory adapt/change/do the following:
 [ ] Edit AUTHORS
 [ ] Edit LICENSE
 [ ] Edit README.md
-[ ] Edit GitConfig (origin etc.)
-[ ] Rename template-config.cmake -> <project>-config.cmake
-
-<project>-config.cmake:
-[ ]  Substitute template -> <project>
-[ ]  Substitute TEMPLATE -> <PROJECT>
+[ ] Rename ./template-config.cmake -> <project>-config.cmake
 
 CMakeLists.txt:
 [ ]  Set META_PROJECT_*
 [ ]  Set META_VERSION_*
 [ ]  Set META_AUTHOR_*
 [ ]  Adjust INSTALL_* to the desired install locations for all systems (defaults should be fine for a start)
-[ ]  Substitute template-config.cmake -> <project>-config.cmake
 --------------------------------------------------------------------
 
 
-
 --------------------------------------------------------------------
-In subdirectory "./source/" do:
-
-[ ] Rename source/template-version.h.in -> source/<project>-version.h.in
-source/CMakeLists.txt:
-[ ] Substitute template -> <project>
-source/<project>-version.h.in:
-[ ] Substitute TEMPLATE -> <PROJECT>
+In subdirectory "./deploy/" do:
+deploy/CMakeLists.txt:
+[ ] Substitute pack-template.cmake -> pack-<project>.cmake
+[ ] Exchange deploy/images/logo.ico
+[ ] Exchange deploy/images/logo.bmp
+[ ] Exchange deploy/images/logo.png
+[ ] Rename deploy/packages/pack-template.cmake -> pack-<project>.cmake
+deploy/packages/pack-<project>.cmake:
+[ ] Adjust OPTION_PACK_GENERATOR to your liking for all systems
+[ ] Adjust package options, e.g., CPACK_DEBIAN_PACKAGE_DEPENDS, CPACK_DEBIAN_PACKAGE_SECTION, CPACK_DEBIAN_PACKAGE_PRIORITY, CPACK_RPM_PACKAGE_LICENSE, CPACK_RPM_PACKAGE_GROUP, ...
 --------------------------------------------------------------------
-
-
-
---------------------------------------------------------------------
-In subdirectory "./source/fiblib" do:
-
-source/fiblib/CMakeLists.txt:
-[ ] Substitute TEMPLATE_STATIC -> <PROJECT>_STATIC
---------------------------------------------------------------------
-
-
-
---------------------------------------------------------------------
-In subdirectory "./source/fiblib/include/fiblib" do:
-
-source/fiblib/include/fiblib/fiblib_api.h:
-[ ] Substitute TEMPLATE_STATIC -> <PROJECT>_STATIC
---------------------------------------------------------------------
-
 
 
 --------------------------------------------------------------------
@@ -63,27 +41,11 @@ source/fibcmd/main.cpp:
 --------------------------------------------------------------------
 
 
-
 --------------------------------------------------------------------
-In subdirectory "./packages/" do:
-packages/CMakeLists.txt:
-[ ] Substitute pack-template.cmake -> pack-<project>.cmake
-[ ] Exchange packages/logo.ico
-[ ] Exchange packages/logo.bmp
-[ ] Rename packages/pack-template.cmake -> packages/pack-<project>.cmake
-packages/pack-<project>.cmake:
-[ ] Adjust OPTION_PACK_GENERATOR to your liking for all systems
-[ ] Adjust package options, e.g., CPACK_DEBIAN_PACKAGE_DEPENDS, CPACK_DEBIAN_PACKAGE_SECTION, CPACK_DEBIAN_PACKAGE_PRIORITY, CPACK_RPM_PACKAGE_LICENSE, CPACK_RPM_PACKAGE_GROUP, ...
---------------------------------------------------------------------
+In subdirectory "./docs/api-docs/" do:
 
-
-
---------------------------------------------------------------------
-In subdirectory "./docs/doxygen/" do:
-
-[ ] Exchange docs/doxygen/logo.png
-docs/doxygen/doxyfile.in:
-[ ] Adjust INPUT tag to check for doxygen annotated sources.
+docs/api-docs/doxyfile.in:
+[ ] Adjust INPUT tag (list of doxygen annotated sources)
 --------------------------------------------------------------------
 
 
@@ -91,7 +53,10 @@ docs/doxygen/doxyfile.in:
 General stuff left to do:
 
 [ ] Rename and adjust projects in source/
-[ ] Remove data/example.txt
+[ ] Add new projects to source/CMakeLists.txt
+[ ] Add new projects to ./{project}-config.cmake
+[ ] Add new projects to docs/api-docs/doxyfile.in
+[ ] Remove data/DATA_FOLDER.txt
 [ ] Populate data/
 [ ] Remove ADAPT
 --------------------------------------------------------------------

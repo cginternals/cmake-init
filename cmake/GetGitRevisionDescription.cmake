@@ -42,16 +42,12 @@ get_filename_component(_gitdescmoddir ${CMAKE_CURRENT_LIST_FILE} PATH)
 function(get_git_head_revision _refspecvar _hashvar)
     set(GIT_PARENT_DIR "${CMAKE_SOURCE_DIR}")
     
-    while(NOT EXISTS "${GIT_PARENT_DIR}/.git")  # .git dir not found, search parent directories
-        set(GIT_PREVIOUS_PARENT "${GIT_PARENT_DIR}")
-        get_filename_component(GIT_PARENT_DIR ${GIT_PARENT_DIR} DIRECTORY)
-        if(GIT_PARENT_DIR STREQUAL GIT_PREVIOUS_PARENT)
-            # We have reached the root directory, we are not in git
-            set(${_refspecvar} "000000000000" PARENT_SCOPE)
-            set(${_hashvar} "000000000000" PARENT_SCOPE)
-            return()
-        endif()
-    endwhile()
+    if(NOT EXISTS "${GIT_PARENT_DIR}/.git")
+        # .git dir not found
+        set(${_refspecvar} "000000000000" PARENT_SCOPE)
+        set(${_hashvar} "000000000000" PARENT_SCOPE)
+        return()
+    endif()
     
     if (IS_DIRECTORY "${GIT_PARENT_DIR}/.git")
 	# common case

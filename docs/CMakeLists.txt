@@ -1,7 +1,18 @@
 
+# 
 # Target 'docs'
-add_custom_target(docs)
-set_target_properties(docs PROPERTIES EXCLUDE_FROM_DEFAULT_BUILD 1)
+# 
 
+if(NOT OPTION_BUILD_DOCS)
+    return()
+endif()
+
+add_custom_target(docs)
+
+
+# 
 # Documentation
-add_subdirectory(doxygen)
+# 
+
+add_subdirectory(api-docs)
+add_subdirectory(manual)
