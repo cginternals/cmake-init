@@ -249,6 +249,3 @@ set_target_properties(pack-${project_name} PROPERTIES EXCLUDE_FROM_DEFAULT_BUILD
 
 # Set dependencies
 add_dependencies(pack pack-${project_name})
-if(MSVC)
-    add_dependencies(pack-${project_name} ALL_BUILD)
-endif()
