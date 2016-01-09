@@ -14,9 +14,7 @@ set(AUTOMOC_MOC_OPTIONS PROPERTIES FOLDER CMakeAutomocTargets)
 set_property(GLOBAL PROPERTY AUTOMOC_FOLDER CMakeAutomocTargets)
 
 # ENABLE CMP0020: Automatically link Qt executables to qtmain target on Windows.
-if (POLICY CMP0020)
-    cmake_policy(SET CMP0020 NEW)
-endif()
+set_policy(CMP0020 NEW)
 
 
 # 

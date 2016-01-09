@@ -9,9 +9,7 @@ if(NOT OPTION_BUILD_TESTS)
 endif()
 
 # DISABLE CMP0037: Target names should not be reserved and should match a validity pattern.
-if(POLICY CMP0037)
-    cmake_policy(SET CMP0037 OLD)
-endif()
+set_policy(CMP0037 OLD)
 
 # Function: Build test and add command to execute it via target 'test'
 function(add_test_without_ctest target)
