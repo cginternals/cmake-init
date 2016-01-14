@@ -25,7 +25,7 @@ The files of cmake-init are an instantiation of the templates containing:
 | Jenkins | Ubuntu 14.04 | Clang 3.5 | BUILD_TESTS | [![Build Status](http://jenkins.hpi3d.de/buildStatus/icon?job=cmake-init-linux-clang3.5)](http://jenkins.hpi3d.de/job/cmake-init-linux-clang3.5) |
 | Jenkins | OS X 10.10 | Clang 3.5 | BUILD_TESTS | [![Build Status](http://jenkins.hpi3d.de/buildStatus/icon?job=cmake-init-osx-clang3.5)](http://jenkins.hpi3d.de/job/cmake-init-osx-clang3.5) |
 | Jenkins | Windows 8.1 | MSVC 2013 Update 5 | BUILD_TESTS | [![Build Status](http://jenkins.hpi3d.de/buildStatus/icon?job=cmake-init-windows-msvc2013)](http://jenkins.hpi3d.de/job/cmake-init-windows-msvc2013) |
-| Jenkins | Windows 8.1 | MSVC 2015 | BUILD_TESTS | [![Build Status](http://jenkins.hpi3d.de/buildStatus/icon?job=cmake-init-windows-msvc2015)](http://jenkins.hpi3d.de/job/cmake-init-windows-msvc2015) |
+| Jenkins | Windows 8.1 | MSVC 2015 Update 1 | BUILD_TESTS | [![Build Status](http://jenkins.hpi3d.de/buildStatus/icon?job=cmake-init-windows-msvc2015)](http://jenkins.hpi3d.de/job/cmake-init-windows-msvc2015) |
 
 
 ## Design Decisions
