@@ -91,9 +91,9 @@ do
     if [ -f "./.localconfig/$ARG" ]
     then
         . "./.localconfig/$ARG"
-    elif [ -f "~/.localconfig/$ARG" ]
+    elif [ -f "$HOME/.localconfig/$ARG" ]
     then
-        . "~/.localconfig/$ARG"
+        . "$HOME/.localconfig/$ARG"
     else
         echo "Configuration \"$ARG\" not found (searched in ./.localconfig and ~/.localconfig)"
     fi
