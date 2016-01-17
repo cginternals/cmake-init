@@ -17,7 +17,7 @@ The files of cmake-init are an instantiation of the templates containing:
   * Example documentation
   * Example package
 
-| Service | System | Compiler | Options | Status |
+| Service | System | Compiler | Targets | Status |
 | ------- | ------ | -------- | ------- | ------ |
 | [Drone](https://drone.io/github.com/cginternals/cmake-init) | Ubuntu 12.04 | GCC 4.8 | all (no qt), test | [![Build Status](https://drone.io/github.com/cginternals/cmake-init/status.png)](https://drone.io/github.com/cginternals/cmake-init/latest) |
 | Jenkins | Ubuntu 14.04 | GCC 4.7 | all, test | [![Build Status](http://jenkins.hpi3d.de/buildStatus/icon?job=cmake-init-linux-gcc4.7)](http://jenkins.hpi3d.de/job/cmake-init-linux-gcc4.7)|
