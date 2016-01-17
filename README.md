@@ -19,7 +19,7 @@ The files of cmake-init are an instantiation of the templates containing:
 
 | Service | System | Compiler | Options | Status |
 | ------- | ------ | -------- | ------- | ------ |
-| [Drone](https://drone.io/github.com/cginternals/cmake-init) | Ubuntu 12.04 | GCC 4.8 | no tests | [![Build Status](https://drone.io/github.com/cginternals/cmake-init/status.png)](https://drone.io/github.com/cginternals/cmake-init/latest) |
+| [Drone](https://drone.io/github.com/cginternals/cmake-init) | Ubuntu 12.04 | GCC 4.8 | all (no qt), test | [![Build Status](https://drone.io/github.com/cginternals/cmake-init/status.png)](https://drone.io/github.com/cginternals/cmake-init/latest) |
 | Jenkins | Ubuntu 14.04 | GCC 4.7 | all, test | [![Build Status](http://jenkins.hpi3d.de/buildStatus/icon?job=cmake-init-linux-gcc4.7)](http://jenkins.hpi3d.de/job/cmake-init-linux-gcc4.7)|
 | Jenkins | Ubuntu 14.04 | GCC 4.8 | all, test | [![Build Status](http://jenkins.hpi3d.de/buildStatus/icon?job=cmake-init-linux-gcc4.8)](http://jenkins.hpi3d.de/job/cmake-init-linux-gcc4.8)|
 | Jenkins | Ubuntu 14.04 | GCC 4.9 | all, test | [![Build Status](http://jenkins.hpi3d.de/buildStatus/icon?job=cmake-init-linux-gcc4.9)](http://jenkins.hpi3d.de/job/cmake-init-linux-gcc4.9)|
