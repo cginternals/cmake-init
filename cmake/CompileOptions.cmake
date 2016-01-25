@@ -75,9 +75,9 @@ if ("${CMAKE_CXX_COMPILER_ID}" MATCHES "MSVC")
         # /wd4201     # -> disable warning: nonstandard extension used: nameless struct/union (caused by GLM)
         # /wd4127     # -> disable warning: conditional expression is constant (caused by Qt)
         
-        $<$<CONFIG:Debug>:
-        /RTCc         # -> value is assigned to a smaller data type and results in a data loss
-        >
+        #$<$<CONFIG:Debug>:
+        #/RTCc         # -> value is assigned to a smaller data type and results in a data loss
+        #>
 
         $<$<CONFIG:Release>: 
         /Gw           # -> whole program global optimization
