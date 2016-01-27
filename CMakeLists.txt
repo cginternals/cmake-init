@@ -54,6 +54,10 @@ option(OPTION_BUILD_TESTS    "Build tests."                                     
 option(OPTION_BUILD_DOCS     "Build documentation."                                   OFF)
 option(OPTION_BUILD_EXAMPLES "Build examples."                                        OFF)
 
+if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+    set(OPTION_DEPLOY_DESTDIR "" CACHE STRING "Emulates the DESTDIR convention of make install.")
+endif()
+
 
 # 
 # Declare project
