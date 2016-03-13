@@ -7,10 +7,13 @@
 cmake_minimum_required(VERSION 3.2 FATAL_ERROR)
 
 # Include cmake modules
+
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+set(WriterCompilerDetectionHeaderFound NOTFOUND)
+
 include(GenerateExportHeader)
 include(ExternalProject)
-include(WriteCompilerDetectionHeader)
+include(WriteCompilerDetectionHeader OPTIONAL RESULT_VARIABLE WriterCompilerDetectionHeaderFound)
 include(cmake/GetGitRevisionDescription.cmake)
 include(cmake/Custom.cmake)
 
