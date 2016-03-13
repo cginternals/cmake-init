@@ -66,6 +66,8 @@ export(TARGETS ${target} NAMESPACE ${META_PROJECT_NAME}:: FILE ${PROJECT_BINARY_
 # Create feature detection header
 # Compilers: https://cmake.org/cmake/help/v3.1/variable/CMAKE_LANG_COMPILER_ID.html#variable:CMAKE_%3CLANG%3E_COMPILER_ID
 # Feature: https://cmake.org/cmake/help/v3.1/prop_gbl/CMAKE_CXX_KNOWN_FEATURES.html
+
+# Check for availability of module; use pre-generated version if not found
 if (WriterCompilerDetectionHeaderFound)
     write_compiler_detection_header(
         FILE ${feature_file}
