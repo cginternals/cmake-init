@@ -30,8 +30,9 @@ set(doxyfile_in doxyfile.in)
 # 
 
 # Set project variables
-set(doxyfile     ${CMAKE_CURRENT_BINARY_DIR}/doxyfile)
-set(doxyfile_html ${CMAKE_CURRENT_BINARY_DIR}/html/index.html)
+set(doxyfile            "${CMAKE_CURRENT_BINARY_DIR}/doxyfile")
+set(doxyfile_directory  "${CMAKE_CURRENT_BINARY_DIR}/html")
+set(doxyfile_html       "${doxyfile_directory}/index.html")
 
 # Get filename and path of doxyfile
 get_filename_component(name ${doxyfile_in} NAME)
@@ -49,7 +50,7 @@ add_custom_command(
     OUTPUT              ${doxyfile_html}
     DEPENDS             ${doxyfile} ${META_PROJECT_NAME}::baselib ${META_PROJECT_NAME}::fiblib
     WORKING_DIRECTORY   ${path}
-    COMMAND             ${CMAKE_COMMAND} -E copy_directory ${path} ${CMAKE_CURRENT_BINARY_DIR}/html # ToDO, configure doxygen to use source as is
+    COMMAND             ${CMAKE_COMMAND} -E copy_directory ${path} ${doxyfile_directory} # ToDO, configure doxygen to use source as is
     COMMAND             ${DOXYGEN} \"${doxyfile}\"
     COMMENT             "Creating doxygen documentation."
 )
@@ -57,3 +58,14 @@ add_custom_command(
 # Declare target
 add_custom_target(${target} ALL DEPENDS ${doxyfile_html})
 add_dependencies(docs ${target})
+
+
+# 
+# Deployment
+# 
+
+install(
+    DIRECTORY ${doxyfile_directory}
+    DESTINATION ${INSTALL_DOC}
+    COMPONENT docs
+)
