@@ -105,7 +105,8 @@ endif()
 if(UNIX AND SYSTEM_DIR_INSTALL)
     # Install into the system (/usr/bin or /usr/local/bin)
     set(INSTALL_ROOT      "share/${project}")       # /usr/[local]/share/<project>
-    set(INSTALL_CMAKE     "share/${project}/cmake") # /usr/[local]/share/<project>
+    set(INSTALL_CMAKE     "share/${project}/cmake") # /usr/[local]/share/<project>/cmake
+    set(INSTALL_EXAMPLES  "share/${project}")       # /usr/[local]/share/<project>
     set(INSTALL_DATA      "share/${project}")       # /usr/[local]/share/<project>
     set(INSTALL_BIN       "bin")                    # /usr/[local]/bin
     set(INSTALL_SHARED    "lib")                    # /usr/[local]/lib
@@ -119,8 +120,9 @@ else()
     # Install into local directory
     set(INSTALL_ROOT      ".")                      # ./
     set(INSTALL_CMAKE     "cmake")                  # ./cmake
-    set(INSTALL_DATA      ".")                      # ./bin
-    set(INSTALL_BIN       ".")                      # ./bin
+    set(INSTALL_EXAMPLES  ".")                      # ./
+    set(INSTALL_DATA      ".")                      # ./
+    set(INSTALL_BIN       ".")                      # ./
     set(INSTALL_SHARED    "lib")                    # ./lib
     set(INSTALL_LIB       "lib")                    # ./lib
     set(INSTALL_INCLUDE   "include")                # ./include
