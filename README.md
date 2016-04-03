@@ -17,17 +17,15 @@ The files of cmake-init are an instantiation of the templates containing:
   * Example documentation
   * Example package
 
-| Service | System | Compiler | Targets | Status |
-| ------- | ------ | -------- | ------- | ------ |
-| [Drone](https://drone.io/github.com/cginternals/cmake-init) | Ubuntu 12.04 | GCC 4.8 | all (no qt), test | [![Build Status](https://drone.io/github.com/cginternals/cmake-init/status.png)](https://drone.io/github.com/cginternals/cmake-init/latest) |
-| Jenkins | Ubuntu 14.04 | GCC 4.7 | all, test | [![Build Status](http://jenkins.hpi3d.de/buildStatus/icon?job=cmake-init-linux-gcc4.7)](http://jenkins.hpi3d.de/job/cmake-init-linux-gcc4.7)|
-| Jenkins | Ubuntu 14.04 | GCC 4.8 | all, test | [![Build Status](http://jenkins.hpi3d.de/buildStatus/icon?job=cmake-init-linux-gcc4.8)](http://jenkins.hpi3d.de/job/cmake-init-linux-gcc4.8)|
-| Jenkins | Ubuntu 14.04 | GCC 4.9 | all, test | [![Build Status](http://jenkins.hpi3d.de/buildStatus/icon?job=cmake-init-linux-gcc4.9)](http://jenkins.hpi3d.de/job/cmake-init-linux-gcc4.9)|
-| Jenkins | Ubuntu 14.04 | GCC 5.3 | all, test | [![Build Status](http://jenkins.hpi3d.de/buildStatus/icon?job=cmake-init-linux-gcc5.3)](http://jenkins.hpi3d.de/job/cmake-init-linux-gcc5.3)|
-| Jenkins | Ubuntu 14.04 | Clang 3.5 | all, test | [![Build Status](http://jenkins.hpi3d.de/buildStatus/icon?job=cmake-init-linux-clang3.5)](http://jenkins.hpi3d.de/job/cmake-init-linux-clang3.5) |
-| Jenkins | OS X 10.10 | Clang 3.5 | - | [![Build Status](http://jenkins.hpi3d.de/buildStatus/icon?job=cmake-init-osx-clang3.5)](http://jenkins.hpi3d.de/job/cmake-init-osx-clang3.5) |
-| Jenkins | Windows 8.1 | MSVC 2013 Update 5 | all, test, install | [![Build Status](http://jenkins.hpi3d.de/buildStatus/icon?job=cmake-init-windows-msvc2013)](http://jenkins.hpi3d.de/job/cmake-init-windows-msvc2013) |
-| Jenkins | Windows 8.1 | MSVC 2015 Update 1 | all, test, install | [![Build Status](http://jenkins.hpi3d.de/buildStatus/icon?job=cmake-init-windows-msvc2015)](http://jenkins.hpi3d.de/job/cmake-init-windows-msvc2015) |
+| Service | System | Compiler | Status |
+| ------- | ------ | -------- | -----: |
+|  [Travis-CI](https://travis-ci.org/cginternals/cmake-init) | Ubuntu 14.04 | GCC 4.8, Clang 3.5 | [![Build Status](https://travis-ci.org/cginternals/cmake-init.svg?branch=master)](https://travis-ci.org/cginternals/cmake-init) |
+| [Coverity](https://scan.coverity.com/projects/6828?tab=overview) | Ubuntu 14.04 | GCC 5.3 | [![Coverity Status](https://scan.coverity.com/projects/6828/badge.svg)](https://scan.coverity.com/projects/6828) |
+| Jenkins <br><br><br><br> | Ubuntu 14.04 <br><br><br><br> | GCC 4.7 <br> GCC 4.8 <br> GCC 4.9 <br> GCC 5.3 <br> Clang 3.5 <br> | [![Build Status](http://jenkins.hpi3d.de/buildStatus/icon?job=cmake-init-linux-gcc4.7)](http://jenkins.hpi3d.de/job/cmake-init-linux-gcc4.7) <br> [![Build Status](http://jenkins.hpi3d.de/buildStatus/icon?job=cmake-init-linux-gcc4.8)](http://jenkins.hpi3d.de/job/cmake-init-linux-gcc4.8) <br> [![Build Status](http://jenkins.hpi3d.de/buildStatus/icon?job=cmake-init-linux-gcc4.9)](http://jenkins.hpi3d.de/job/cmake-init-linux-gcc4.9) <br> [![Build Status](http://jenkins.hpi3d.de/buildStatus/icon?job=cmake-init-linux-gcc5.3)](http://jenkins.hpi3d.de/job/cmake-init-linux-gcc5.3) <br> [![Build Status](http://jenkins.hpi3d.de/buildStatus/icon?job=cmake-init-linux-clang3.5)](http://jenkins.hpi3d.de/job/cmake-init-linux-clang3.5) <br> |
+| Jenkins <br><br> | Windows 10 <br><br> | MSVC 2013 Update 5 <br>  MSVC 2015 Update 1 <br> | [![Build Status](http://jenkins.hpi3d.de/buildStatus/icon?job=cmake-init-windows-msvc2013)](http://jenkins.hpi3d.de/job/cmake-init-windows-msvc2013) <br> [![Build Status](http://jenkins.hpi3d.de/buildStatus/icon?job=cmake-init-windows-msvc2015)](http://jenkins.hpi3d.de/job/cmake-init-windows-msvc2015) <br> |
+| Jenkins | OS X 10.10 | Clang 3.5 | [![Build Status](http://jenkins.hpi3d.de/buildStatus/icon?job=cmake-init-osx-clang3.5)](http://jenkins.hpi3d.de/job/cmake-init-osx-clang3.5) |
+
+Please note that our OS X build node is currently broken (physically). However, *cmake-init* is supported and maintained for OS X as well.
 
 
 ## Design Decisions
