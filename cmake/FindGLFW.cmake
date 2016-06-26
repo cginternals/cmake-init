@@ -1,8 +1,9 @@
 
 # GLFW_FOUND
 # GLFW_INCLUDE_DIR
-# GLFW_LIBRARY
-
+# GLFW_LIBRARY_RELEASE
+# GLFW_LIBRARY_DEBUG
+# GLFW_LIBRARIES
 # GLFW_BINARY (win32 only)
 
 include(FindPackageHandleStandardArgs)
@@ -27,6 +28,9 @@ find_path(GLFW_INCLUDE_DIR GLFW/glfw3.h
 
 find_library(GLFW_LIBRARY_RELEASE NAMES glfw3 glfw glfw3dll glfwdll
 
+    HINTS
+    ${GLFW_INCLUDE_DIR}/..
+
     PATHS
     $ENV{GLFW_DIR}
     /lib/x64
@@ -50,6 +54,9 @@ find_library(GLFW_LIBRARY_RELEASE NAMES glfw3 glfw glfw3dll glfwdll
     DOC "The GLFW library")
 
 find_library(GLFW_LIBRARY_DEBUG NAMES glfw3d glfwd glfw3ddll glfwddll
+
+    HINTS
+    ${GLFW_INCLUDE_DIR}/..
 
     PATHS
     $ENV{GLFW_DIR}
@@ -107,6 +114,7 @@ endif()
 if(APPLE)
     set(GLFW_cocoa_LIBRARY "-framework Cocoa" CACHE STRING "Cocoa framework for OSX")
     set(GLFW_iokit_LIBRARY "-framework IOKit" CACHE STRING "IOKit framework for OSX")
+    set(GLFW_corevideo_LIBRARY "-framework CoreVideo" CACHE STRING "CoreVideo framework for OSX")
 endif()
 
 # GLFW is required to link statically for now (no deploy specified)
