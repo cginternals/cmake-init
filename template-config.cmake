@@ -1,6 +1,6 @@
 
 # This config script tries to locate the project either in its source tree
-# of from an install location.
+# or from an install location.
 # 
 # Please adjust the list of submodules to search for.
 
