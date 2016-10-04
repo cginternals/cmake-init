@@ -23,7 +23,11 @@ endmacro()
 # Macro to search for all modules
 macro(find_modules PREFIX)
     foreach(module_name ${MODULE_NAMES})
-        find_module("${CMAKE_CURRENT_LIST_DIR}/${PREFIX}/${module_name}/${module_name}-export.cmake")
+        if(TARGET ${module_name})
+            set(MODULE_FOUND TRUE)
+        else()
+            find_module("${CMAKE_CURRENT_LIST_DIR}/${PREFIX}/${module_name}/${module_name}-export.cmake")
+        endif()
     endforeach(module_name)
 endmacro()
 
@@ -42,3 +46,6 @@ if("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
 else()
     find_modules("build/cmake")
 endif()
+
+# Signal success/failure to CMake
+set(template_FOUND ${MODULE_FOUND})
