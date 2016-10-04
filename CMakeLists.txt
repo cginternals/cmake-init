@@ -16,6 +16,10 @@ include(ExternalProject)
 
 # This module is only available with CMake >=3.1, so check whether it could be found
 include(WriteCompilerDetectionHeader OPTIONAL RESULT_VARIABLE WriterCompilerDetectionHeaderFound)
+# BUT in CMake 3.1 this module doesn't recognize AppleClang as compiler, so disable it
+if (${CMAKE_VERSION} VERSION_LESS "3.2")
+    set(WriterCompilerDetectionHeaderFound Off)
+endif()
 
 include(cmake/GetGitRevisionDescription.cmake)
 include(cmake/Custom.cmake)
