@@ -13,7 +13,7 @@ endfunction(set_policy)
 # to group source files in folders (e.g. for MSVC solutions).
 #
 # Example:
-# source_group_by_path("${CMAKE_CURRENT_SOURCE_DIR}/src" "\\\\.h$|\\\\.hpp$|\\\\.cpp$|\\\\.c$|\\\\.ui$|\\\\.qrc$" "Source Files" ${sources})
+# source_group_by_path("${CMAKE_CURRENT_SOURCE_DIR}/src" "\\\\.h$|\\\\.inl$|\\\\.cpp$|\\\\.c$|\\\\.ui$|\\\\.qrc$" "Source Files" ${sources})
 function(source_group_by_path PARENT_PATH REGEX GROUP)
 
     foreach (FILENAME ${ARGN})
