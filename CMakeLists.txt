@@ -9,16 +9,14 @@ cmake_minimum_required(VERSION 3.0 FATAL_ERROR)
 # Include cmake modules
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
-set(WriterCompilerDetectionHeaderFound NOTFOUND)
 
 include(GenerateExportHeader)
-include(ExternalProject)
 
+set(WriterCompilerDetectionHeaderFound NOTFOUND)
 # This module is only available with CMake >=3.1, so check whether it could be found
-include(WriteCompilerDetectionHeader OPTIONAL RESULT_VARIABLE WriterCompilerDetectionHeaderFound)
-# BUT in CMake 3.1 this module doesn't recognize AppleClang as compiler, so disable it
-if (${CMAKE_VERSION} VERSION_LESS "3.2")
-    set(WriterCompilerDetectionHeaderFound NOTFOUND)
+# BUT in CMake 3.1 this module doesn't recognize AppleClang as compiler, so just use it as of CMake 3.2
+if (${CMAKE_VERSION} VERSION_GREATER "3.2")
+    include(WriteCompilerDetectionHeader OPTIONAL RESULT_VARIABLE WriterCompilerDetectionHeaderFound)
 endif()
 
 include(cmake/GetGitRevisionDescription.cmake)
