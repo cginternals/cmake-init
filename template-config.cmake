@@ -39,6 +39,8 @@ endif()
 # Try common build locations
 if("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
     find_modules("build-debug/cmake")
+    find_modules("build/cmake")
 else()
+    find_modules("build-debug/cmake")
     find_modules("build/cmake")
 endif()
