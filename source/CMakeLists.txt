@@ -21,8 +21,10 @@ set(IDE_FOLDER "Examples")
 add_subdirectory(examples)
 
 # Tests
-set(IDE_FOLDER "Tests")
-add_subdirectory(tests)
+if(OPTION_BUILD_TESTS)
+    set(IDE_FOLDER "Tests")
+    add_subdirectory(tests)
+endif()
 
 
 # 

@@ -1,5 +1,11 @@
 
 # 
+# External dependencies
+# 
+
+find_package(${META_PROJECT_NAME} REQUIRED HINTS "${CMAKE_CURRENT_SOURCE_DIR}/../../../")
+
+# 
 # Executable name and options
 # 
 
