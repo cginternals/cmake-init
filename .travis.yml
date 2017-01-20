@@ -13,8 +13,8 @@ compiler:
 
 env:
   matrix:
-    - CMAKE_CONFIGURATION=release
-    - CMAKE_CONFIGURATION=debug
+    - CMAKE_CONFIGURATION=release BUILD_DIR=build
+    - CMAKE_CONFIGURATION=debug BUILD_DIR=build-debug
 
 matrix:
   exclude:
@@ -31,5 +31,5 @@ before_script:
   - if [ $CMAKE_CONFIGURATION == debug ]; then CMAKE_OPTIONS="-DOPTION_BUILD_EXAMPLES=On" ./configure debug; fi
 
 script:
-  - cmake --build build -- -j 8
-  - cmake --build --target test build
+  - cmake --build $BUILD_DIR
+  - cmake --build --target test $BUILD_DIR
