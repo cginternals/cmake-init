@@ -50,6 +50,14 @@ docs/api-docs/doxyfile.in:
 
 
 --------------------------------------------------------------------
+In subdirectory "./source/tests/" do:
+
+source/tests/CMakeLists.txt:
+[ ]  Set META_PROJECT_NAME
+--------------------------------------------------------------------
+
+
+--------------------------------------------------------------------
 General stuff left to do:
 
 [ ] Rename and adjust projects in source/
