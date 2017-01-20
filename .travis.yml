@@ -32,4 +32,4 @@ before_script:
 
 script:
   - cmake --build $BUILD_DIR
-  - cmake --build --target test $BUILD_DIR
+  - cmake --build $BUILD_DIR --target test
