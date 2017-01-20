@@ -1,17 +1,21 @@
 language: cpp
 
 sudo: required
+dist: trusty
 
 os:
   - linux
   - osx
 
-dist: trusty
-
 compiler:
   - gcc
   - clang
-  
+
+env:
+  matrix:
+    - CMAKE_CONFIGURATION=release
+    - CMAKE_CONFIGURATION=debug
+
 matrix:
   exclude:
   - os: osx
@@ -23,9 +27,9 @@ before_install:
 
 before_script:
   - ./configure
-  - CMAKE_OPTIONS="-DOPTION_BUILD_EXAMPLES=On" ./configure
-  
+  - if [ $CMAKE_CONFIGURATION == release ]; then CMAKE_OPTIONS="-DOPTION_BUILD_EXAMPLES=On" ./configure; fi
+  - if [ $CMAKE_CONFIGURATION == debug ]; then CMAKE_OPTIONS="-DOPTION_BUILD_EXAMPLES=On" ./configure debug; fi
+
 script:
-  - cd build
-  - make -j 8
-  - make test
+  - cmake --build build -- -j 8
+  - cmake --build --target test build
