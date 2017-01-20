@@ -11,6 +11,11 @@ dist: trusty
 compiler:
   - gcc
   - clang
+  
+matrix:
+  exclude:
+  - os: osx
+    compiler: gcc
 
 before_install:
   - if [ $TRAVIS_OS_NAME == linux ]; then sudo apt-get install -qq cmake qt5-default; fi
