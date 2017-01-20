@@ -12,6 +12,8 @@ compiler:
   - clang
 
 env:
+  global:
+    - CMAKE_OPTIONS="-DOPTION_BUILD_EXAMPLES=On"
   matrix:
     - CMAKE_CONFIGURATION=release BUILD_DIR=build
     - CMAKE_CONFIGURATION=debug BUILD_DIR=build-debug
@@ -27,8 +29,8 @@ before_install:
 
 before_script:
   - ./configure
-  - if [ $CMAKE_CONFIGURATION == release ]; then CMAKE_OPTIONS="-DOPTION_BUILD_EXAMPLES=On" ./configure; fi
-  - if [ $CMAKE_CONFIGURATION == debug ]; then CMAKE_OPTIONS="-DOPTION_BUILD_EXAMPLES=On" ./configure debug; fi
+  - if [ $CMAKE_CONFIGURATION == release ]; then ./configure; fi
+  - if [ $CMAKE_CONFIGURATION == debug ]; then ./configure debug; fi
 
 script:
   - cmake --build $BUILD_DIR
