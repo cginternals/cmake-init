@@ -4,7 +4,7 @@
 BUILD_DIR="build"
 CMAKE_GENERATOR="Unix Makefiles"
 BUILD_TYPE="Release"
-CMAKE_OPTIONS=""
+CMAKE_OPTIONS="$CMAKE_OPTIONS"
 
 # Create default configs
 if [ ! -d "./.localconfig" ]
