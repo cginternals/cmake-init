@@ -79,7 +79,7 @@ if (WriterCompilerDetectionHeaderFound)
     )
 else()
     file(
-        COPY ${PROJECT_SOURCE_DIR}/codegeneration/${target}_features.h
+        COPY ${PROJECT_SOURCE_DIR}/source/codegeneration/${target}_features.h
         DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/include/${target}
         USE_SOURCE_PERMISSIONS
     )
