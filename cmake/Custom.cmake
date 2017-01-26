@@ -9,6 +9,21 @@ function(set_policy POL VAL)
 endfunction(set_policy)
 
 
+# Converts a list of include paths to their -I ... command line list
+#
+# Example:
+# convert_includes(RESULT "include1;include2;include3")
+# Result:
+# -I include1 -I include2 -I include3
+function(convert_includes var)
+   set(listVar "")
+   foreach(include ${ARGN})
+      list(APPEND listVar "-I${include}")
+   endforeach()
+   set(${var} "${listVar}" PARENT_SCOPE)
+endfunction()
+
+
 # Define function "source_group_by_path with three mandatory arguments (PARENT_PATH, REGEX, GROUP, ...)
 # to group source files in folders (e.g. for MSVC solutions).
 #
@@ -44,3 +59,32 @@ function(list_extract OUTPUT REGEX)
     set(${OUTPUT} ${${OUTPUT}} PARENT_SCOPE)
 
 endfunction(list_extract)
+
+
+# Function to register a target for cppcheck
+function(enable_cppcheck target)
+    if(NOT TARGET cppcheck-all)
+        add_custom_target(cppcheck-all)
+    endif()
+    
+    get_target_property(INCLUDES ${target} INCLUDE_DIRECTORIES)
+
+    convert_includes(INCLUDES ${INCLUDES})
+
+    add_custom_target(
+        cppcheck-${target}
+        COMMAND
+            cppcheck
+                ${INCLUDES}
+                --check-config
+                --enable=warning,performance,portability,information,missingInclude
+                --quiet
+                --std=c++11
+                --verbose
+                --suppress=missingIncludeSystem
+                ${ARGN}
+        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+    )
+    
+    add_dependencies(cppcheck-all cppcheck-${target})
+endfunction()

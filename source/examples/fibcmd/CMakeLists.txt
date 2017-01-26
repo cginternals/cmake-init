@@ -104,6 +104,16 @@ target_link_libraries(${target}
 )
 
 
+#
+# Target Health
+#
+
+enable_cppcheck(
+    ${target}
+    ${sources}
+)
+
+
 # 
 # Deployment
 # 
