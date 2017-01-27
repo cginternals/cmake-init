@@ -103,7 +103,7 @@ include(cmake/CompileOptions.cmake)
 #
 
 enable_cppcheck(On)
-enable_clang_format(Off)
+enable_clang_tidy(On)
 enable_uncrustify(Off)
 
 

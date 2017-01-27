@@ -1,10 +1,10 @@
 
 include(${CMAKE_CURRENT_LIST_DIR}/Cppcheck.cmake)
-include(${CMAKE_CURRENT_LIST_DIR}/ClangFormat.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/ClangTidy.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/Uncrustify.cmake)
 
 set(OPTION_CPPCHECK_ENABLED Off)
-set(OPTION_CLANG_FORMAT_ENABLED Off)
+set(OPTION_CLANG_TIDY_ENABLED Off)
 set(OPTION_UNCRUSTIFY_ENABLED Off)
 
 # Function to register a target for enabled health checks
@@ -20,9 +20,9 @@ function(perform_health_checks target)
         add_dependencies(check-${target} cppcheck-${target})
     endif()
     
-    if (OPTION_CLANG_FORMAT_ENABLED)
-        perform_clang_format(clang-format-${target} ${target} ${ARGN})
-        add_dependencies(check-${target} clang-format-${target})
+    if (OPTION_CLANG_TIDY_ENABLED)
+        perform_clang_tidy(clang-tidy-${target} ${target} ${ARGN})
+        add_dependencies(check-${target} clang-tidy-${target})
     endif()
     
     if (OPTION_UNCRUSTIFY_ENABLED)
@@ -38,9 +38,9 @@ function(enable_cppcheck status)
     set(OPTION_CPPCHECK_ENABLED ${status} PARENT_SCOPE)
 endfunction()
 
-# Enable or disable clang-format for health checks
-function(enable_clang_format status)
-    set(OPTION_CLANG_FORMAT_ENABLED ${status} PARENT_SCOPE)
+# Enable or disable clang-tidy for health checks
+function(enable_clang_tidy status)
+    set(OPTION_CLANG_TIDY_ENABLED ${status} PARENT_SCOPE)
 endfunction()
 
 # Enable or disable uncrustify for health checks
