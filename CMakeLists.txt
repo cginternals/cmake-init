@@ -21,6 +21,7 @@ endif()
 
 include(cmake/GetGitRevisionDescription.cmake)
 include(cmake/Custom.cmake)
+include(cmake/HealthCheck.cmake)
 
 # Set policies
 set_policy(CMP0028 NEW) # ENABLE CMP0028: Double colon in target name means ALIAS or IMPORTED target.
@@ -95,6 +96,15 @@ file(WRITE "${PROJECT_BINARY_DIR}/VERSION" "${META_NAME_VERSION}")
 # 
 
 include(cmake/CompileOptions.cmake)
+
+
+#
+# Project Health Check Setup
+#
+
+enable_cppcheck(On)
+enable_clang_format(Off)
+enable_uncrustify(Off)
 
 
 # 

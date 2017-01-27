@@ -131,7 +131,7 @@ target_link_libraries(${target}
 # Target Health
 #
 
-enable_cppcheck(
+perform_health_checks(
     ${target}
     ${sources}
 )
