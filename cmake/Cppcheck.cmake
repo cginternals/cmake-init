@@ -6,7 +6,7 @@ function(perform_cppcheck check_target target)
     add_custom_target(
         ${check_target}
         COMMAND
-            cppcheck
+            ${cppcheck_EXECUTABLE}
                 "$<$<BOOL:${includes}>:-I$<JOIN:${includes},\t-I>>"
                 --check-config
                 --enable=warning,performance,portability,information,missingInclude
