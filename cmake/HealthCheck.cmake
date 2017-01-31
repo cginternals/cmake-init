@@ -1,7 +1,6 @@
 
 include(${CMAKE_CURRENT_LIST_DIR}/Cppcheck.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/ClangTidy.cmake)
-include(${CMAKE_CURRENT_LIST_DIR}/Uncrustify.cmake)
 
 set(OPTION_CPPCHECK_ENABLED Off)
 set(OPTION_CLANG_TIDY_ENABLED Off)
@@ -79,9 +78,4 @@ function(enable_clang_tidy status)
     if(${CMAKE_VERSION} VERSION_GREATER "3.5" AND NOT CMAKE_EXPORT_COMPILE_COMMANDS)
         message(STATUS "clang-tidy makes use of the compile commands database. Make sure to configure CMake with -DCMAKE_EXPORT_COMPILE_COMMANDS=ON")
     endif()
-endfunction()
-
-# Enable or disable uncrustify for health checks
-function(enable_uncrustify status)
-    set(OPTION_UNCRUSTIFY_ENABLED ${status} PARENT_SCOPE)
 endfunction()
