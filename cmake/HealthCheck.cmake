@@ -41,6 +41,10 @@ endfunction()
 # Enable or disable clang-tidy for health checks
 function(enable_clang_tidy status)
     set(OPTION_CLANG_TIDY_ENABLED ${status} PARENT_SCOPE)
+    
+    if(${CMAKE_VERSION} VERSION_GREATER "3.5" AND NOT CMAKE_EXPORT_COMPILE_COMMANDS)
+        message(STATUS "clang-tidy makes use of the compile commands database. Make sure to configure CMake with -DCMAKE_EXPORT_COMPILE_COMMANDS=ON")
+    endif()
 endfunction()
 
 # Enable or disable uncrustify for health checks

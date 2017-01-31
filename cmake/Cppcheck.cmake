@@ -1,15 +1,13 @@
 
 # Function to register a target for cppcheck
 function(perform_cppcheck check_target target)
-    get_target_property(INCLUDES ${target} INCLUDE_DIRECTORIES)
-
-    convert_includes(INCLUDES ${INCLUDES})
-
+    set(includes "$<TARGET_PROPERTY:${target},INCLUDE_DIRECTORIES>")
+    
     add_custom_target(
         ${check_target}
         COMMAND
             cppcheck
-                ${INCLUDES}
+                "$<$<BOOL:${includes}>:-I$<JOIN:${includes},\t-I>>"
                 --check-config
                 --enable=warning,performance,portability,information,missingInclude
                 --quiet

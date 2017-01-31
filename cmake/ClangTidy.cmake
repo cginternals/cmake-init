@@ -3,17 +3,16 @@
 function(perform_clang_tidy check_target target)
     set(clang_tidy_command "clang-tidy-3.8")
     
-    get_target_property(INCLUDES ${target} INCLUDE_DIRECTORIES)
-
-    convert_includes(INCLUDES ${INCLUDES})
+    set(includes "$<TARGET_PROPERTY:${target},INCLUDE_DIRECTORIES>")
 
     add_custom_target(
         ${check_target}
         COMMAND
             ${clang_tidy_command}
+                "$<$<BOOL:${CMAKE_EXPORT_COMPILE_COMMANDS}>:-p\t${PROJECT_BINARY_DIR}>"
                 ${ARGN}
                 -checks=*
-                -- ${INCLUDES}
+                "$<$<NOT:$<BOOL:${CMAKE_EXPORT_COMPILE_COMMANDS}>>:--\t$<$<BOOL:${includes}>:-I$<JOIN:${includes},\t-I>>>"
         WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
     )
 endfunction()
