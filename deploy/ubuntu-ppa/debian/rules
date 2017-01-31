@@ -22,7 +22,7 @@ build-arch:
 # thirdly called by launchpad
 binary: binary-arch
 
-binary-arch: libcmake-init libcmake-init-dev libcmake-init-docs libcmake-init-dbg libcmake-init-examples-data libcmake-init-examples-qt libcmake-init-all
+binary-arch: libcmake-init libcmake-init-dev libcmake-init-docs libcmake-init-dbg libcmake-init-examples-data libcmake-init-examples libcmake-init-all
 
 libcmake-init:
 	cd $(BUILDDIR); DESTDIR=../debian/tmp COMPONENT=runtime make component_install
