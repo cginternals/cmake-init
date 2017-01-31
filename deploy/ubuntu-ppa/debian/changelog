@@ -1,0 +1,6 @@
+
+cmake-init (2.0.0-0) UNRELEASED; urgency=low
+
+  * Initial release.
+
+ -- Willy Scheibel <willy.scheibel@cginternals.com>  Tue, 31 Jan 2017 13:30:00 +0100

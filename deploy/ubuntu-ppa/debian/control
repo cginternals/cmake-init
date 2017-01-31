@@ -1,0 +1,46 @@
+Source: cmake-init
+Section: misc
+Priority: optional
+Maintainer: Willy Scheibel <willy.scheibel@cginternals.com>
+Build-Depends: build-essential, cmake, qtbase5-dev, doxygen, graphviz
+Standards-Version: 3.8.0
+
+Package: libcmake-init
+Architecture: any
+Depends: 
+Homepage: https://github.com/cginternals/cmake-init
+Description: Template for reliable, cross-platform C++ project setup using cmake.
+
+Package: libcmake-init-dev
+Architecture: any
+Depends: libcmake-init
+Homepage: https://github.com/cginternals/cmake-init
+Description: Template for reliable, cross-platform C++ project setup using cmake.
+
+Package: libcmake-init-examples-data
+Architecture: any
+Homepage: https://github.com/cginternals/cmake-init
+Description: Template for reliable, cross-platform C++ project setup using cmake.
+
+Package: libcmake-init-examples
+Architecture: any
+Depends: libcmake-init, libcmake-init-examples-data, libqt5core5a
+Homepage: https://github.com/cginternals/cmake-init
+Description: Template for reliable, cross-platform C++ project setup using cmake.
+
+Package: libcmake-init-docs
+Architecture: any
+Homepage: https://github.com/cginternals/cmake-init
+Description: Template for reliable, cross-platform C++ project setup using cmake.
+
+Package: libcmake-init-dbg
+Architecture: any
+Depends: libcmake-init, libcmake-init-dev
+Homepage: https://github.com/cginternals/cmake-init
+Description: Template for reliable, cross-platform C++ project setup using cmake.
+
+Package: libcmake-init-all
+Architecture: any
+Depends: libcmake-init, libcmake-init-dev, libcmake-init-docs, libcmake-init-examples
+Homepage: https://github.com/cginternals/cmake-init
+Description: Template for reliable, cross-platform C++ project setup using cmake.
