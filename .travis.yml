@@ -25,7 +25,7 @@ matrix:
 
 before_install:
   - if [ $TRAVIS_OS_NAME == linux ]; then sudo apt-get install -qq cmake qt5-default cppcheck clang-tidy-3.8; fi
-  - if [ $TRAVIS_OS_NAME == osx ]; then brew update && brew install qt5; fi
+  - if [ $TRAVIS_OS_NAME == osx ]; then brew update && brew install qt5 cppcheck; fi
 
 before_script:
   - ./configure
