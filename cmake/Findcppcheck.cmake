@@ -13,8 +13,10 @@ find_program(cppcheck_EXECUTABLE
 )
 
 find_package_handle_standard_args(cppcheck
-	DEFAULT_MSG
-	cppcheck_EXECUTABLE
+	FOUND_VAR
+        cppcheck_FOUND
+    REQUIRED_VARS
+        cppcheck_EXECUTABLE
 )
 
 mark_as_advanced(cppcheck_EXECUTABLE)

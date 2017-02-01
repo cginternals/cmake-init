@@ -18,8 +18,10 @@ find_program(clang_tidy_EXECUTABLE
 )
 
 find_package_handle_standard_args(clang_tidy
-	DEFAULT_MSG
-	clang_tidy_EXECUTABLE
+    FOUND_VAR
+        clang_tidy_FOUND
+    REQUIRED_VARS
+        clang_tidy_EXECUTABLE
 )
 
 mark_as_advanced(clang_tidy_EXECUTABLE)
