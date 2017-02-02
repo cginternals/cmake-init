@@ -9,21 +9,6 @@ function(set_policy POL VAL)
 endfunction(set_policy)
 
 
-# Converts a list of include paths to their -I ... command line list
-#
-# Example:
-# convert_includes(RESULT "include1;include2;include3")
-# Result:
-# -I include1 -I include2 -I include3
-function(convert_includes var)
-   set(listVar "")
-   foreach(include ${ARGN})
-      list(APPEND listVar "-I${include}")
-   endforeach()
-   set(${var} "${listVar}" PARENT_SCOPE)
-endfunction()
-
-
 # Define function "source_group_by_path with three mandatory arguments (PARENT_PATH, REGEX, GROUP, ...)
 # to group source files in folders (e.g. for MSVC solutions).
 #

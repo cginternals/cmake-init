@@ -4,7 +4,6 @@ include(${CMAKE_CURRENT_LIST_DIR}/ClangTidy.cmake)
 
 set(OPTION_CPPCHECK_ENABLED Off)
 set(OPTION_CLANG_TIDY_ENABLED Off)
-set(OPTION_UNCRUSTIFY_ENABLED Off)
 
 # Function to register a target for enabled health checks
 function(perform_health_checks target)
@@ -22,11 +21,6 @@ function(perform_health_checks target)
     if (OPTION_CLANG_TIDY_ENABLED)
         perform_clang_tidy(clang-tidy-${target} ${target} ${ARGN})
         add_dependencies(check-${target} clang-tidy-${target})
-    endif()
-    
-    if (OPTION_UNCRUSTIFY_ENABLED)
-        perform_uncrustify(uncrustify-${target} ${target} ${ARGN})
-        add_dependencies(check-${target} uncrustify-${target})
     endif()
     
     add_dependencies(check-all check-${target})
