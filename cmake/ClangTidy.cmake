@@ -13,4 +13,6 @@ function(perform_clang_tidy check_target target)
                 "$<$<NOT:$<BOOL:${CMAKE_EXPORT_COMPILE_COMMANDS}>>:--\t$<$<BOOL:${includes}>:-I$<JOIN:${includes},\t-I>>>"
         WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
     )
+    
+    add_dependencies(${check_target} ${target})
 endfunction()

@@ -17,4 +17,6 @@ function(perform_cppcheck check_target target)
                 ${ARGN}
         WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
     )
+    
+    add_dependencies(${check_target} ${target})
 endfunction()
