@@ -1,0 +1,83 @@
+#!/usr/bin/make -f
+
+BUILDDIR = build
+BUILDDEBUGDIR = build-debug
+
+# firstly called by launchpad
+clean:
+	rm -rf $(BUILDDIR)
+	rm -rf $(BUILDDEBUGDIR)
+
+# secondly called by launchpad
+build: build-arch
+
+build-arch:
+	mkdir $(BUILDDIR)
+	cd $(BUILDDIR);cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr -DOPTION_BUILD_TESTS=Off -DOPTION_BUILD_EXAMPLES=On -DOPTION_BUILD_DOCS=On ..
+	make -C $(BUILDDIR)
+	mkdir $(BUILDDEBUGDIR)
+	cd $(BUILDDEBUGDIR);cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX=/usr -DOPTION_BUILD_TESTS=Off -DOPTION_BUILD_EXAMPLES=Off -DOPTION_BUILD_DOCS=Off ..
+	make -C $(BUILDDEBUGDIR)
+
+# thirdly called by launchpad
+binary: binary-arch
+
+binary-arch: libcmake-init libcmake-init-dev libcmake-init-docs libcmake-init-dbg libcmake-init-examples-data libcmake-init-examples libcmake-init-all
+
+libcmake-init:
+	cd $(BUILDDIR); DESTDIR=../debian/tmp COMPONENT=runtime make component_install
+	mkdir -p debian/tmp/DEBIAN
+	dpkg-gencontrol -plibcmake-init
+	dpkg --build debian/tmp ..
+	rm -rf debian/tmp
+
+libcmake-init-dev:
+	cd $(BUILDDIR); DESTDIR=../debian/tmp COMPONENT=dev make component_install
+	mkdir -p debian/tmp/DEBIAN
+	dpkg-gencontrol -plibcmake-init-dev
+	dpkg --build debian/tmp ..
+	rm -rf debian/tmp
+
+libcmake-init-docs:
+	cd $(BUILDDIR); DESTDIR=../debian/tmp COMPONENT=docs make component_install
+	mkdir -p debian/tmp/DEBIAN
+	dpkg-gencontrol -plibcmake-init-docs
+	dpkg --build debian/tmp ..
+	rm -rf debian/tmp
+
+libcmake-init-dbg:
+	cd $(BUILDDEBUGDIR); DESTDIR=../debian/tmp COMPONENT=runtime make component_install
+	cd $(BUILDDEBUGDIR); DESTDIR=../debian/tmp COMPONENT=dev make component_install
+	rm -rf debian/tmp/usr/include
+	rm debian/tmp/usr/share/*/*-config.cmake
+	rm debian/tmp/usr/share/*/AUTHORS
+	rm debian/tmp/usr/share/*/LICENSE
+	rm debian/tmp/usr/share/*/README.md
+	rm debian/tmp/usr/share/*/VERSION
+	rm debian/tmp/usr/share/*/cmake/*/*-export.cmake
+	mkdir -p debian/tmp/DEBIAN
+	dpkg-gencontrol -plibcmake-init-dbg
+	dpkg --build debian/tmp ..
+	rm -rf debian/tmp
+
+libcmake-init-examples-data:
+	cd $(BUILDDIR); DESTDIR=../debian/tmp COMPONENT=examples_data make component_install
+	mkdir -p debian/tmp/DEBIAN
+	dpkg-gencontrol -plibcmake-init-examples-data
+	dpkg --build debian/tmp ..
+	rm -rf debian/tmp
+
+libcmake-init-examples:
+	cd $(BUILDDIR); DESTDIR=../debian/tmp COMPONENT=examples_qt make component_install
+	mkdir -p debian/tmp/DEBIAN
+	dpkg-gencontrol -plibcmake-init-examples
+	dpkg --build debian/tmp ..
+	rm -rf debian/tmp
+
+libcmake-init-all:
+	mkdir -p debian/tmp/DEBIAN
+	dpkg-gencontrol -plibcmake-init-all
+	dpkg --build debian/tmp ..
+	rm -rf debian/tmp
+
+.PHONY: build build-arch binary binary-arch clean libcmake-init libcmake-init-dev libcmake-init-docs libcmake-init-dbg libcmake-init-examples-data libcmake-init-examples libcmake-init-all
