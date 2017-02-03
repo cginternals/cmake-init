@@ -7,7 +7,7 @@ function(perform_clang_tidy check_target target)
         ${check_target}
         COMMAND
             ${clang_tidy_EXECUTABLE}
-                "$<$<BOOL:${CMAKE_EXPORT_COMPILE_COMMANDS}>:-p\t${PROJECT_BINARY_DIR}>"
+                -p\t${PROJECT_BINARY_DIR}
                 ${ARGN}
                 -checks=*
                 "$<$<NOT:$<BOOL:${CMAKE_EXPORT_COMPILE_COMMANDS}>>:--\t$<$<BOOL:${includes}>:-I$<JOIN:${includes},\t-I>>>"
