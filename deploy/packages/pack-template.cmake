@@ -255,5 +255,17 @@ add_custom_target(
 )
 set_target_properties(pack-${project_name} PROPERTIES EXCLUDE_FROM_DEFAULT_BUILD 1)
 
+# Create per-component install targets
+if(OPTION_DEPLOY_DESTDIR AND ${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+    foreach(component ${CPACK_COMPONENTS_ALL})
+        add_custom_target(
+            destdir-deploy-${component}
+	    COMMAND make preinstall
+	    COMMAND DESTDIR=${OPTION_DEPLOY_DESTDIR} ${CMAKE_COMMAND} -DCOMPONENT=${component} -P cmake_install.cmake
+            WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
+        )
+    endforeach()
+endif()
+
 # Set dependencies
 add_dependencies(pack pack-${project_name})
