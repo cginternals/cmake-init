@@ -36,3 +36,6 @@ _start-cmd.bat
 
 # Local config unix
 .localconfig
+
+# Wiki
+wiki
