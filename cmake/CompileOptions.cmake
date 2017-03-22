@@ -119,7 +119,7 @@ if ("${CMAKE_CXX_COMPILER_ID}" MATCHES "GNU" OR "${CMAKE_CXX_COMPILER_ID}" MATCH
         $<$<CXX_COMPILER_ID:Clang>:
             -Wpedantic
             
-            -Wreturn-stack-address
+            # -Wreturn-stack-address # gives false positives
         >
         
         $<$<PLATFORM_ID:Darwin>:
