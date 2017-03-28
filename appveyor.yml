@@ -41,7 +41,7 @@ before_build:
     cmake .. -G %generator%
     
 build:
-  project: c:\projects\glbinding\build\cmake-init.sln
+  project: c:\projects\cmake-init\build\cmake-init.sln
   verbosity: minimal
   parallel: true 
 only_commits:
