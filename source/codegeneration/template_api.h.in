@@ -6,7 +6,6 @@
 
 #ifdef ${target_id}_STATIC_DEFINE
 #  define ${target_id}_TEMPLATE_API
-#  define ${target_id}_TEMPLATE_NO_EXPORT
 #else
 #  ifndef ${target_id}_TEMPLATE_API
 #    ifdef ${target}_EXPORTS
