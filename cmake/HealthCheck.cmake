@@ -9,6 +9,11 @@ set(OPTION_CLANG_TIDY_ENABLED Off)
 function(perform_health_checks target)
     if(NOT TARGET check-all)
         add_custom_target(check-all)
+    
+        set_target_properties(check-all
+            PROPERTIES
+            FOLDER "Maintenance"
+        )
     endif()
     
     add_custom_target(check-${target})
@@ -70,4 +75,22 @@ function(enable_clang_tidy status)
     message(STATUS "Check clang-tidy")
     
     set(CMAKE_EXPORT_COMPILE_COMMANDS On PARENT_SCOPE)
+endfunction()
+
+# Configure cmake target to check for cmake-init template
+function(add_check_template_target current_template_sha)
+    add_custom_target(
+        check-template
+        COMMAND ${CMAKE_COMMAND}
+            -DPROJECT_SOURCE_DIR=${PROJECT_SOURCE_DIR}
+            -DPROJECT_BINARY_DIR=${PROJECT_BINARY_DIR}
+            -DAPPLIED_CMAKE_INIT_SHA=${current_template_sha}
+            -P ${PROJECT_SOURCE_DIR}/cmake/CheckTemplate.cmake
+        WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
+    )
+    
+    set_target_properties(check-template
+        PROPERTIES
+        FOLDER "Maintenance"
+    )
 endfunction()

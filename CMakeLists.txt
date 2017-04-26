@@ -102,6 +102,10 @@ include(cmake/CompileOptions.cmake)
 # Project Health Check Setup
 #
 
+# Add cmake-init template check cmake targets
+add_check_template_target(${META_CMAKE_INIT_SHA})
+
+# Configure health check tools
 enable_cppcheck(On)
 enable_clang_tidy(On)
 

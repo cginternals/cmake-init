@@ -33,10 +33,3 @@ endif()
 
 # Deploy generated headers
 install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/include/${META_PROJECT_NAME} DESTINATION include COMPONENT dev)
-
-
-#
-# Project Health
-#
-
-add_subdirectory(scripts)

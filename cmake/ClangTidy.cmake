@@ -14,5 +14,10 @@ function(perform_clang_tidy check_target target)
         WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
     )
     
+    set_target_properties(${check_target}
+        PROPERTIES
+        FOLDER "Maintenance"
+    )
+    
     add_dependencies(${check_target} ${target})
 endfunction()
