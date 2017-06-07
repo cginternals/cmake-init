@@ -13,10 +13,17 @@ function(perform_health_checks target)
         set_target_properties(check-all
             PROPERTIES
             FOLDER "Maintenance"
+            EXCLUDE_FROM_DEFAULT_BUILD 1
         )
     endif()
     
     add_custom_target(check-${target})
+    
+    set_target_properties(check-${target}
+        PROPERTIES
+        FOLDER "Maintenance"
+        EXCLUDE_FROM_DEFAULT_BUILD 1
+    )
     
     if (OPTION_CPPCHECK_ENABLED)
         perform_cppcheck(cppcheck-${target} ${target} ${ARGN})
@@ -92,5 +99,6 @@ function(add_check_template_target current_template_sha)
     set_target_properties(check-template
         PROPERTIES
         FOLDER "Maintenance"
+        EXCLUDE_FROM_DEFAULT_BUILD 1
     )
 endfunction()
