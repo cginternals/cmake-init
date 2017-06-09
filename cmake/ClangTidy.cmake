@@ -17,6 +17,7 @@ function(perform_clang_tidy check_target target)
     set_target_properties(${check_target}
         PROPERTIES
         FOLDER "Maintenance"
+        EXCLUDE_FROM_DEFAULT_BUILD 1
     )
     
     add_dependencies(${check_target} ${target})
