@@ -19,12 +19,9 @@ The files of cmake-init are an instantiation of the templates containing:
 
 | Service | System | Compiler | Status |
 | ------- | ------ | -------- | -----: |
-|  [Travis-CI](https://travis-ci.org/cginternals/cmake-init) | Ubuntu 14.04 | GCC 4.8, Clang 3.5 | [![Build Status](https://travis-ci.org/cginternals/cmake-init.svg?branch=master)](https://travis-ci.org/cginternals/cmake-init) |
-|  [Travis-CI](https://travis-ci.org/cginternals/cmake-init) | macOS | AppleClang 7.3 | [![Build Status](https://travis-ci.org/cginternals/cmake-init.svg?branch=master)](https://travis-ci.org/cginternals/cmake-init) |
-| [AppVeyor]() | Windows | MSVC 2013<br>MSVC 2015<br>MSVC 2017 | [![Build status](https://ci.appveyor.com/api/projects/status/sy4f0p436p1g5tnp/branch/master?svg=true)](https://ci.appveyor.com/project/scheibel/cmake-init/branch/master)|
-| Jenkins <br><br><br><br> | Ubuntu 14.04 <br><br><br><br> | GCC 4.7 <br> GCC 4.8 <br> GCC 4.9 <br> GCC 5.4 <br> Clang 3.8 <br> | [![Build Status](https://jenkins.hpi3d.de/buildStatus/icon?job=cmake-init-linux-gcc4.7)](https://jenkins.hpi3d.de/job/cmake-init-linux-gcc4.7) <br> [![Build Status](https://jenkins.hpi3d.de/buildStatus/icon?job=cmake-init-linux-gcc4.8)](https://jenkins.hpi3d.de/job/cmake-init-linux-gcc4.8) <br> [![Build Status](https://jenkins.hpi3d.de/buildStatus/icon?job=cmake-init-linux-gcc4.9)](https://jenkins.hpi3d.de/job/cmake-init-linux-gcc4.9) <br> [![Build Status](https://jenkins.hpi3d.de/buildStatus/icon?job=cmake-init-linux-gcc5)](https://jenkins.hpi3d.de/job/cmake-init-linux-gcc5) <br> [![Build Status](https://jenkins.hpi3d.de/buildStatus/icon?job=cmake-init-linux-clang3.8)](https://jenkins.hpi3d.de/job/cmake-init-linux-clang3.8) <br> |
-| Jenkins <br><br> | Windows 10 <br><br> | MSVC 2013 Update 5 <br>  MSVC 2015 Update 1 <br> | [![Build Status](https://jenkins.hpi3d.de/buildStatus/icon?job=cmake-init-windows-msvc2013)](https://jenkins.hpi3d.de/job/cmake-init-windows-msvc2013) <br> [![Build Status](https://jenkins.hpi3d.de/buildStatus/icon?job=cmake-init-windows-msvc2015)](https://jenkins.hpi3d.de/job/cmake-init-windows-msvc2015) <br> |
-| Jenkins | OS X 10.10 | AppleClang 6.0 | [![Build Status](https://jenkins.hpi3d.de/buildStatus/icon?job=cmake-init-osx-clang3.5)](https://jenkins.hpi3d.de/job/cmake-init-osx-clang3.5) |
+|  [Travis-CI](https://travis-ci.org/massich/cmake-init) | Ubuntu 14.04 | GCC 4.8, Clang 3.5 | [![Build Status](https://travis-ci.org/massich/cmake-init.svg?branch=master)](https://travis-ci.org/massich/cmake-init) |
+|  [Travis-CI](https://travis-ci.org/massich/cmake-init) | macOS | AppleClang 7.3 | [![Build Status](https://travis-ci.org/massich/cmake-init.svg?branch=master)](https://travis-ci.org/massich/cmake-init) |
+| [AppVeyor]() | Windows | MSVC 2013<br>MSVC 2015<br>MSVC 2017 | [![Build status](https://ci.appveyor.com/api/projects/status/2y04k38ml9pqbg57?svg=true)](https://ci.appveyor.com/project/massich/cmake-init)|
 
 Please note that our OS X build node is currently broken (physically). However, *cmake-init* is supported and maintained for OS X as well.
 
