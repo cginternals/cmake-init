@@ -13,6 +13,7 @@ find_program(clang_tidy_EXECUTABLE
         clang-tidy-3.8
         clang-tidy-3.9
         clang-tidy-4.0
+        clang-tidy
     PATHS
         "${CLANG_TIDY_DIR}"
 )
