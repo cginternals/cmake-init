@@ -1,7 +1,17 @@
+# make it explicit that we favor the new container-based travis workers
+dist: trusty
+sudo: false
+
 language: cpp
 
-sudo: required
-dist: trusty
+# Pre-install packages for the ubuntu distribution
+addons:
+  apt:
+    packages:
+      - cmake
+      - qt5-default
+      - cppcheck
+      - clang-tidy-3.8
 
 os:
   - linux
@@ -24,7 +34,6 @@ matrix:
     compiler: gcc
 
 before_install:
-  - if [ $TRAVIS_OS_NAME == linux ]; then sudo apt-get install -qq cmake qt5-default cppcheck clang-tidy-3.8; fi
   - if [ $TRAVIS_OS_NAME == osx ]; then brew update && brew install qt5 cppcheck; fi
 
 before_script:
