@@ -31,19 +31,16 @@ init:
 - echo %generator%
 
 before_build:
-- cmd: >-
+- cmd: |-
     mkdir build
-    
     cd build
-    
     cmake --version
-
     cmake .. -G %generator%
-    
+
 build:
   project: c:\projects\cmake-init\build\template.sln
   verbosity: minimal
-  parallel: true 
+  parallel: true
 only_commits:
   files:
     - CMakeLists.txt
