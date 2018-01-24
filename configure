@@ -104,14 +104,15 @@ echo "Configuring ..."
 echo ""
 
 # Create build directory
-if [ ! -d "./$BUILD_DIR" ]
+if [ ! -d "$BUILD_DIR" ]
 then
-    mkdir $BUILD_DIR
+    mkdir -p "$BUILD_DIR"
 fi
 
 # Configure project
+PREVIOUS_DIR=$(pwd)
 cd $BUILD_DIR
-cmake -G "$CMAKE_GENERATOR" "-DCMAKE_BUILD_TYPE=$BUILD_TYPE" $CMAKE_OPTIONS ..
+cmake -G "$CMAKE_GENERATOR" "-DCMAKE_BUILD_TYPE=$BUILD_TYPE" $CMAKE_OPTIONS "$PREVIOUS_DIR"
 if [ $? == 0 ]
 then
     echo ""
@@ -123,4 +124,4 @@ else
     echo "Configuration failed.";
 fi
 
-cd ..
+cd "$PREVIOUS_DIR"
