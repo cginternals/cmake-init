@@ -141,9 +141,38 @@ endif ()
 
 set(DEFAULT_LINKER_OPTIONS)
 
+# libc++ linking
+if (OPTION_USE_LIBCPP)
+    if("${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang")
+        set(DEFAULT_COMPILE_OPTIONS ${DEFAULT_COMPILE_OPTIONS}
+                -stdlib=libc++
+                #-I/usr/include/libcxxabi
+                )
+        set(DEFAULT_LINKER_OPTIONS ${DEFAULT_LINKER_OPTIONS}
+                #-lc++abi
+                )
+    endif()
+    if ("${CMAKE_CXX_COMPILER_ID}" MATCHES "GNU")
+        set(DEFAULT_COMPILE_OPTIONS ${DEFAULT_COMPILE_OPTIONS}
+                -nostdinc++
+                -I/usr/include/c++/v1
+                #-I/usr/include/libcxxabi
+                )
+        set(DEFAULT_LINKER_OPTIONS ${DEFAULT_LINKER_OPTIONS}
+                -nodefaultlibs
+                -lc++
+                -lc++abi
+                -lm
+                -lc
+                -lgcc
+                -lgcc_s
+                )
+    endif()
+endif()
+
 # Use pthreads on mingw and linux
 if("${CMAKE_CXX_COMPILER_ID}" MATCHES "GNU" OR "${CMAKE_SYSTEM_NAME}" MATCHES "Linux")
-    set(DEFAULT_LINKER_OPTIONS
+    set(DEFAULT_LINKER_OPTIONS ${DEFAULT_LINKER_OPTIONS}
         -pthread
     )
 endif()

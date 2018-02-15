@@ -77,7 +77,6 @@ option(OPTION_BUILD_TESTS    "Build tests."                                     
 option(OPTION_BUILD_DOCS     "Build documentation."                                   OFF)
 option(OPTION_BUILD_EXAMPLES "Build examples."                                        OFF)
 
-
 # 
 # Declare project
 # 
@@ -88,6 +87,10 @@ set(IDE_FOLDER "")
 
 # Declare project
 project(${META_PROJECT_NAME} C CXX)
+
+if ("${CMAKE_CXX_COMPILER_ID}" MATCHES "GNU" OR "${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang")
+    option(OPTION_USE_LIBCPP "Link against libc++ instead of libstdc++."              ON)
+endif ()
 
 # Set output directories
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR})
