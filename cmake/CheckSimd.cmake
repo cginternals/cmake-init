@@ -1,6 +1,8 @@
 
 include(CheckCXXSourceRuns)
 
+# save old configuration
+set(OLD_CMAKE_REQUIRED_FLAGS ${CMAKE_REQUIRED_FLAGS})
 
 # set flags
 set(AVX_FLAGS)
@@ -19,7 +21,7 @@ endif()
 
 
 # check for AVX
-set(CMAKE_REQUIRED_FLAGS ${AVX_FLAGS})
+set(CMAKE_REQUIRED_FLAGS ${OLD_CMAKE_REQUIRED_FLAGS} ${AVX_FLAGS})
 CHECK_CXX_SOURCE_RUNS("
     #include <immintrin.h>
     int main(){
@@ -40,7 +42,7 @@ endif()
 
 
 # check for AVX2
-set(CMAKE_REQUIRED_FLAGS ${AVX2_FLAGS})
+set(CMAKE_REQUIRED_FLAGS ${OLD_CMAKE_REQUIRED_FLAGS} ${AVX2_FLAGS})
 CHECK_CXX_SOURCE_RUNS("
     #include <immintrin.h>
     int main(){
@@ -61,7 +63,7 @@ endif()
 
 
 # check for AVX512
-set(CMAKE_REQUIRED_FLAGS ${AVX512_FLAGS})
+set(CMAKE_REQUIRED_FLAGS ${OLD_CMAKE_REQUIRED_FLAGS} ${AVX512_FLAGS})
 CHECK_CXX_SOURCE_RUNS("
     #include <zmmintrin.h>
     int main(){
@@ -81,5 +83,5 @@ if(NOT AVX512_ENABLED)
 endif()
 
 
-# cleanup cmake var
-set(CMAKE_REQUIRED_FLAGS "")
+# restore previous state of cmake variable
+set(CMAKE_REQUIRED_FLAGS ${OLD_CMAKE_REQUIRED_FLAGS})
