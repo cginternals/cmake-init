@@ -1,7 +1,7 @@
 
-# 
+#
 # CMake options
-# 
+#
 
 # CMake version
 cmake_minimum_required(VERSION 3.0 FATAL_ERROR)
@@ -37,9 +37,9 @@ include(cmake/HealthCheck.cmake)
 include(cmake/GenerateTemplateExportHeader.cmake)
 
 
-# 
+#
 # Project description and (meta) information
-# 
+#
 
 # Get git revision
 get_git_head_revision(GIT_REFSPEC GIT_SHA1)
@@ -66,9 +66,9 @@ string(MAKE_C_IDENTIFIER ${META_PROJECT_NAME} META_PROJECT_ID)
 string(TOUPPER ${META_PROJECT_ID} META_PROJECT_ID)
 
 
-# 
+#
 # Project configuration options
-# 
+#
 
 # Project options
 option(BUILD_SHARED_LIBS     "Build shared instead of static libraries."              ON)
@@ -78,9 +78,9 @@ option(OPTION_BUILD_DOCS     "Build documentation."                             
 option(OPTION_BUILD_EXAMPLES "Build examples."                                        OFF)
 
 
-# 
+#
 # Declare project
-# 
+#
 
 # Generate folders for IDE targets (e.g., VisualStudio solutions)
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
@@ -98,9 +98,9 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR})
 file(WRITE "${PROJECT_BINARY_DIR}/VERSION" "${META_NAME_VERSION}")
 
 
-# 
+#
 # Compiler settings and options
-# 
+#
 
 include(cmake/CompileOptions.cmake)
 
@@ -117,9 +117,9 @@ enable_cppcheck(On)
 enable_clang_tidy(On)
 
 
-# 
+#
 # Deployment/installation setup
-# 
+#
 
 # Get project name
 set(project ${META_PROJECT_NAME})
@@ -171,23 +171,23 @@ if(NOT SYSTEM_DIR_INSTALL)
     if(APPLE)
         set(CMAKE_INSTALL_RPATH "@loader_path/../../../${INSTALL_LIB}")
     else()
-        set(CMAKE_INSTALL_RPATH "$ORIGIN/${INSTALL_LIB}")       
+        set(CMAKE_INSTALL_RPATH "$ORIGIN/${INSTALL_LIB}")
     endif()
 endif()
 
 
-# 
+#
 # Project modules
-# 
+#
 
 add_subdirectory(source)
 add_subdirectory(docs)
 add_subdirectory(deploy)
 
 
-# 
+#
 # Deployment (global project files)
-# 
+#
 
 # Install version file
 install(FILES "${PROJECT_BINARY_DIR}/VERSION" DESTINATION ${INSTALL_ROOT} COMPONENT runtime)
