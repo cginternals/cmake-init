@@ -79,3 +79,7 @@ CHECK_CXX_SOURCE_RUNS("
 if(NOT AVX512_ENABLED)
   set(AVX512_FLAGS "")
 endif()
+
+
+# cleanup cmake var
+set(CMAKE_REQUIRED_FLAGS "")
