@@ -11,15 +11,15 @@ After updating, the following changes needs to be applied manually:
 
 `googletest/googlemock/CMakeLists.txt`
 
-Add `set(BUILD_SHARED_LIBS OFF)` after the call to `option(BUILD_SHARED_LIBS ...)`
-Add `set(CMAKE_MACOSX_RPATH OFF)` before the calls to `cxx_library(...)`
-Add `set_target_properties(gmock_main PROPERTIES FOLDER "Tests")` after the calls to `cxx_library(...)`
-Add `set_target_properties(gmock      PROPERTIES FOLDER "Tests")` after the calls to `cxx_library(...)`
+* Add `set(BUILD_SHARED_LIBS OFF)` after the call to `option(BUILD_SHARED_LIBS ...)`
+* Add `set(CMAKE_MACOSX_RPATH OFF)` before the calls to `cxx_library(...)`
+* Add `set_target_properties(gmock_main PROPERTIES FOLDER "Tests")` after the calls to `cxx_library(...)`
+* Add `set_target_properties(gmock      PROPERTIES FOLDER "Tests")` after the calls to `cxx_library(...)`
 
 `googletest/googletest/CMakeLists.txt`
 
-Add `set(BUILD_SHARED_LIBS OFF)` after the call to `option(BUILD_SHARED_LIBS ...)`
-Add `set(CMAKE_MACOSX_RPATH OFF)` before the calls to `cxx_library(...)`
-Add `set_target_properties(gtest_main PROPERTIES FOLDER "Tests")` after the calls to `cxx_library(...)`
-Add `set_target_properties(gtest      PROPERTIES FOLDER "Tests")` after the calls to `cxx_library(...)`
-Comment out the calls to `install`
+* Add `set(BUILD_SHARED_LIBS OFF)` after the call to `option(BUILD_SHARED_LIBS ...)`
+* Add `set(CMAKE_MACOSX_RPATH OFF)` before the calls to `cxx_library(...)`
+* Add `set_target_properties(gtest_main PROPERTIES FOLDER "Tests")` after the calls to `cxx_library(...)`
+* Add `set_target_properties(gtest      PROPERTIES FOLDER "Tests")` after the calls to `cxx_library(...)`
+* Comment out the calls to `install`
