@@ -178,7 +178,7 @@ def GetTestExecutablePath(executable_name, build_dir=None):
         'Unable to find the test binary "%s". Please make sure to provide\n'
         'a path to the binary via the --build_dir flag or the BUILD_DIR\n'
         'environment variable.' % path)
-    print >> sys.stderr, message
+    sys.stdout.write(message)
     sys.exit(1)
 
   return path
@@ -245,7 +245,7 @@ class Subprocess:
       p = subprocess.Popen(command,
                            stdout=subprocess.PIPE, stderr=stderr,
                            cwd=working_dir, universal_newlines=True, env=env)
-      # communicate returns a tuple with the file obect for the child's
+      # communicate returns a tuple with the file object for the child's
       # output.
       self.output = p.communicate()[0]
       self._return_code = p.returncode

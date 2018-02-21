@@ -28,11 +28,11 @@ list can help you decide whether it is for you too.
   * `SCOPED_TRACE` helps you understand the context of an assertion failure when it comes from inside a sub-routine or loop.
   * You can decide which tests to run using name patterns.  This saves time when you want to quickly reproduce a test failure.
   * Google Test can generate XML test result reports that can be parsed by popular continuous build system like Hudson.
-  * Simple things are easy in Google Test, while hard things are possible: in addition to advanced features like [global test environments](https://github.com/google/googletest/blob/master/googletest/docs/AdvancedGuide.md#global-set-up-and-tear-down) and tests parameterized by [values](https://github.com/google/googletest/blob/master/googletest/docs/AdvancedGuide.md#value-parameterized-tests) or [types](https://github.com/google/googletest/blob/master/googletest/docs/AdvancedGuide.md#typed-tests), Google Test supports various ways for the user to extend the framework -- if Google Test doesn't do something out of the box, chances are that a user can implement the feature using Google Test's public API, without changing Google Test itself.  In particular, you can:
-    * expand your testing vocabulary by defining [custom predicates](https://github.com/google/googletest/blob/master/googletest/docs/AdvancedGuide.md#predicate-assertions-for-better-error-messages),
-    * teach Google Test how to [print your types](https://github.com/google/googletest/blob/master/googletest/docs/AdvancedGuide.md#teaching-google-test-how-to-print-your-values),
-    * define your own testing macros or utilities and verify them using Google Test's [Service Provider Interface](https://github.com/google/googletest/blob/master/googletest/docs/AdvancedGuide.md#catching-failures), and
-    * reflect on the test cases or change the test output format by intercepting the [test events](https://github.com/google/googletest/blob/master/googletest/docs/AdvancedGuide.md#extending-google-test-by-handling-test-events).
+  * Simple things are easy in Google Test, while hard things are possible: in addition to advanced features like [global test environments](AdvancedGuide.md#global-set-up-and-tear-down) and tests parameterized by [values](AdvancedGuide.md#value-parameterized-tests) or [types](docs/AdvancedGuide.md#typed-tests), Google Test supports various ways for the user to extend the framework -- if Google Test doesn't do something out of the box, chances are that a user can implement the feature using Google Test's public API, without changing Google Test itself.  In particular, you can:
+    * expand your testing vocabulary by defining [custom predicates](AdvancedGuide.md#predicate-assertions-for-better-error-messages),
+    * teach Google Test how to [print your types](AdvancedGuide.md#teaching-google-test-how-to-print-your-values),
+    * define your own testing macros or utilities and verify them using Google Test's [Service Provider Interface](AdvancedGuide.md#catching-failures), and
+    * reflect on the test cases or change the test output format by intercepting the [test events](AdvancedGuide.md#extending-google-test-by-handling-test-events).
 
 ## I'm getting warnings when compiling Google Test.  Would you fix them? ##
 
@@ -54,7 +54,7 @@ Underscore (`_`) is special, as C++ reserves the following to be used by
 the compiler and the standard library:
 
   1. any identifier that starts with an `_` followed by an upper-case letter, and
-  1. any identifier that containers two consecutive underscores (i.e. `__`) _anywhere_ in its name.
+  1. any identifier that contains two consecutive underscores (i.e. `__`) _anywhere_ in its name.
 
 User code is _prohibited_ from using such identifiers.
 
@@ -102,9 +102,9 @@ Then every user of your machine can write tests without
 recompiling Google Test.
 
 This seemed like a good idea, but it has a
-got-cha: every user needs to compile his tests using the _same_ compiler
+got-cha: every user needs to compile their tests using the _same_ compiler
 flags used to compile the installed Google Test libraries; otherwise
-he may run into undefined behaviors (i.e. the tests can behave
+they may run into undefined behaviors (i.e. the tests can behave
 strangely and may even crash for no obvious reasons).
 
 Why?  Because C++ has this thing called the One-Definition Rule: if
@@ -201,7 +201,7 @@ we don't have a convention on the order of the two arguments for
 twice in the implementation, making it even harder to understand and
 maintain. We believe the benefit doesn't justify the cost.
 
-Finally, with the growth of Google Mock's [matcher](http://code.google.com/p/googlemock/wiki/CookBook#Using_Matchers_in_Google_Test_Assertions) library, we are
+Finally, with the growth of Google Mock's [matcher](../../googlemock/docs/CookBook.md#using-matchers-in-google-test-assertions) library, we are
 encouraging people to use the unified `EXPECT_THAT(value, matcher)`
 syntax more often in tests. One significant advantage of the matcher
 approach is that matchers can be easily combined to form new matchers,
@@ -409,7 +409,7 @@ If necessary, you can continue to derive test fixtures from a derived fixture.
 Google Test has no limit on how deep the hierarchy can be.
 
 For a complete example using derived test fixtures, see
-[sample5](https://github.com/google/googletest/blob/master/googletest/samples/sample5_unittest.cc).
+[sample5](../samples/sample5_unittest.cc).
 
 ## My compiler complains "void value not ignored as it ought to be." What does this mean? ##
 
@@ -494,7 +494,7 @@ EXPECT_PRED1(IsPositive, 5);
 However, this will work:
 
 ``` cpp
-EXPECT_PRED1(*static_cast<bool (*)(int)>*(IsPositive), 5);
+EXPECT_PRED1(static_cast<bool (*)(int)>(IsPositive), 5);
 ```
 
 (The stuff inside the angled brackets for the `static_cast` operator is the
@@ -512,14 +512,14 @@ bool IsNegative(T x) {
 you can use it in a predicate assertion like this:
 
 ``` cpp
-ASSERT_PRED1(IsNegative*<int>*, -5);
+ASSERT_PRED1(IsNegative<int>, -5);
 ```
 
 Things are more interesting if your template has more than one parameters. The
 following won't compile:
 
 ``` cpp
-ASSERT_PRED2(*GreaterThan<int, int>*, 5, 0);
+ASSERT_PRED2(GreaterThan<int, int>, 5, 0);
 ```
 
 
@@ -528,7 +528,7 @@ which is one more than expected. The workaround is to wrap the predicate
 function in parentheses:
 
 ``` cpp
-ASSERT_PRED2(*(GreaterThan<int, int>)*, 5, 0);
+ASSERT_PRED2((GreaterThan<int, int>), 5, 0);
 ```
 
 
@@ -754,7 +754,7 @@ EXPECT_TRUE(internal::Func(12345));
 
 ## I would like to run a test several times with different parameters. Do I need to write several similar copies of it? ##
 
-No. You can use a feature called [value-parameterized tests](AdvancedGuide#Value_Parameterized_Tests.md) which
+No. You can use a feature called [value-parameterized tests](AdvancedGuide.md#Value_Parameterized_Tests) which
 lets you repeat your tests with different parameters, without defining it more than once.
 
 ## How do I test a file that defines main()? ##
@@ -849,7 +849,7 @@ expression syntax
 (http://en.wikipedia.org/wiki/Regular_expression#POSIX_Extended_Regular_Expressions).
 On Windows, it uses a limited variant of regular expression
 syntax. For more details, see the
-[regular expression syntax](AdvancedGuide#Regular_Expression_Syntax.md).
+[regular expression syntax](AdvancedGuide.md#Regular_Expression_Syntax).
 
 ## I have a fixture class Foo, but TEST\_F(Foo, Bar) gives me error "no matching function for call to Foo::Foo()". Why? ##
 
@@ -956,16 +956,15 @@ using gtest-md.vcproj instead of gtest.vcproj.
 
 ## I put my tests in a library and Google Test doesn't run them. What's happening? ##
 Have you read a
-[warning](https://github.com/google/googletest/blob/master/googletest/docs/Primer.md#important-note-for-visual-c-users) on
+[warning](Primer.md#important-note-for-visual-c-users) on
 the Google Test Primer page?
 
 ## I want to use Google Test with Visual Studio but don't know where to start. ##
-Many people are in your position and one of the posted his solution to
-our mailing list.
+Many people are in your position and one of them posted his solution to our mailing list.
 
 ## I am seeing compile errors mentioning std::type\_traits when I try to use Google Test on Solaris. ##
 Google Test uses parts of the standard C++ library that SunStudio does not support.
-Our users reported success using alternative implementations. Try running the build after runing this commad:
+Our users reported success using alternative implementations. Try running the build after running this command:
 
 `export CC=cc CXX=CC CXXFLAGS='-library=stlport4'`
 
@@ -994,7 +993,7 @@ you can use the _horrible_ hack of sniffing your executable name
 ## Google Test defines a macro that clashes with one defined by another library. How do I deal with that? ##
 
 In C++, macros don't obey namespaces.  Therefore two libraries that
-both define a macro of the same name will clash if you #include both
+both define a macro of the same name will clash if you `#include` both
 definitions.  In case a Google Test macro clashes with another
 library, you can force Google Test to rename its macro to avoid the
 conflict.
@@ -1015,7 +1014,7 @@ instead of
 ```
 in order to define a test.
 
-Currently, the following `TEST`, `FAIL`, `SUCCEED`, and the basic comparison assertion macros can have alternative names. You can see the full list of covered macros [here](http://www.google.com/codesearch?q=if+!GTEST_DONT_DEFINE_\w%2B+package:http://googletest\.googlecode\.com+file:/include/gtest/gtest.h). More information can be found in the "Avoiding Macro Name Clashes" section of the README file.
+Currently, the following `TEST`, `FAIL`, `SUCCEED`, and the basic comparison assertion macros can have . You can see the full list of covered macros [here](../include/gtest/gtest.h). More information can be found in the "Avoiding Macro Name Clashes" section of the README file.
 
 
 ## Is it OK if I have two separate `TEST(Foo, Bar)` test methods defined in different namespaces? ##
@@ -1035,7 +1034,7 @@ namespace bar {
 TEST(CoolTest, DoSomething) {
   SUCCEED();
 }
-}  // namespace foo
+}  // namespace bar
 ```
 
 However, the following code is **not allowed** and will produce a runtime error from Google Test because the test methods are using different test fixture classes with the same test case name.
@@ -1053,20 +1052,26 @@ class CoolTest : public ::testing::Test {};  // Fixture: bar::CoolTest
 TEST_F(CoolTest, DoSomething) {
   SUCCEED();
 }
-}  // namespace foo
+}  // namespace bar
 ```
 
 ## How do I build Google Testing Framework with Xcode 4? ##
 
 If you try to build Google Test's Xcode project with Xcode 4.0 or later, you may encounter an error message that looks like
-"Missing SDK in target gtest\_framework: /Developer/SDKs/MacOSX10.4u.sdk". That means that Xcode does not support the SDK the project is targeting. See the Xcode section in the [README](https://github.com/google/googletest/blob/master/googletest/README.md) file on how to resolve this.
+"Missing SDK in target gtest\_framework: /Developer/SDKs/MacOSX10.4u.sdk". That means that Xcode does not support the SDK the project is targeting. See the Xcode section in the [README](../README.md) file on how to resolve this.
+
+## How do I easily discover the flags needed for GoogleTest? ##
+
+GoogleTest (and GoogleMock) now support discovering all necessary flags using pkg-config.
+See the [pkg-config guide](Pkgconfig.md) on how you can easily discover all compiler and
+linker flags using pkg-config.
 
 ## My question is not covered in your FAQ! ##
 
 If you cannot find the answer to your question in this FAQ, there are
 some other resources you can use:
 
-  1. read other [wiki pages](https://github.com/google/googletest/tree/master/googletest/docs),
+  1. read other [wiki pages](../docs),
   1. search the mailing list [archive](https://groups.google.com/forum/#!forum/googletestframework),
   1. ask it on [googletestframework@googlegroups.com](mailto:googletestframework@googlegroups.com) and someone will answer it (to prevent spam, we require you to join the [discussion group](http://groups.google.com/group/googletestframework) before you can post.).
 
