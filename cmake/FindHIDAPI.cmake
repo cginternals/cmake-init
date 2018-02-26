@@ -3,6 +3,8 @@
 # HIDAPI_INCLUDE_DIRS
 # HIDAPI_LIBRARIES
 
+include(FindPackageHandleStandardArgs)
+
 find_path(HIDAPI_INCLUDE_DIRS
 	NAMES hidapi/hidapi.h
 	/usr/include
@@ -25,7 +27,6 @@ find_library(HIDAPI_LIBRARIES
 	DOC "The hidapi library")
 
 
-include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(HIDAPI REQUIRED_VARS HIDAPI_LIBRARIES HIDAPI_INCLUDE_DIRS)
 
 mark_as_advanced(HIDAPI_INCLUDE_DIR HIDAPI_LIBRARY)
