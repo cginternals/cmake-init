@@ -5,6 +5,7 @@
 
 # GLEW_BINARY (win32 only)
 
+include(FindPackageHandleStandardArgs)
 
 find_path(GLEW_INCLUDE_DIR GL/glew.h
 

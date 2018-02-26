@@ -23,6 +23,40 @@ So let's go!
 _Note:_ We sometimes refer to Google C++ Testing Framework informally
 as _Google Test_.
 
+# Beware of the nomenclature #
+
+_Note:_ There might be some confusion of idea due to different
+definitions of the terms _Test_, _Test Case_ and _Test Suite_, so beware
+of misunderstanding these.
+
+Historically, the Google C++ Testing Framework started to use the term
+_Test Case_ for grouping related tests, whereas current publications
+including the International Software Testing Qualifications Board
+([ISTQB](http://www.istqb.org/)) and various textbooks on Software
+Quality use the term _[Test
+Suite](http://glossary.istqb.org/search/test%20suite)_ for this.
+
+The related term _Test_, as it is used in the Google C++ Testing
+Framework, is corresponding to the term _[Test
+Case](http://glossary.istqb.org/search/test%20case)_ of ISTQB and
+others.
+
+The term _Test_ is commonly of broad enough sense, including ISTQB's
+definition of _Test Case_, so it's not much of a problem here. But the
+term _Test Case_ as used in Google Test is of contradictory sense and thus confusing.
+
+Unfortunately replacing the term _Test Case_ by _Test Suite_ throughout
+the Google C++ Testing Framework is not easy without breaking dependent
+projects, as `TestCase` is part of the public API at various places.
+
+So for the time being, please be aware of the different definitions of
+the terms:
+
+Meaning | Google Test Term | [ISTQB](http://www.istqb.org/) Term
+------- | ---------------- | -----------------------------------
+Exercise a particular program path with specific input values and verify the results | [TEST()](#simple-tests) | [Test Case](http://glossary.istqb.org/search/test%20case)
+A set of several tests related to one component | [Test Case](#basic-concepts) | [Test Suite](http://glossary.istqb.org/search/test%20suite)
+
 # Setting up a New Test Project #
 
 To write a test program using Google Test, you need to compile Google
@@ -127,18 +161,14 @@ This section describes assertions that compare two values.
 
 | **Fatal assertion** | **Nonfatal assertion** | **Verifies** |
 |:--------------------|:-----------------------|:-------------|
-|`ASSERT_EQ(`_expected_`, `_actual_`);`|`EXPECT_EQ(`_expected_`, `_actual_`);`| _expected_ `==` _actual_ |
-|`ASSERT_NE(`_val1_`, `_val2_`);`      |`EXPECT_NE(`_val1_`, `_val2_`);`      | _val1_ `!=` _val2_ |
-|`ASSERT_LT(`_val1_`, `_val2_`);`      |`EXPECT_LT(`_val1_`, `_val2_`);`      | _val1_ `<` _val2_ |
-|`ASSERT_LE(`_val1_`, `_val2_`);`      |`EXPECT_LE(`_val1_`, `_val2_`);`      | _val1_ `<=` _val2_ |
-|`ASSERT_GT(`_val1_`, `_val2_`);`      |`EXPECT_GT(`_val1_`, `_val2_`);`      | _val1_ `>` _val2_ |
-|`ASSERT_GE(`_val1_`, `_val2_`);`      |`EXPECT_GE(`_val1_`, `_val2_`);`      | _val1_ `>=` _val2_ |
+|`ASSERT_EQ(`_val1_`, `_val2_`);`|`EXPECT_EQ(`_val1_`, `_val2_`);`| _val1_ `==` _val2_ |
+|`ASSERT_NE(`_val1_`, `_val2_`);`|`EXPECT_NE(`_val1_`, `_val2_`);`| _val1_ `!=` _val2_ |
+|`ASSERT_LT(`_val1_`, `_val2_`);`|`EXPECT_LT(`_val1_`, `_val2_`);`| _val1_ `<` _val2_ |
+|`ASSERT_LE(`_val1_`, `_val2_`);`|`EXPECT_LE(`_val1_`, `_val2_`);`| _val1_ `<=` _val2_ |
+|`ASSERT_GT(`_val1_`, `_val2_`);`|`EXPECT_GT(`_val1_`, `_val2_`);`| _val1_ `>` _val2_ |
+|`ASSERT_GE(`_val1_`, `_val2_`);`|`EXPECT_GE(`_val1_`, `_val2_`);`| _val1_ `>=` _val2_ |
 
-In the event of a failure, Google Test prints both _val1_ and _val2_
-. In `ASSERT_EQ*` and `EXPECT_EQ*` (and all other equality assertions
-we'll introduce later), you should put the expression you want to test
-in the position of _actual_, and put its expected value in _expected_,
-as Google Test's failure messages are optimized for this convention.
+In the event of a failure, Google Test prints both _val1_ and _val2_.
 
 Value arguments must be comparable by the assertion's comparison
 operator or you'll get a compiler error.  We used to require the
@@ -147,7 +177,7 @@ but it's no longer necessary since v1.6.0 (if `<<` is supported, it
 will be called to print the arguments when the assertion fails;
 otherwise Google Test will attempt to print them in the best way it
 can. For more details and how to customize the printing of the
-arguments, see this Google Mock [recipe](http://code.google.com/p/googlemock/wiki/CookBook#Teaching_Google_Mock_How_to_Print_Your_Values).).
+arguments, see this Google Mock [recipe](../../googlemock/docs/CookBook.md#teaching-google-mock-how-to-print-your-values).).
 
 These assertions can work with a user-defined type, but only if you define the
 corresponding comparison operator (e.g. `==`, `<`, etc).  If the corresponding
@@ -172,6 +202,10 @@ and `wstring`).
 
 _Availability_: Linux, Windows, Mac.
 
+_Historical note_: Before February 2016 `*_EQ` had a convention of calling it as
+`ASSERT_EQ(expected, actual)`, so lots of existing code uses this order.
+Now `*_EQ` treats both parameters in the same way.
+
 ## String Comparison ##
 
 The assertions in this group compare two **C strings**. If you want to compare
@@ -179,9 +213,9 @@ two `string` objects, use `EXPECT_EQ`, `EXPECT_NE`, and etc instead.
 
 | **Fatal assertion** | **Nonfatal assertion** | **Verifies** |
 |:--------------------|:-----------------------|:-------------|
-| `ASSERT_STREQ(`_expected\_str_`, `_actual\_str_`);`    | `EXPECT_STREQ(`_expected\_str_`, `_actual\_str_`);`     | the two C strings have the same content |
+| `ASSERT_STREQ(`_str1_`, `_str2_`);`    | `EXPECT_STREQ(`_str1_`, `_str2_`);`     | the two C strings have the same content |
 | `ASSERT_STRNE(`_str1_`, `_str2_`);`    | `EXPECT_STRNE(`_str1_`, `_str2_`);`     | the two C strings have different content |
-| `ASSERT_STRCASEEQ(`_expected\_str_`, `_actual\_str_`);`| `EXPECT_STRCASEEQ(`_expected\_str_`, `_actual\_str_`);` | the two C strings have the same content, ignoring case |
+| `ASSERT_STRCASEEQ(`_str1_`, `_str2_`);`| `EXPECT_STRCASEEQ(`_str1_`, `_str2_`);` | the two C strings have the same content, ignoring case |
 | `ASSERT_STRCASENE(`_str1_`, `_str2_`);`| `EXPECT_STRCASENE(`_str1_`, `_str2_`);` | the two C strings have different content, ignoring case |
 
 Note that "CASE" in an assertion name means that case is ignored.
@@ -256,7 +290,7 @@ To create a fixture, just:
   1. Derive a class from `::testing::Test` . Start its body with `protected:` or `public:` as we'll want to access fixture members from sub-classes.
   1. Inside the class, declare any objects you plan to use.
   1. If necessary, write a default constructor or `SetUp()` function to prepare the objects for each test. A common mistake is to spell `SetUp()` as `Setup()` with a small `u` - don't let that happen to you.
-  1. If necessary, write a destructor or `TearDown()` function to release any resources you allocated in `SetUp()` . To learn when you should use the constructor/destructor and when you should use `SetUp()/TearDown()`, read this [FAQ entry](http://code.google.com/p/googletest/wiki/FAQ#Should_I_use_the_constructor/destructor_of_the_test_fixture_or_t).
+  1. If necessary, write a destructor or `TearDown()` function to release any resources you allocated in `SetUp()` . To learn when you should use the constructor/destructor and when you should use `SetUp()/TearDown()`, read this [FAQ entry](FAQ.md#should-i-use-the-constructordestructor-of-the-test-fixture-or-the-set-uptear-down-function).
   1. If needed, define subroutines for your tests to share.
 
 When using a fixture, use `TEST_F()` instead of `TEST()` as it allows you to
@@ -281,7 +315,7 @@ declaration`".
 
 For each test defined with `TEST_F()`, Google Test will:
   1. Create a _fresh_ test fixture at runtime
-  1. Immediately initialize it via `SetUp()` ,
+  1. Immediately initialize it via `SetUp()`
   1. Run the test
   1. Clean up by calling `TearDown()`
   1. Delete the test fixture.  Note that different tests in the same test case have different test fixture objects, and Google Test always deletes a test fixture before it creates the next one. Google Test does not reuse the same test fixture for multiple tests. Any changes one test makes to the fixture do not affect other tests.
@@ -382,7 +416,7 @@ When invoked, the `RUN_ALL_TESTS()` macro:
   1. Restores the state of all Google Test flags.
   1. Repeats the above steps for the next test, until all tests have run.
 
-In addition, if the text fixture's constructor generates a fatal failure in
+In addition, if the test fixture's constructor generates a fatal failure in
 step 2, there is no point for step 3 - 5 and they are thus skipped. Similarly,
 if step 3 generates a fatal failure, step 4 will be skipped.
 

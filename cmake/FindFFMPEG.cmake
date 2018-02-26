@@ -18,6 +18,8 @@
 #  BSD license.
 #
 
+include(FindPackageHandleStandardArgs)
+
 if (FFMPEG_LIBRARIES AND FFMPEG_INCLUDE_DIR)
   # in cache already
   set(FFMPEG_FOUND TRUE)
