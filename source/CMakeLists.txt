@@ -21,7 +21,7 @@ set(IDE_FOLDER "Examples")
 add_subdirectory(examples)
 
 # Tests
-if(OPTION_BUILD_TESTS)
+if(OPTION_BUILD_TESTS AND NOT MINGW)
     set(IDE_FOLDER "Tests")
     add_subdirectory(tests)
 endif()
