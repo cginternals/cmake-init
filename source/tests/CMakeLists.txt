@@ -40,7 +40,10 @@ function(add_test_without_ctest target)
     
     add_dependencies(test ${target})
     add_custom_command(TARGET test POST_BUILD 
-        COMMAND $<TARGET_FILE:${target}> --gtest_output=xml:gtests-${target}.xml)
+        COMMAND $<TARGET_FILE:${target}> --gtest_output=xml:gtests-${target}.xml
+    )
+
+    generate_coverage_report(${target})
 endfunction()
 
 # Build gmock
@@ -66,6 +69,20 @@ target_link_libraries(gmock-dev
     INTERFACE
     gmock
 )
+
+set(DEFAULT_COMPILE_TEST_OPTIONS)
+set(DEFAULT_LINKER_TEST_OPTIONS)
+
+if(OPTION_COVERAGE_ENABLED)
+    set(DEFAULT_COMPILE_TEST_OPTIONS ${DEFAULT_COMPILE_TEST_OPTIONS}
+        -fprofile-arcs
+        -ftest-coverage
+    )
+    set(DEFAULT_LINKER_TEST_OPTIONS
+        -fprofile-arcs
+        -ftest-coverage
+    )
+endif()
 
 
 # 

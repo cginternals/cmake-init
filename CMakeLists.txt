@@ -34,6 +34,7 @@ endif()
 include(cmake/GetGitRevisionDescription.cmake)
 include(cmake/HealthCheck.cmake)
 include(cmake/GenerateTemplateExportHeader.cmake)
+include(cmake/Coverage.cmake)
 
 
 # 
@@ -112,8 +113,9 @@ include(cmake/CompileOptions.cmake)
 add_check_template_target(${META_CMAKE_INIT_SHA})
 
 # Configure health check tools
-enable_cppcheck(On)
-enable_clang_tidy(On)
+enable_cppcheck(ON)
+enable_clang_tidy(ON)
+enable_coverage(ON)
 
 
 # 
