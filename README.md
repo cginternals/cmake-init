@@ -1,5 +1,5 @@
 
-<br>cmake-<strong>init</strong>
+<br><span style="font-size: 3em;">cmake-<strong>init</strong></span>
 
 A C++ CMake Project Template
 
