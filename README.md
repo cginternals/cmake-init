@@ -8,71 +8,98 @@ The C++ CMake Project Template
 [![Tokei](https://tokei.rs/b1/github/cginternals/cmake-init)](https://github.com/Aaronepower/tokei)
 [![Setup Guide](https://img.shields.io/badge/cmake%20guide-wiki-blue.svg?style=flat)](https://github.com/cginternals/cmake-init/wiki/Setup-Guide)
 
-cmake-init is a copy and paste template, that provides the following features:
- * Cross Platform
-  * Windows
-  * Linux
-  * Mac
- * Libraries, Applications, Testing template
- * Documentation template
- * Installation, Packaging template
- * CMake find script template for defined libraries
 
-The files of cmake-init are an instantiation of the templates containing:
-  * Example app
-  * Example lib
-  * Example test
-  * Example documentation
-  * Example package
+*cmake-init* is a sophisticated copy & paste template for modern C and C++ projects.
+The main goals include support of all use cases around software development (programming, testing, Q&A, deployment, documentation) while being modular, flexible, and idomatic. *cmake-init* is therefore a collection of cmake best-practices.
+
+The main target platforms are typical desktop, laptop, and server platforms. Currently supported are:
+
+* Windows
+* macOS
+* GNU/Linux
+
+The cmake-init template assumes you want to setup a project using
+* CMake (3.0 or above)
+* C/C++ compiler
 
 
-## Design Decisions
+# Resources
 
-ToDo: revisit!
+* [Adaption Guide](#adaption-guide)
+* [Non-Goals](#non-goals)
+* [Module Documentation](#module-documentation)
+  * [Core Modules](#core-modules)
+    * [CMake Initialization](cmake-initialization)
+    * [CMake Backward Compatibility](#cmake-backward-compatability)
+    * [Project Meta Information](#project-meta-information)
+    * [Project Meta Information Code Generation](#project-meta-information-code-generation)
+    * [Project Build Options](#project-build-options)
+  * [Maintainer Modules](#maintainer-modules)
+    * [cmake-init Template Check](#cmake-init-template-check)
+  * [Development Modules](#development-modules)
+    * [Build Targets](#build-targets)
+    * [Documentation](#documentation)
+    * [Tests](#tests)
+    * [Linter](#linter)
+    * [Continuous Integration](#continuous-integration)
+    * [Deployment](#deployment)
+    * [Packaging](#packaging)
+    * [Run-time Assets](#run-time-assets)
 
-#### Console vs. Windows App (Windows only)
+# Adaption Guide
 
-decisions:
-* we do not use the msvc subsystem linker flag
-* we do not use the add_executable win32 property
-* instead the ```set_target_properties``` with the ```WIN32_EXECUTABLE``` flag on target executable is used
-* we use the same subsystem for all configurations of a single target (no switching between, e.g., debug and release)
+# Non-Goals
 
-rationale:
-typically, only released 'feature' applications are required to decide on their subsystem, and in the case of 'gui-heavy' applications the windows subsystem is preferred (since the std output is probably piped into widgets, logfiles, or even discard).
+In order to be usable in a deterministic, idiomatic fashion, we avoid the following approaches and features:
 
-furthermore, console output is usually more relevant for development/debugging purposes, already using console or IDE with appropriate console output handling
+## Super-Build
 
+Due to the current semantics of targets and CMake internals, combining multiple
+cmake-init projects into one super-build project is not officially supported.
+There are limited and restricting workarounds.
+Actual solution: treat each project separately and use explicit dependency management.
 
+## High Abstraction
 
-ToDo: Add missing content, bring into markdown form
+We use low abstractions to not build a language upon CMake a user has to learn.
 
+## File Glob
 
-Scenarios covered in cmake-init:
+Explicit source specification prevents erroneous cases when adding and removing
+sources from the project tree.
 
+# Module Documentation
 
-1) Development
+## Core Modules
 
-The project is contained in a source directory for active development.
+### CMake Initialization
 
-binaries: ./build
-rpath:    absolute paths to all dependencies
-datapath: ..
+### CMake Backward Compatibility
 
+### Project Meta Information
 
-2) Installation (default)
+### Project Meta Information Code Generation
 
-The project is installed in a self-contained directory, ready for being moved or copied to another location or computer.
+### Project Build Options
 
-binaries: ./bin
-rpath:    $ORIGIN/../lib
-datapath: ..
+## Maintainer Modules
 
+### cmake-init Template Check
 
-3) Installation (unix system install)
+## Development Modules
 
-The project is installed globally on a system.
+### Build Targets
 
-binaries: /usr/[local/]bin
-rpath:    empty
-datapath: /usr/[local/]share/<projectname>
+### Documentation
+
+### Tests
+
+### Linter
+
+### Continuous Integration
+
+### Deployment
+
+### Packaging
+
+### Run-time Assets
