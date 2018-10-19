@@ -99,8 +99,14 @@ do
     fi
 done
 
+if [ "$CMAKE_GENERATOR_OVERRIDE" != "" ]
+then
+  echo "Override CMAKE_GENERATOR to $CMAKE_GENERATOR_OVERRIDE"
+  CMAKE_GENERATOR="$CMAKE_GENERATOR_OVERRIDE"
+fi
+
 # Configure build
-echo "Configuring ..."
+echo "Configuring in $BUILD_DIR..."
 echo ""
 
 # Create build directory
@@ -112,6 +118,7 @@ fi
 # Configure project
 PREVIOUS_DIR=$(pwd)
 cd $BUILD_DIR
+echo cmake -G "$CMAKE_GENERATOR" "-DCMAKE_BUILD_TYPE=$BUILD_TYPE" $CMAKE_OPTIONS "$PREVIOUS_DIR"
 cmake -G "$CMAKE_GENERATOR" "-DCMAKE_BUILD_TYPE=$BUILD_TYPE" $CMAKE_OPTIONS "$PREVIOUS_DIR"
 if [ $? == 0 ]
 then
