@@ -23,7 +23,7 @@ The cmake-init template assumes you want to setup a project using
 * C/C++ compiler
 
 
-# Resources
+# Contents
 
 * [Adaption Guide](#adaption-guide)
 * [Non-Goals](#non-goals)
@@ -48,22 +48,25 @@ The cmake-init template assumes you want to setup a project using
 
 # Adaption Guide
 
+The file [ADAPT.md](https://github.com/cginternals/cmake-init/blob/master/ADAPT.md) contains a task checklist for new projects.
+More generally, a new project should contain all core modules and, as needed, add the maintainer and development modules as required. cmake-init does not impose modularity rules for the cmake targets.
+
 # Non-Goals
 
 In order to be usable in a deterministic, idiomatic fashion, we avoid the following approaches and features:
 
-## Super-Build
+### Super-Build
 
 Due to the current semantics of targets and CMake internals, combining multiple
 cmake-init projects into one super-build project is not officially supported.
 There are limited and restricting workarounds.
 Actual solution: treat each project separately and use explicit dependency management.
 
-## High Abstraction
+### High Abstraction
 
 We use low abstractions to not build a language upon CMake a user has to learn.
 
-## File Glob
+### File Glob
 
 Explicit source specification prevents erroneous cases when adding and removing
 sources from the project tree.
