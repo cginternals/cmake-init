@@ -53,7 +53,7 @@ More generally, a new project should contain all core modules and, as needed, ad
 
 # Non-Goals
 
-In order to be usable in a deterministic, idiomatic fashion, we avoid the following approaches and features:
+In order to be usable in a deterministic, idiomatic fashion, cmake-init avoids the following approaches and features:
 
 ### Super-Build
 
@@ -88,6 +88,29 @@ sources from the project tree.
 ## Maintainer Modules
 
 ### cmake-init Template Check
+
+This module allows to check the actuality of the used cmake-init template for own projects.
+This module is usable when the following is integrated into the `CMakeLists.txt`.
+
+```cmake
+# Add cmake-init template check cmake targets
+add_check_template_target(<CMAKE_INIT_SHA>)
+```
+
+Here, the `<CMAKE_INIT_SHA>` contains the git hash of the used cmake-init template.
+Further, the files `cmake/HealthCheck.cmake` and `cmake/CheckTemplate.cmake` are required.
+
+The hash is usually configured using
+
+```cmake
+# Meta information about the project
+set(META_CMAKE_INIT_SHA      "<CMAKE_INIT_SHA>")
+
+# Add cmake-init template check cmake targets
+add_check_template_target(<CMAKE_INIT_SHA>)
+```
+
+Correctly configures, this module adds a cmake build target named `check-template` that compares the passed `<CMAKE_INIT_SHA>` with the current master commit hash of this repository and provides a link for a diff view.
 
 ## Development Modules
 
