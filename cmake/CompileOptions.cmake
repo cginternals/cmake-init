@@ -21,9 +21,15 @@ set(DEFAULT_PROJECT_OPTIONS
     DEBUG_POSTFIX             "d"
     CXX_STANDARD              11 # Not available before CMake 3.1; see below for manual command line argument addition
     LINKER_LANGUAGE           "CXX"
-    POSITION_INDEPENDENT_CODE ON
     CXX_VISIBILITY_PRESET     "hidden"
     CXX_EXTENSIONS            Off
+    
+    $<$<STREQUAL,$<TARGET_PROPERTY,TYPE>,SHARED_LIBRARY>: # in case of shared library (dll, so, dylib)
+        POSITION_INDEPENDENT_CODE ON
+    >
+    $<$<STREQUAL,$<TARGET_PROPERTY,TYPE>,MODULE_LIBRARY>: # in case of module library (plugin)
+        POSITION_INDEPENDENT_CODE ON
+    >
 )
 
 
