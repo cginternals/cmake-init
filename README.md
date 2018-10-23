@@ -1,81 +1,131 @@
-# C++ CMake Project Template
 
-cmake-init is a copy and paste template, that provides the following features:
- * Cross Platform
-  * Windows
-  * Linux
-  * Mac
- * Libraries, Applications, Testing template
- * Documentation template
- * Installation, Packaging template
- * CMake find script template for defined libraries
+<br><a href="https://github.com/cginternals/cmake-init/"><img src="https://raw.githubusercontent.com/cginternals/cmake-init/master/cmake-init-logo.svg?sanitize=true" width="50%"></a>
 
-The files of cmake-init are an instantiation of the templates containing:
-  * Example app
-  * Example lib
-  * Example test
-  * Example documentation
-  * Example package
+The C++ CMake Project Template
 
-| Service | System | Compiler | Status |
-| ------- | ------ | -------- | -----: |
-|  [Travis-CI](https://travis-ci.org/cginternals/cmake-init) | Ubuntu 14.04 | GCC 4.8, Clang 3.5 | [![Build Status](https://travis-ci.org/cginternals/cmake-init.svg?branch=master)](https://travis-ci.org/cginternals/cmake-init) |
-|  [Travis-CI](https://travis-ci.org/cginternals/cmake-init) | macOS | AppleClang 7.3 | [![Build Status](https://travis-ci.org/cginternals/cmake-init.svg?branch=master)](https://travis-ci.org/cginternals/cmake-init) |
-| [AppVeyor]() | Windows | MSVC 2013<br>MSVC 2015<br>MSVC 2017 | [![Build status](https://ci.appveyor.com/api/projects/status/sy4f0p436p1g5tnp/branch/master?svg=true)](https://ci.appveyor.com/project/scheibel/cmake-init/branch/master)|
-| Jenkins <br><br><br><br> | Ubuntu 14.04 <br><br><br><br> | GCC 4.7 <br> GCC 4.8 <br> GCC 4.9 <br> GCC 5.4 <br> Clang 3.8 <br> | [![Build Status](https://jenkins.hpi3d.de/buildStatus/icon?job=cmake-init-linux-gcc4.7)](https://jenkins.hpi3d.de/job/cmake-init-linux-gcc4.7) <br> [![Build Status](https://jenkins.hpi3d.de/buildStatus/icon?job=cmake-init-linux-gcc4.8)](https://jenkins.hpi3d.de/job/cmake-init-linux-gcc4.8) <br> [![Build Status](https://jenkins.hpi3d.de/buildStatus/icon?job=cmake-init-linux-gcc4.9)](https://jenkins.hpi3d.de/job/cmake-init-linux-gcc4.9) <br> [![Build Status](https://jenkins.hpi3d.de/buildStatus/icon?job=cmake-init-linux-gcc5)](https://jenkins.hpi3d.de/job/cmake-init-linux-gcc5) <br> [![Build Status](https://jenkins.hpi3d.de/buildStatus/icon?job=cmake-init-linux-clang3.8)](https://jenkins.hpi3d.de/job/cmake-init-linux-clang3.8) <br> |
-| Jenkins <br><br> | Windows 10 <br><br> | MSVC 2013 Update 5 <br>  MSVC 2015 Update 1 <br> | [![Build Status](https://jenkins.hpi3d.de/buildStatus/icon?job=cmake-init-windows-msvc2013)](https://jenkins.hpi3d.de/job/cmake-init-windows-msvc2013) <br> [![Build Status](https://jenkins.hpi3d.de/buildStatus/icon?job=cmake-init-windows-msvc2015)](https://jenkins.hpi3d.de/job/cmake-init-windows-msvc2015) <br> |
-| Jenkins | OS X 10.10 | AppleClang 6.0 | [![Build Status](https://jenkins.hpi3d.de/buildStatus/icon?job=cmake-init-osx-clang3.5)](https://jenkins.hpi3d.de/job/cmake-init-osx-clang3.5) |
-
-Please note that our OS X build node is currently broken (physically). However, *cmake-init* is supported and maintained for OS X as well.
+[![Travis](https://img.shields.io/travis/cginternals/cmake-init/master.svg?style=flat&logo=travis)](https://travis-ci.org/cginternals/cmake-init)
+[![Appveyor](https://img.shields.io/appveyor/ci/scheibel/cmake-init/master.svg?style=flat&logo=appveyor)](https://ci.appveyor.com/project/scheibel/cmake-init/branch/master)
+[![Tokei](https://tokei.rs/b1/github/cginternals/cmake-init)](https://github.com/Aaronepower/tokei)
+[![Setup Guide](https://img.shields.io/badge/cmake%20guide-wiki-blue.svg?style=flat)](https://github.com/cginternals/cmake-init/wiki/Setup-Guide)
 
 
-## Design Decisions
+*cmake-init* is a sophisticated copy & paste template for modern C and C++ projects.
+The main goals include support of all use cases around software development (programming, testing, Q&A, deployment, documentation) while being modular, flexible, and idomatic. *cmake-init* is therefore a collection of cmake best-practices.
 
-ToDo: revisit!
+The main target platforms are typical desktop, laptop, and server platforms. Currently supported are:
 
-#### Console vs. Windows App (Windows only)
+* Windows
+* macOS
+* GNU/Linux
 
-decisions:
-* we do not use the msvc subsystem linker flag
-* we do not use the add_executable win32 property
-* instead the ```set_target_properties``` with the ```WIN32_EXECUTABLE``` flag on target executable is used
-* we use the same subsystem for all configurations of a single target (no switching between, e.g., debug and release)
-
-rationale:
-typically, only released 'feature' applications are required to decide on their subsystem, and in the case of 'gui-heavy' applications the windows subsystem is preferred (since the std output is probably piped into widgets, logfiles, or even discard).
-
-furthermore, console output is usually more relevant for development/debugging purposes, already using console or IDE with appropriate console output handling
+The cmake-init template assumes you want to setup a project using
+* CMake (3.0 or above)
+* C/C++ compiler
 
 
+# Contents
 
-ToDo: Add missing content, bring into markdown form
+* [Adaption Guide](#adaption-guide)
+* [Non-Goals](#non-goals)
+* [Module Documentation](#module-documentation)
+  * [Core Modules](#core-modules)
+    * [CMake Initialization](cmake-initialization)
+    * [CMake Backward Compatibility](#cmake-backward-compatability)
+    * [Project Meta Information](#project-meta-information)
+    * [Project Meta Information Code Generation](#project-meta-information-code-generation)
+    * [Project Build Options](#project-build-options)
+  * [Maintainer Modules](#maintainer-modules)
+    * [cmake-init Template Check](#cmake-init-template-check)
+  * [Development Modules](#development-modules)
+    * [Build Targets](#build-targets)
+    * [Documentation](#documentation)
+    * [Tests](#tests)
+    * [Linter](#linter)
+    * [Continuous Integration](#continuous-integration)
+    * [Deployment](#deployment)
+    * [Packaging](#packaging)
+    * [Run-time Assets](#run-time-assets)
 
+# Adaption Guide
 
-Scenarios covered in cmake-init:
+The file [ADAPT.md](https://github.com/cginternals/cmake-init/blob/master/ADAPT.md) contains a task checklist for new projects.
+More generally, a new project should contain all core modules and, as needed, add the maintainer and development modules as required. cmake-init does not impose modularity rules for the cmake targets.
 
+# Non-Goals
 
-1) Development
+In order to be usable in a deterministic, idiomatic fashion, cmake-init avoids the following approaches and features:
 
-The project is contained in a source directory for active development.
+### Super-Build
 
-binaries: ./build
-rpath:    absolute paths to all dependencies
-datapath: ..
+Due to the current semantics of targets and CMake internals, combining multiple
+cmake-init projects into one super-build project is not officially supported.
+There are limited and restricting workarounds.
+Actual solution: treat each project separately and use explicit dependency management.
 
+### High Abstraction
 
-2) Installation (default)
+We use low abstractions to not build a language upon CMake a user has to learn.
 
-The project is installed in a self-contained directory, ready for being moved or copied to another location or computer.
+### File Glob
 
-binaries: ./bin
-rpath:    $ORIGIN/../lib
-datapath: ..
+Explicit source specification prevents erroneous cases when adding and removing
+sources from the project tree.
 
+# Module Documentation
 
-3) Installation (unix system install)
+## Core Modules
 
-The project is installed globally on a system.
+### CMake Initialization
 
-binaries: /usr/[local/]bin
-rpath:    empty
-datapath: /usr/[local/]share/<projectname>
+### CMake Backward Compatibility
+
+### Project Meta Information
+
+### Project Meta Information Code Generation
+
+### Project Build Options
+
+## Maintainer Modules
+
+### cmake-init Template Check
+
+This module allows to check the actuality of the used cmake-init template for own projects.
+This module is usable when the following is integrated into the `CMakeLists.txt`.
+
+```cmake
+# Add cmake-init template check cmake targets
+add_check_template_target(<CMAKE_INIT_SHA>)
+```
+
+Here, the `<CMAKE_INIT_SHA>` contains the git hash of the used cmake-init template.
+Further, the files `cmake/HealthCheck.cmake` and `cmake/CheckTemplate.cmake` are required.
+
+The hash is usually configured using
+
+```cmake
+# Meta information about the project
+set(META_CMAKE_INIT_SHA      "<CMAKE_INIT_SHA>")
+
+# Add cmake-init template check cmake targets
+add_check_template_target(<CMAKE_INIT_SHA>)
+```
+
+Correctly configures, this module adds a cmake build target named `check-template` that compares the passed `<CMAKE_INIT_SHA>` with the current master commit hash of this repository and provides a link for a diff view.
+
+## Development Modules
+
+### Build Targets
+
+### Documentation
+
+### Tests
+
+### Linter
+
+### Continuous Integration
+
+### Deployment
+
+### Packaging
+
+### Run-time Assets
