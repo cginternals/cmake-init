@@ -23,13 +23,7 @@ set(DEFAULT_PROJECT_OPTIONS
     LINKER_LANGUAGE           "CXX"
     CXX_VISIBILITY_PRESET     "hidden"
     CXX_EXTENSIONS            Off
-    
-    $<$<STREQUAL,$<TARGET_PROPERTY,TYPE>,SHARED_LIBRARY>: # in case of shared library (dll, so, dylib)
-        POSITION_INDEPENDENT_CODE ON
-    >
-    $<$<STREQUAL,$<TARGET_PROPERTY,TYPE>,MODULE_LIBRARY>: # in case of module library (plugin)
-        POSITION_INDEPENDENT_CODE ON
-    >
+    POSITION_INDEPENDENT_CODE ${OPTION_USE_PIC}
 )
 
 
