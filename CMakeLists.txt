@@ -31,10 +31,10 @@ if (${CMAKE_VERSION} VERSION_GREATER "3.2")
 endif()
 
 # Include custom cmake modules
+include(cmake/Coverage.cmake)
+include(cmake/GenerateTemplateExportHeader.cmake)
 include(cmake/GetGitRevisionDescription.cmake)
 include(cmake/HealthCheck.cmake)
-include(cmake/GenerateTemplateExportHeader.cmake)
-include(cmake/Coverage.cmake)
 
 
 # 
@@ -71,11 +71,12 @@ string(TOUPPER ${META_PROJECT_ID} META_PROJECT_ID)
 # 
 
 # Project options
-option(BUILD_SHARED_LIBS     "Build shared instead of static libraries."              ON)
-option(OPTION_SELF_CONTAINED "Create a self-contained install with all dependencies." OFF)
-option(OPTION_BUILD_TESTS    "Build tests."                                           ON)
-option(OPTION_BUILD_DOCS     "Build documentation."                                   OFF)
-option(OPTION_BUILD_EXAMPLES "Build examples."                                        OFF)
+option(BUILD_SHARED_LIBS      "Build shared instead of static libraries."              ON)
+option(OPTION_SELF_CONTAINED  "Create a self-contained install with all dependencies." OFF)
+option(OPTION_BUILD_TESTS     "Build tests."                                           ON)
+option(OPTION_BUILD_DOCS      "Build documentation."                                   OFF)
+option(OPTION_BUILD_EXAMPLES  "Build examples."                                        OFF)
+option(OPTION_ENABLE_COVERAGE "Add coverage information."                              OFF)
 
 
 # 
@@ -98,13 +99,6 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR})
 file(WRITE "${PROJECT_BINARY_DIR}/VERSION" "${META_NAME_VERSION}")
 
 
-# 
-# Compiler settings and options
-# 
-
-include(cmake/CompileOptions.cmake)
-
-
 #
 # Project Health Check Setup
 #
@@ -115,7 +109,14 @@ add_check_template_target(${META_CMAKE_INIT_SHA})
 # Configure health check tools
 enable_cppcheck(ON)
 enable_clang_tidy(ON)
-enable_coverage(ON)
+enable_coverage(${OPTION_ENABLE_COVERAGE})
+
+
+# 
+# Compiler settings and options
+# 
+
+include(cmake/CompileOptions.cmake)
 
 
 # 

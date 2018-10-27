@@ -1,5 +1,5 @@
 
-# FindGcovr results:
+# Findlcov results:
 # lcov_FOUND
 # lcov_EXECUTABLE
 
@@ -36,6 +36,7 @@ find_package_handle_standard_args(lcov
         genhtml_EXECUTABLE
 )
 
-mark_as_advanced(lcov_EXECUTABLE
+mark_as_advanced(
+    lcov_EXECUTABLE
     genhtml_EXECUTABLE
 )

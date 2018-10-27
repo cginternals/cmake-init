@@ -70,20 +70,6 @@ target_link_libraries(gmock-dev
     gmock
 )
 
-set(DEFAULT_COMPILE_TEST_OPTIONS)
-set(DEFAULT_LINKER_TEST_OPTIONS)
-
-if(OPTION_COVERAGE_ENABLED)
-    set(DEFAULT_COMPILE_TEST_OPTIONS ${DEFAULT_COMPILE_TEST_OPTIONS}
-        -fprofile-arcs
-        -ftest-coverage
-    )
-    set(DEFAULT_LINKER_TEST_OPTIONS
-        -fprofile-arcs
-        -ftest-coverage
-    )
-endif()
-
 
 # 
 # Target 'test'

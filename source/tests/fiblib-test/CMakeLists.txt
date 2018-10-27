@@ -88,7 +88,6 @@ target_compile_definitions(${target}
 target_compile_options(${target}
     PRIVATE
     ${DEFAULT_COMPILE_OPTIONS}
-    ${DEFAULT_COMPILE_TEST_OPTIONS}
 )
 
 
@@ -99,5 +98,4 @@ target_compile_options(${target}
 target_link_libraries(${target}
     PRIVATE
     ${DEFAULT_LINKER_OPTIONS}
-    ${DEFAULT_LINKER_TEST_OPTIONS}
 )

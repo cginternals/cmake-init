@@ -131,6 +131,11 @@ if ("${CMAKE_CXX_COMPILER_ID}" MATCHES "GNU" OR "${CMAKE_CXX_COMPILER_ID}" MATCH
         $<$<VERSION_LESS:${CMAKE_VERSION},3.1>:
             -std=c++11
         >
+        
+        $<$<BOOL:${OPTION_COVERAGE_ENABLED}>:
+            -fprofile-arcs
+            -ftest-coverage
+        >
     )
 endif ()
 
@@ -144,6 +149,15 @@ set(DEFAULT_LINKER_OPTIONS)
 # Use pthreads on mingw and linux
 if("${CMAKE_CXX_COMPILER_ID}" MATCHES "GNU" OR "${CMAKE_SYSTEM_NAME}" MATCHES "Linux")
     set(DEFAULT_LINKER_OPTIONS
+        ${DEFAULT_LINKER_OPTIONS}
         -pthread
     )
+    
+    if (${OPTION_COVERAGE_ENABLED})
+        set(DEFAULT_LINKER_OPTIONS
+        ${DEFAULT_LINKER_OPTIONS}
+        -fprofile-arcs
+        -ftest-coverage
+    )
+    endif ()
 endif()
