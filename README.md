@@ -10,7 +10,7 @@ The C++ CMake Project Template
 
 
 *cmake-init* is a sophisticated copy & paste template for modern C and C++ projects.
-The main goals include support of all use cases around software development (programming, testing, Q&A, deployment, documentation) while being modular, flexible, and idomatic. *cmake-init* is therefore a collection of cmake best-practices.
+The main goals include support of all use cases around software development (programming, testing, Q&A, deployment, documentation) while being modular, flexible, and idiomatic. *cmake-init* is therefore a collection of cmake best-practices.
 
 The main target platforms are typical desktop, laptop, and server platforms. Currently supported are:
 
