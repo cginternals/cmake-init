@@ -71,3 +71,4 @@ before_script:
 script:
   - cmake --build $BUILD_DIR
   - cmake --build $BUILD_DIR --target test
+  - cmake --build $BUILD_DIR --target coverage
