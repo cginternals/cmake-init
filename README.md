@@ -77,6 +77,47 @@ sources from the project tree.
 
 ### CMake Initialization
 
+As with most CMake projects, cmake-init initializes the CMake environment. This includes the minimum required CMake version,
+
+```cmake
+# CMake version
+cmake_minimum_required(VERSION 3.0 FATAL_ERROR)
+```
+
+required policies,
+
+```cmake
+# Set policies
+set_policy(CMP0054 NEW) # ENABLE CMP0054: Only interpret if() arguments as variables or keywords when unquoted.
+set_policy(CMP0042 NEW) # ENABLE CMP0042: MACOSX_RPATH is enabled by default.
+set_policy(CMP0063 NEW) # ENABLE CMP0063: Honor visibility properties for all target types.
+```
+
+adaption of the cmake module path,
+
+```cmake
+# Include cmake modules
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+```
+
+and an include of default modules that are typically required for each project.
+
+```cpp
+include(GenerateExportHeader)
+include(WriteCompilerDetectionHeader)
+```
+
+As some modules as `WriteCompilerDetectionHeader` may not be available, cmake-init suggests to use fallbacks and availability detection.
+
+```cmake
+set(WriterCompilerDetectionHeaderFound NOTFOUND)
+# This module is only available with CMake >=3.1, so check whether it could be found
+# BUT in CMake 3.1 this module doesn't recognize AppleClang as compiler, so just use it as of CMake 3.2
+if (${CMAKE_VERSION} VERSION_GREATER "3.2")
+    include(WriteCompilerDetectionHeader OPTIONAL RESULT_VARIABLE WriterCompilerDetectionHeaderFound)
+endif()
+```
+
 ### CMake Backward Compatibility
 
 ### Project Meta Information
