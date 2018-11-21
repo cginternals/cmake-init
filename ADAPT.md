@@ -23,26 +23,18 @@ In subdirectory "./deploy/" do:
 
 deploy/CMakeLists.txt:
 * [ ] Substitute pack-template.cmake -> pack-<project>.cmake
-* [ ] Exchange deploy/images/logo.ico
-* [ ] Exchange deploy/images/logo.bmp
-* [ ] Exchange deploy/images/logo.png
 * [ ] Rename deploy/packages/pack-template.cmake -> pack-<project>.cmake
 
 deploy/packages/pack-<project>.cmake:
 * [ ] Adjust OPTION_PACK_GENERATOR to your liking for all systems
 * [ ] Adjust package options, e.g., CPACK_DEBIAN_PACKAGE_DEPENDS, CPACK_DEBIAN_PACKAGE_SECTION, CPACK_DEBIAN_PACKAGE_PRIORITY, CPACK_RPM_PACKAGE_LICENSE, CPACK_RPM_PACKAGE_GROUP, ...
 
-In subdirectory "./source/" do:
+
+In subdirectory "./source/baselib/source" do:
 --------------------------------------------------------------------
 
-* [ ] Rename template-version.h -> <project>-version.h
-
-
-In subdirectory "./source/examples/fibcmd" do:
---------------------------------------------------------------------
-
-source/fibcmd/main.cpp:
-* [ ] Substitute template-version.h -> <project>-version.h
+source/baselib/source/baselib.cpp:
+* [ ] Substitute template/template-version.h -> <project>/<project>-version.h
 * [ ] Substitute TEMPLATE_VERSION -> <PROJECT>_VERSION
 
 
