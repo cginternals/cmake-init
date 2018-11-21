@@ -18,6 +18,8 @@ The main target platforms are typical desktop, laptop, and server platforms. Cur
 * macOS
 * GNU/Linux
 
+However, other UNIX versions may work as well if they are supported by CMake.
+
 The cmake-init template assumes you want to setup a project using
 * CMake (3.0 or above)
 * C/C++ compiler
@@ -25,7 +27,8 @@ The cmake-init template assumes you want to setup a project using
 
 # Contents
 
-* [Adaption Guide](#adaption-guide)
+* [Usage](#usage)
+  * [Adaption Guide](#adaption-guide)
 * [Non-Goals](#non-goals)
 * [Module Documentation](#module-documentation)
   * [Core Modules](#core-modules)
@@ -46,10 +49,24 @@ The cmake-init template assumes you want to setup a project using
     * [Packaging](#packaging)
     * [Run-time Assets](#run-time-assets)
 
-# Adaption Guide
+# Usage
 
-The file [ADAPT.md](https://github.com/cginternals/cmake-init/blob/master/ADAPT.md) contains a task checklist for new projects.
-More generally, a new project should contain all core modules and, as needed, add the maintainer and development modules as required. cmake-init does not impose modularity rules for the cmake targets.
+The intended use of the template is a copy of the current version with a subsequent replacement of project names and customization of modules to your needs. This is documented within the [adaption guide](#adaption-guide).
+Another approach is the initialization of a new CMake project where the required features are adopted from cmake-init. We propose the former workflow.
+
+Concluding, a new project should contain the core modules and, as needed, add the maintainer and development modules as required. All modules are designed in a way that they can be excluded. The process of integration or removal of a module/feature is documented with each module.
+
+## Adaption Guide
+
+The file [ADAPT.md](https://github.com/cginternals/cmake-init/blob/master/ADAPT.md) contains a task checklist for new projects. Your start with a copy of cmake-init and process each item from the checklist, adjusting the template to your needs.
+
+## Update
+
+After some time working on a project, cmake-init may be updated and you want to integrate the changes.
+For an overview of changes we suggest to use the [cmake-init Template Check](#cmake-init-template-check) module.
+Alternatively, you can update the required modules selectively.
+
+
 
 # Non-Goals
 
