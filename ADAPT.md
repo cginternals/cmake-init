@@ -8,7 +8,7 @@ In the root directory adapt/change/do the following:
 * [ ] Edit AUTHORS
 * [ ] Edit LICENSE
 * [ ] Edit README.md
-* [ ] Rename ./template-config.cmake -> <project>-config.cmake
+* [ ] Rename ./template-config.cmake -> \<project>-config.cmake
 
 CMakeLists.txt:
 * [ ]  Set META_PROJECT_*
@@ -22,28 +22,28 @@ In subdirectory "./deploy/" do:
 --------------------------------------------------------------------
 
 deploy/CMakeLists.txt:
-* [ ] Substitute pack-template.cmake -> pack-<project>.cmake
+* [ ] Substitute pack-template.cmake -> pack-\<project>.cmake
 * [ ] Exchange deploy/images/logo.ico
 * [ ] Exchange deploy/images/logo.bmp
 * [ ] Exchange deploy/images/logo.png
-* [ ] Rename deploy/packages/pack-template.cmake -> pack-<project>.cmake
+* [ ] Rename deploy/packages/pack-template.cmake -> pack-\<project>.cmake
 
-deploy/packages/pack-<project>.cmake:
+deploy/packages/pack-\<project>.cmake:
 * [ ] Adjust OPTION_PACK_GENERATOR to your liking for all systems
 * [ ] Adjust package options, e.g., CPACK_DEBIAN_PACKAGE_DEPENDS, CPACK_DEBIAN_PACKAGE_SECTION, CPACK_DEBIAN_PACKAGE_PRIORITY, CPACK_RPM_PACKAGE_LICENSE, CPACK_RPM_PACKAGE_GROUP, ...
 
 In subdirectory "./source/" do:
 --------------------------------------------------------------------
 
-* [ ] Rename template-version.h -> <project>-version.h
+* [ ] Rename template-version.h -> \<project>-version.h
 
 
 In subdirectory "./source/examples/fibcmd" do:
 --------------------------------------------------------------------
 
 source/fibcmd/main.cpp:
-* [ ] Substitute template-version.h -> <project>-version.h
-* [ ] Substitute TEMPLATE_VERSION -> <PROJECT>_VERSION
+* [ ] Substitute template-version.h -> \<project>-version.h
+* [ ] Substitute TEMPLATE_VERSION -> \<PROJECT>_VERSION
 
 
 In subdirectory "./source/codegeneration/" do:
