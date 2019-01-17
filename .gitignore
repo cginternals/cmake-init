@@ -16,6 +16,7 @@
 build*
 debug_build
 release_build
+cmake-build-*
 /bin
 /lib
 /install
@@ -27,6 +28,7 @@ CMakeLists.txt.user.*
 # IDE project files
 *.sublime-project
 *.sublime-workspace
+.idea
 
 # Local config windows
 _configure.bat
@@ -39,3 +41,6 @@ _start-cmd.bat
 
 # Wiki
 wiki
+
+# external projects
+source/tests/googletest-src

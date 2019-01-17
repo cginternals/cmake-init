@@ -24,7 +24,7 @@ if (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/../../cmake")
 else()
     include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/CompileOptions.cmake)
     include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Custom.cmake)
-    include(${CMAKE_CURRENT_SOURCE_DIR}/../../cmake/Coverage.cmake)
+    include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Coverage.cmake)
     include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/DownloadProject.cmake)
     list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 endif()
@@ -35,7 +35,15 @@ set_policy(CMP0042 NEW) # ENABLE  CMP0042: MACOSX_RPATH is enabled by default.
 set_policy(CMP0063 NEW) # ENABLE  CMP0063: Honor visibility properties for all target types.
 set_policy(CMP0037 OLD) # DISABLE CMP0037: Target names should not be reserved and should match a validity pattern.
 
-# Build gmock
+
+# Download gtest/gmock (only once at configure time)
+download_project(PROJ                googletest
+                 SOURCE_DIR          ${CMAKE_CURRENT_LIST_DIR}/googletest-src
+                 GIT_REPOSITORY      https://github.com/google/googletest.git
+                 GIT_TAG             master
+)
+
+# Build gtest/gmock
 set(INSTALL_GTEST               OFF CACHE BOOL "")
 set(gmock_build_tests           OFF CACHE BOOL "")
 set(gtest_build_samples         OFF CACHE BOOL "")
@@ -43,22 +51,9 @@ set(gtest_build_tests           OFF CACHE BOOL "")
 set(gtest_disable_pthreads      OFF CACHE BOOL "")
 set(gtest_force_shared_crt      ON  CACHE BOOL "")
 set(gtest_hide_internal_symbols OFF CACHE BOOL "")
+add_subdirectory(${googletest_SOURCE_DIR})
 
-if (CMAKE_VERSION VERSION_LESS 3.2)
-    set(UPDATE_DISCONNECTED_IF_AVAILABLE "")
-else()
-    set(UPDATE_DISCONNECTED_IF_AVAILABLE "UPDATE_DISCONNECTED 1")
-endif()
-
-download_project(PROJ                googletest
-                 GIT_REPOSITORY      https://github.com/google/googletest.git
-                 GIT_TAG             master
-                 ${UPDATE_DISCONNECTED_IF_AVAILABLE}
-)
-
-add_subdirectory(${googletest_SOURCE_DIR} ${googletest_BINARY_DIR})
-
-# configure google/googletest targets
+# configure gtest/gmock targets
 foreach(target gtest gtest_main gmock gmock_main)
     set_target_properties(${target} PROPERTIES
         FOLDER "${IDE_FOLDER}"

@@ -101,7 +101,6 @@ function(download_project)
         PREFIX
         DOWNLOAD_DIR
         SOURCE_DIR
-        BINARY_DIR
         # Prevent the following from being passed through
         CONFIGURE_COMMAND
         BUILD_COMMAND
@@ -137,11 +136,7 @@ function(download_project)
     if (NOT DL_ARGS_SOURCE_DIR)
         set(DL_ARGS_SOURCE_DIR "${DL_ARGS_PREFIX}/${DL_ARGS_PROJ}-src")
     endif()
-    if (NOT DL_ARGS_BINARY_DIR)
-        set(DL_ARGS_BINARY_DIR "${DL_ARGS_PREFIX}/${DL_ARGS_PROJ}-build")
-    endif()
     set(${DL_ARGS_PROJ}_SOURCE_DIR "${DL_ARGS_SOURCE_DIR}" PARENT_SCOPE)
-    set(${DL_ARGS_PROJ}_BINARY_DIR "${DL_ARGS_BINARY_DIR}" PARENT_SCOPE)
 
     # The way that CLion manages multiple configurations, it causes a copy of
     # the CMakeCache.txt to be copied across due to it not expecting there to
@@ -152,6 +147,24 @@ function(download_project)
     # executed at the configure step, it should not cause additional builds or
     # downloads.
     file(REMOVE "${DL_ARGS_DOWNLOAD_DIR}/CMakeCache.txt")
+
+
+    # check if source is already present
+    find_package (Git REQUIRED)
+    execute_process(
+        COMMAND ${GIT_EXECUTABLE} status
+        RESULT_VARIABLE result
+        WORKING_DIRECTORY "${DL_ARGS_SOURCE_DIR}"
+        OUTPUT_QUIET
+    )
+
+    # do not download again if there is a git repo present at ${DL_ARGS_SOURCE_DIR}
+    if(NOT result)
+        message(STATUS "found ${DL_ARGS_PROJ} in ${DL_ARGS_SOURCE_DIR}; skipping download")
+        return()
+    endif()
+    message(STATUS "${DL_ARGS_PROJ} is not in ${DL_ARGS_SOURCE_DIR}; will now be cloned")
+
 
     # Create and build a separate CMake project to carry out the download.
     # If we've already previously done these steps, they will not cause
