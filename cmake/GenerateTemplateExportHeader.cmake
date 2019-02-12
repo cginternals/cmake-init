@@ -5,8 +5,8 @@
 # may get used to define public visibility for templates on GCC and Clang platforms.
 function(generate_template_export_header target target_id export_file)
     if ("${CMAKE_CXX_COMPILER_ID}" MATCHES "MSVC")
-        configure_file(${PROJECT_SOURCE_DIR}/source/codegeneration/template_msvc_api.h.in ${CMAKE_CURRENT_BINARY_DIR}/${export_file})
+        configure_file(${PROJECT_SOURCE_DIR}/source/codegeneration/template_msvc_api.h.in ${CMAKE_CURRENT_BINARY_DIR}/${export_file} @ONLY)
     else()
-        configure_file(${PROJECT_SOURCE_DIR}/source/codegeneration/template_api.h.in ${CMAKE_CURRENT_BINARY_DIR}/${export_file})
+        configure_file(${PROJECT_SOURCE_DIR}/source/codegeneration/template_api.h.in ${CMAKE_CURRENT_BINARY_DIR}/${export_file} @ONLY)
     endif()
 endfunction()

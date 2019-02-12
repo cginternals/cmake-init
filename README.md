@@ -203,20 +203,20 @@ The result of this module is the generation of a C header file that propagates t
 For this, the CMake file configuration feature is used on the `version.h.in` header template.
 
 ```c
-#define ${META_PROJECT_ID}_PROJECT_NAME        "@META_PROJECT_NAME@"
-#define ${META_PROJECT_ID}_PROJECT_DESCRIPTION "@META_PROJECT_DESCRIPTION@"
+#define @META_PROJECT_ID@_PROJECT_NAME        "@META_PROJECT_NAME@"
+#define @META_PROJECT_ID@_PROJECT_DESCRIPTION "@META_PROJECT_DESCRIPTION@"
 
-#define ${META_PROJECT_ID}_AUTHOR_ORGANIZATION "@META_AUTHOR_ORGANIZATION@"
-#define ${META_PROJECT_ID}_AUTHOR_DOMAIN       "@META_AUTHOR_DOMAIN@"
-#define ${META_PROJECT_ID}_AUTHOR_MAINTAINER   "@META_AUTHOR_MAINTAINER@"
+#define @META_PROJECT_ID@_AUTHOR_ORGANIZATION "@META_AUTHOR_ORGANIZATION@"
+#define @META_PROJECT_ID@_AUTHOR_DOMAIN       "@META_AUTHOR_DOMAIN@"
+#define @META_PROJECT_ID@_AUTHOR_MAINTAINER   "@META_AUTHOR_MAINTAINER@"
 
-#define ${META_PROJECT_ID}_VERSION_MAJOR       "@META_VERSION_MAJOR@"
-#define ${META_PROJECT_ID}_VERSION_MINOR       "@META_VERSION_MINOR@"
-#define ${META_PROJECT_ID}_VERSION_PATCH       "@META_VERSION_PATCH@"
-#define ${META_PROJECT_ID}_VERSION_REVISION    "@META_VERSION_REVISION@"
+#define @META_PROJECT_ID@_VERSION_MAJOR       "@META_VERSION_MAJOR@"
+#define @META_PROJECT_ID@_VERSION_MINOR       "@META_VERSION_MINOR@"
+#define @META_PROJECT_ID@_VERSION_PATCH       "@META_VERSION_PATCH@"
+#define @META_PROJECT_ID@_VERSION_REVISION    "@META_VERSION_REVISION@"
 
-#define ${META_PROJECT_ID}_VERSION             "@META_VERSION@"
-#define ${META_PROJECT_ID}_NAME_VERSION        "@META_NAME_VERSION@"
+#define @META_PROJECT_ID@_VERSION             "@META_VERSION@"
+#define @META_PROJECT_ID@_NAME_VERSION        "@META_NAME_VERSION@"
 ```
 
 The template file is configured with the project meta information and the result is stored within the build directory. Beware that this header is stored in a path derived from your project name. You should adopt this as required.
