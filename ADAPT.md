@@ -23,9 +23,6 @@ In subdirectory "./deploy/" do:
 
 deploy/CMakeLists.txt:
 * [ ] Substitute pack-template.cmake -> pack-\<project>.cmake
-* [ ] Exchange deploy/images/logo.ico
-* [ ] Exchange deploy/images/logo.bmp
-* [ ] Exchange deploy/images/logo.png
 * [ ] Rename deploy/packages/pack-template.cmake -> pack-\<project>.cmake
 
 deploy/packages/pack-\<project>.cmake:
