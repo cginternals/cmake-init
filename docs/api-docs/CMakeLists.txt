@@ -43,7 +43,7 @@ endif()
 
 # Configure doxyfile (if it is a real doxyfile already, it should simply copy the file)
 set(DOXYGEN_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
-configure_file(${doxyfile_in} ${doxyfile})
+configure_file(${doxyfile_in} ${doxyfile} @ONLY)
 
 # Invoke doxygen
 add_custom_command(
