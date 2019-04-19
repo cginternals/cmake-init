@@ -22,7 +22,6 @@ In subdirectory "./deploy/" do:
 --------------------------------------------------------------------
 
 deploy/CMakeLists.txt:
-* [ ] Substitute pack-template.cmake -> pack-\<project>.cmake
 * [ ] Rename deploy/packages/pack-template.cmake -> pack-\<project>.cmake
 
 deploy/packages/pack-\<project>.cmake:
