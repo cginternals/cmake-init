@@ -32,7 +32,7 @@ The cmake-init template assumes you want to setup a project using
 * [Non-Goals](#non-goals)
 * [Module Documentation](#module-documentation)
   * [Core Modules](#core-modules)
-    * [CMake Initialization](cmake-initialization)
+    * [CMake Initialization](#cmake-initialization)
     * [CMake Backward Compatibility](#cmake-backward-compatability)
     * [Project Meta Information](#project-meta-information)
     * [Project Meta Information Code Generation](#project-meta-information-code-generation)
