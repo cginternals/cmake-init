@@ -26,8 +26,7 @@
 // THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-//
-// Author: wan@google.com (Zhanyong Wan)
+
 
 // Google Mock - a framework for writing C++ mock classes.
 //
@@ -35,6 +34,7 @@
 
 #include "gmock/gmock-spec-builders.h"
 
+#include <memory>
 #include <ostream>  // NOLINT
 #include <sstream>
 #include <string>
@@ -78,6 +78,7 @@ using testing::Expectation;
 using testing::ExpectationSet;
 using testing::GMOCK_FLAG(verbose);
 using testing::Gt;
+using testing::IgnoreResult;
 using testing::InSequence;
 using testing::Invoke;
 using testing::InvokeWithoutArgs;
@@ -89,6 +90,7 @@ using testing::Mock;
 using testing::NaggyMock;
 using testing::Ne;
 using testing::Return;
+using testing::SaveArg;
 using testing::Sequence;
 using testing::SetArgPointee;
 using testing::internal::ExpectationTester;
@@ -99,7 +101,6 @@ using testing::internal::kFail;
 using testing::internal::kInfoVerbosity;
 using testing::internal::kWarn;
 using testing::internal::kWarningVerbosity;
-using testing::internal::linked_ptr;
 
 #if GTEST_HAS_STREAM_REDIRECTION
 using testing::HasSubstr;
@@ -172,7 +173,7 @@ class ReferenceHoldingMock {
  public:
   ReferenceHoldingMock() {}
 
-  MOCK_METHOD1(AcceptReference, void(linked_ptr<MockA>*));
+  MOCK_METHOD1(AcceptReference, void(std::shared_ptr<MockA>*));
 
  private:
   GTEST_DISALLOW_COPY_AND_ASSIGN_(ReferenceHoldingMock);
@@ -748,7 +749,6 @@ TEST(ExpectCallSyntaxTest, WarningIsErrorWithFlag) {
   testing::GMOCK_FLAG(default_mock_behavior) = original_behavior;
 }
 
-
 #endif  // GTEST_HAS_STREAM_REDIRECTION
 
 // Tests the semantics of ON_CALL().
@@ -1176,7 +1176,7 @@ TEST(UnexpectedCallTest, UnsatisifiedPrerequisites) {
 TEST(UndefinedReturnValueTest,
      ReturnValueIsMandatoryWhenNotDefaultConstructible) {
   MockA a;
-  // TODO(wan@google.com): We should really verify the output message,
+  // FIXME: We should really verify the output message,
   // but we cannot yet due to that EXPECT_DEATH only captures stderr
   // while Google Mock logs to stdout.
 #if GTEST_HAS_EXCEPTIONS
@@ -1952,18 +1952,20 @@ TEST(DeletingMockEarlyTest, Failure2) {
 
 class EvenNumberCardinality : public CardinalityInterface {
  public:
-  // Returns true iff call_count calls will satisfy this cardinality.
-  virtual bool IsSatisfiedByCallCount(int call_count) const {
+  // Returns true if and only if call_count calls will satisfy this
+  // cardinality.
+  bool IsSatisfiedByCallCount(int call_count) const override {
     return call_count % 2 == 0;
   }
 
-  // Returns true iff call_count calls will saturate this cardinality.
-  virtual bool IsSaturatedByCallCount(int /* call_count */) const {
+  // Returns true if and only if call_count calls will saturate this
+  // cardinality.
+  bool IsSaturatedByCallCount(int /* call_count */) const override {
     return false;
   }
 
   // Describes self to an ostream.
-  virtual void DescribeTo(::std::ostream* os) const {
+  void DescribeTo(::std::ostream* os) const override {
     *os << "called even number of times";
   }
 };
@@ -2024,7 +2026,9 @@ class VerboseFlagPreservingFixture : public testing::Test {
   VerboseFlagPreservingFixture()
       : saved_verbose_flag_(GMOCK_FLAG(verbose)) {}
 
-  ~VerboseFlagPreservingFixture() { GMOCK_FLAG(verbose) = saved_verbose_flag_; }
+  ~VerboseFlagPreservingFixture() override {
+    GMOCK_FLAG(verbose) = saved_verbose_flag_;
+  }
 
  private:
   const std::string saved_verbose_flag_;
@@ -2042,7 +2046,7 @@ TEST(FunctionCallMessageTest,
   GMOCK_FLAG(verbose) = kWarningVerbosity;
   NaggyMock<MockC> c;
   CaptureStdout();
-  c.VoidMethod(false, 5, "Hi", NULL, Printable(), Unprintable());
+  c.VoidMethod(false, 5, "Hi", nullptr, Printable(), Unprintable());
   const std::string output = GetCapturedStdout();
   EXPECT_PRED_FORMAT2(IsSubstring, "GMOCK WARNING", output);
   EXPECT_PRED_FORMAT2(IsNotSubstring, "Stack trace:", output);
@@ -2056,7 +2060,7 @@ TEST(FunctionCallMessageTest,
   GMOCK_FLAG(verbose) = kInfoVerbosity;
   NaggyMock<MockC> c;
   CaptureStdout();
-  c.VoidMethod(false, 5, "Hi", NULL, Printable(), Unprintable());
+  c.VoidMethod(false, 5, "Hi", nullptr, Printable(), Unprintable());
   const std::string output = GetCapturedStdout();
   EXPECT_PRED_FORMAT2(IsSubstring, "GMOCK WARNING", output);
   EXPECT_PRED_FORMAT2(IsSubstring, "Stack trace:", output);
@@ -2099,7 +2103,7 @@ TEST(FunctionCallMessageTest,
   // A void mock function.
   NaggyMock<MockC> c;
   CaptureStdout();
-  c.VoidMethod(false, 5, "Hi", NULL, Printable(), Unprintable());
+  c.VoidMethod(false, 5, "Hi", nullptr, Printable(), Unprintable());
   const std::string output2 = GetCapturedStdout();
   EXPECT_THAT(output2.c_str(),
               ContainsRegex(
@@ -2174,7 +2178,9 @@ class GMockVerboseFlagTest : public VerboseFlagPreservingFixture {
         "NOTE: You can safely ignore the above warning unless this "
         "call should not happen.  Do not suppress it by blindly adding "
         "an EXPECT_CALL() if you don't mean to enforce the call.  "
-        "See https://github.com/google/googletest/blob/master/googlemock/docs/CookBook.md#"
+        "See "
+        "https://github.com/google/googletest/blob/master/googlemock/docs/"
+        "cook_book.md#"
         "knowing-when-to-expect for details.";
 
     // A void-returning function.
@@ -2618,7 +2624,7 @@ TEST(VerifyAndClearTest, DoesNotAffectOtherMockObjects) {
 
 TEST(VerifyAndClearTest,
      DestroyingChainedMocksDoesNotDeadlockThroughExpectations) {
-  linked_ptr<MockA> a(new MockA);
+  std::shared_ptr<MockA> a(new MockA);
   ReferenceHoldingMock test_mock;
 
   // EXPECT_CALL stores a reference to a inside test_mock.
@@ -2638,7 +2644,7 @@ TEST(VerifyAndClearTest,
 
 TEST(VerifyAndClearTest,
      DestroyingChainedMocksDoesNotDeadlockThroughDefaultAction) {
-  linked_ptr<MockA> a(new MockA);
+  std::shared_ptr<MockA> a(new MockA);
   ReferenceHoldingMock test_mock;
 
   // ON_CALL stores a reference to a inside test_mock.
@@ -2680,6 +2686,75 @@ TEST(SynchronizationTest, CanCallMockMethodInAction) {
   // EXPECT_CALL() did not specify an action.
 }
 
+TEST(ParameterlessExpectationsTest, CanSetExpectationsWithoutMatchers) {
+  MockA a;
+  int do_a_arg0 = 0;
+  ON_CALL(a, DoA).WillByDefault(SaveArg<0>(&do_a_arg0));
+  int do_a_47_arg0 = 0;
+  ON_CALL(a, DoA(47)).WillByDefault(SaveArg<0>(&do_a_47_arg0));
+
+  a.DoA(17);
+  EXPECT_THAT(do_a_arg0, 17);
+  EXPECT_THAT(do_a_47_arg0, 0);
+  a.DoA(47);
+  EXPECT_THAT(do_a_arg0, 17);
+  EXPECT_THAT(do_a_47_arg0, 47);
+
+  ON_CALL(a, Binary).WillByDefault(Return(true));
+  ON_CALL(a, Binary(_, 14)).WillByDefault(Return(false));
+  EXPECT_THAT(a.Binary(14, 17), true);
+  EXPECT_THAT(a.Binary(17, 14), false);
+}
+
+TEST(ParameterlessExpectationsTest, CanSetExpectationsForOverloadedMethods) {
+  MockB b;
+  ON_CALL(b, DoB()).WillByDefault(Return(9));
+  ON_CALL(b, DoB(5)).WillByDefault(Return(11));
+
+  EXPECT_THAT(b.DoB(), 9);
+  EXPECT_THAT(b.DoB(1), 0);  // default value
+  EXPECT_THAT(b.DoB(5), 11);
+}
+
+struct MockWithConstMethods {
+ public:
+  MOCK_CONST_METHOD1(Foo, int(int));
+  MOCK_CONST_METHOD2(Bar, int(int, const char*));
+};
+
+TEST(ParameterlessExpectationsTest, CanSetExpectationsForConstMethods) {
+  MockWithConstMethods mock;
+  ON_CALL(mock, Foo).WillByDefault(Return(7));
+  ON_CALL(mock, Bar).WillByDefault(Return(33));
+
+  EXPECT_THAT(mock.Foo(17), 7);
+  EXPECT_THAT(mock.Bar(27, "purple"), 33);
+}
+
+class MockConstOverload {
+ public:
+  MOCK_METHOD1(Overloaded, int(int));
+  MOCK_CONST_METHOD1(Overloaded, int(int));
+};
+
+TEST(ParameterlessExpectationsTest,
+     CanSetExpectationsForConstOverloadedMethods) {
+  MockConstOverload mock;
+  ON_CALL(mock, Overloaded(_)).WillByDefault(Return(7));
+  ON_CALL(mock, Overloaded(5)).WillByDefault(Return(9));
+  ON_CALL(Const(mock), Overloaded(5)).WillByDefault(Return(11));
+  ON_CALL(Const(mock), Overloaded(7)).WillByDefault(Return(13));
+
+  EXPECT_THAT(mock.Overloaded(1), 7);
+  EXPECT_THAT(mock.Overloaded(5), 9);
+  EXPECT_THAT(mock.Overloaded(7), 7);
+
+  const MockConstOverload& const_mock = mock;
+  EXPECT_THAT(const_mock.Overloaded(1), 0);
+  EXPECT_THAT(const_mock.Overloaded(5), 11);
+  EXPECT_THAT(const_mock.Overloaded(7), 13);
+}
+
 }  // namespace
 
 // Allows the user to define their own main and then invoke gmock_main
@@ -2691,7 +2766,6 @@ int gmock_main(int argc, char **argv) {
 int main(int argc, char **argv) {
 #endif  // GMOCK_RENAME_MAIN
   testing::InitGoogleMock(&argc, argv);
-
   // Ensures that the tests pass no matter what value of
   // --gmock_catch_leaked_mocks and --gmock_verbose the user specifies.
   testing::GMOCK_FLAG(catch_leaked_mocks) = true;

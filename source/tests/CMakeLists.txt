@@ -54,7 +54,7 @@ set(gtest_disable_pthreads      OFF CACHE BOOL "")
 set(gtest_force_shared_crt      ON  CACHE BOOL "")
 set(gtest_hide_internal_symbols OFF CACHE BOOL "")
 
-add_subdirectory(googletest/googlemock)
+add_subdirectory(googletest)
 
 # Create interface library to link against gmock
 add_library(gmock-dev INTERFACE)
