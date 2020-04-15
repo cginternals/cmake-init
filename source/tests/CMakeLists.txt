@@ -48,8 +48,9 @@ endfunction()
 
 find_package(googletest QUIET)
 
-if (NOT TARGET googletest)
+if (NOT TARGET googletest::googletest)
     message(STATUS "Tests skipped: googletest not found")
+    return()
 endif ()
 
 # 
