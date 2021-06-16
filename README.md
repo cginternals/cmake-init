@@ -21,7 +21,7 @@ The main target platforms are typical desktop, laptop, and server platforms. Cur
 However, other UNIX versions may work as well if they are supported by CMake.
 
 The cmake-init template assumes you want to setup a project using
-* CMake (3.0 or above)
+* CMake (3.13 or above)
 * C/C++ compiler
 
 
@@ -99,7 +99,7 @@ As with most CMake projects, cmake-init initializes the CMake environment. This 
 
 ```cmake
 # CMake version
-cmake_minimum_required(VERSION 3.0 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.13 FATAL_ERROR)
 ```
 
 required policies,
@@ -155,12 +155,12 @@ if (WriterCompilerDetectionHeaderFound)
 endif ()
 ```
 
-Another issue with older CMake versions is the unavailability of then-unpublished language standards (e.g., C++11 and CMake 3.0). For those versions, the compile options has to be extended manually.
+Another issue with older CMake versions is the unavailability of then-unpublished language standards (e.g., C++11 and CMake 3.13). For those versions, the compile options has to be extended manually.
 
 For new projects, we suggest to require at least CMake 3.2 and to therefore adjust the minimum required version:
 
 ```cmake
-cmake_minimum_required(VERSION 3.0 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.13 FATAL_ERROR)
 ```
 
 

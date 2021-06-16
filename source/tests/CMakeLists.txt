@@ -4,7 +4,7 @@
 #
 
 # CMake version
-cmake_minimum_required(VERSION 3.0 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.13 FATAL_ERROR)
 
 # Meta information about the project
 set(META_PROJECT_NAME "template")
