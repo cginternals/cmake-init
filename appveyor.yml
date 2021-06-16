@@ -35,7 +35,7 @@ before_build:
     mkdir build
     cd build
     cmake --version
-    cmake .. -G %generator% - A arch
+    cmake .. -G %generator% - A %arch%
 
 build:
   project: c:\projects\cmake-init\build\template.sln
