@@ -1,4 +1,4 @@
-name: C++ Compilation and Test
+name: C++ CI
 
 on:
   push:
@@ -18,10 +18,17 @@ jobs:
       - name: make
         run: make
         working-directory: build
-  test:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
       - name: tests
         run: make tests
+        working-directory: build
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: install cmake
+        run: sudo apt install -y cmake
+      - name: configure
+        run: ./configure && ./configure
+      - name: check
+        run: make check-all
         working-directory: build
