@@ -1,4 +1,4 @@
-name: C++ Compilation
+name: C++ Compilation and Test
 
 on:
   push:
@@ -7,17 +7,25 @@ on:
       branches: [ master ]
 
 jobs:
-  build:
+  setup:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - name: install cmake and googletest
         run: sudo apt install -y cmake libgmock-dev
+  build:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
       - name: configure
         run: ./configure && ./configure
       - name: make
         run: make
         working-directory: build
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
       - name: tests
         run: make tests
         working-directory: build
