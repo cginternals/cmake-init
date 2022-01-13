@@ -1,6 +1,8 @@
 
 #pragma once
 
+#include <fiblib/CTFibonacci.h>
+
 
 namespace fiblib
 {
