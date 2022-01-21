@@ -28,7 +28,7 @@ jobs:
       - name: configure
         run: ./configure && CMAKE_OPTIONS="-DOPTION_ENABLE_COVERAGE=On" ./configure
       - name: tests
-        run: make tests
+        run: make test
         working-directory: build
   check:
     needs: build
