@@ -47,6 +47,7 @@ add_executable(${META_PROJECT_NAME}::${target} ALIAS ${target})
 set_target_properties(${target}
     PROPERTIES
     ${DEFAULT_PROJECT_OPTIONS}
+    INSTALL_RPATH "${EXECUTABLE_INSTALL_RPATH}"
     FOLDER "${IDE_FOLDER}"
 )
 

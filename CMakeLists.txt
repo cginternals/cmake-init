@@ -172,9 +172,11 @@ set(CMAKE_INSTALL_RPATH_USE_LINK_PATH FALSE) # Do NOT add path to dependencies f
 if(NOT SYSTEM_DIR_INSTALL)
     # Find libraries relative to binary
     if(APPLE)
-        set(CMAKE_INSTALL_RPATH "@loader_path/../../../${INSTALL_LIB}")
+        set(EXECUTABLE_INSTALL_RPATH "@loader_path/../../../${INSTALL_LIB}")
+        set(LIBRARY_INSTALL_RPATH    "@loader_path/../../../${INSTALL_LIB}")
     else()
-        set(CMAKE_INSTALL_RPATH "$ORIGIN/${INSTALL_LIB}")       
+        set(EXECUTABLE_INSTALL_RPATH "$ORIGIN/${INSTALL_LIB}")
+        set(LIBRARY_INSTALL_RPATH    "$ORIGIN")
     endif()
 endif()
 

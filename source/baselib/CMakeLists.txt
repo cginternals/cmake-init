@@ -104,9 +104,10 @@ generate_template_export_header(${target}
 set_target_properties(${target}
     PROPERTIES
     ${DEFAULT_PROJECT_OPTIONS}
+    INSTALL_RPATH "${LIBRARY_INSTALL_RPATH}"
     FOLDER "${IDE_FOLDER}"
-    VERSION ${META_VERSION}
-    SOVERSION ${META_VERSION_MAJOR}
+    VERSION "${META_VERSION}"
+    SOVERSION "${META_VERSION_MAJOR}"
 )
 
 
