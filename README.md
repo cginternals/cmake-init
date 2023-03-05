@@ -286,6 +286,12 @@ endif()
 
 ### Tests
 
+Tests are available using the Google testing frameworks `googletest` and `googlemock`.
+cmake-init assumes an external installment of both frameworks.
+Typically, package managers of each system provides a sufficient installment.
+For example, on Ubuntu you can install the `libgmock-dev` package.
+On macOS using Homebrew, this package is named `googletest
+
 ### Linter
 
 ### Continuous Integration
