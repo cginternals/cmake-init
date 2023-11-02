@@ -18,45 +18,33 @@ set(target api-docs)
 message(STATUS "Doc ${target}")
 
 
-# 
-# Input file
-# 
-
-set(doxyfile_in doxyfile.in)
-
-
-# 
-# Create documentation
+#
+# Configure Doxygen
 # 
 
-# Set project variables
-set(doxyfile            "${CMAKE_CURRENT_BINARY_DIR}/doxyfile")
-set(doxyfile_directory  "${CMAKE_CURRENT_BINARY_DIR}/html")
-set(doxyfile_html       "${doxyfile_directory}/index.html")
+set(DOXYGEN_QUIET                   YES)
+set(DOXYGEN_USE_MDFILE_AS_MAINPAGE  ${PROJECT_SOURCE_DIR}/README.md)
+set(DOXYGEN_PROJECT_LOGO            ${PROJECT_SOURCE_DIR}/cmake-init-logo.png) # TODO replace by ${META_PROJECT_NAME}-logo.png
+set(DOXYGEN_USE_MATHJAX             YES)
+set(DOXYGEN_EXTRACT_ALL             YES)
+set(DOXYGEN_EXTRACT_LOCAL_CLASSES   NO)
 
-# Get filename and path of doxyfile
-get_filename_component(name ${doxyfile_in} NAME)
-get_filename_component(path ${doxyfile_in} PATH)
-if(NOT path)
-    set(path ${CMAKE_CURRENT_SOURCE_DIR})
-endif()
 
-# Configure doxyfile (if it is a real doxyfile already, it should simply copy the file)
-set(DOXYGEN_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
-configure_file(${doxyfile_in} ${doxyfile} @ONLY)
+#
+# Create Target
+# 
 
-# Invoke doxygen
-add_custom_command(
-    OUTPUT              ${doxyfile_html}
-    DEPENDS             ${doxyfile} ${META_PROJECT_NAME}::baselib ${META_PROJECT_NAME}::fiblib
-    WORKING_DIRECTORY   ${path}
-    COMMAND             ${CMAKE_COMMAND} -E copy_directory ${path} ${doxyfile_directory} # ToDO, configure doxygen to use source as is
-    COMMAND             ${DOXYGEN} \"${doxyfile}\"
-    COMMENT             "Creating doxygen documentation."
+doxygen_add_docs(${target}
+    ${PROJECT_SOURCE_DIR}/README.md
+# library headers
+    ${PROJECT_SOURCE_DIR}/source/baselib/include
+    ${PROJECT_SOURCE_DIR}/source/fiblib/include
+# generated headers
+    ${CMAKE_BINARY_DIR}/source/include
+    ${CMAKE_BINARY_DIR}/source/baselib/include
+    ${CMAKE_BINARY_DIR}/source/fiblib/include
+    ALL WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
 )
-
-# Declare target
-add_custom_target(${target} ALL DEPENDS ${doxyfile_html})
 add_dependencies(docs ${target})
 
 
@@ -65,7 +53,7 @@ add_dependencies(docs ${target})
 # 
 
 install(
-    DIRECTORY ${doxyfile_directory}
+    DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/html
     DESTINATION ${INSTALL_DOC}
     COMPONENT docs
 )
