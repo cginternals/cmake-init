@@ -4,7 +4,7 @@
 # 
 
 # CMake version
-cmake_minimum_required(VERSION 3.5 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.15 FATAL_ERROR)
 
 #
 # Configure CMake environment
