@@ -73,7 +73,7 @@ write_compiler_detection_header(
     PREFIX ${target_id}
     COMPILERS AppleClang Clang GNU MSVC
     FEATURES cxx_alignas cxx_alignof cxx_constexpr cxx_final cxx_noexcept cxx_nullptr cxx_sizeof_member cxx_thread_local
-    VERSION 3.2
+    VERSION 3.5
 )
 
 # Create API export header
