@@ -3,8 +3,12 @@
 # Get cmake-init latest commit SHA on master
 #
 
+if(NOT APPLIED_CMAKE_INIT_BRANCH)
+    set(APPLIED_CMAKE_INIT_BRANCH "master")
+endif ()
+
 file(DOWNLOAD
-    "https://api.github.com/repos/cginternals/cmake-init/commits/master"
+    "https://api.github.com/repos/cginternals/cmake-init/commits/${APPLIED_CMAKE_INIT_BRANCH}"
     "${PROJECT_BINARY_DIR}/cmake-init.github.data"
 )
 file(READ
@@ -45,5 +49,5 @@ endif()
 if(${APPLIED_CMAKE_INIT_SHA} STREQUAL ${CMAKE_INIT_SHA})
     message(STATUS "cmake-init template is up-to-date (${CMAKE_INIT_SHA})")
 else()
-    message(STATUS "cmake-init template needs an update https://github.com/cginternals/cmake-init/compare/${APPLIED_CMAKE_INIT_SHA}...master")
+    message(STATUS "cmake-init template needs an update https://github.com/cginternals/cmake-init/compare/${APPLIED_CMAKE_INIT_SHA}...${APPLIED_CMAKE_INIT_BRANCH}")
 endif()
