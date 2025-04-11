@@ -21,7 +21,7 @@ The main target platforms are typical desktop, laptop, and server platforms. Cur
 However, other UNIX versions may work as well if they are supported by CMake.
 
 The cmake-init template assumes you want to setup a project using
-CMake (3.15 or above)
+* CMake (3.15 or above)
 * C/C++ compiler
 
 
