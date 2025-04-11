@@ -63,6 +63,7 @@ set(META_VERSION_REVISION    "${GIT_REV}")
 set(META_VERSION             "${META_VERSION_MAJOR}.${META_VERSION_MINOR}.${META_VERSION_PATCH}")
 set(META_NAME_VERSION        "${META_PROJECT_NAME} v${META_VERSION} (${META_VERSION_REVISION})")
 set(META_CMAKE_INIT_SHA      "${GIT_REV}")
+set(META_CMAKE_INIT_BRANCH   "cmake-3.1")
 
 string(MAKE_C_IDENTIFIER ${META_PROJECT_NAME} META_PROJECT_ID)
 string(TOUPPER ${META_PROJECT_ID} META_PROJECT_ID)
@@ -106,7 +107,7 @@ file(WRITE "${PROJECT_BINARY_DIR}/VERSION" "${META_NAME_VERSION}")
 #
 
 # Add cmake-init template check cmake targets
-add_check_template_target(${META_CMAKE_INIT_SHA})
+add_check_template_target(${META_CMAKE_INIT_SHA} ${META_CMAKE_INIT_BRANCH})
 
 # Configure health check tools
 enable_cppcheck(ON)

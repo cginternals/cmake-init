@@ -249,7 +249,7 @@ This module is usable when the following is integrated into the `CMakeLists.txt`
 
 ```cmake
 # Add cmake-init template check cmake targets
-add_check_template_target(<CMAKE_INIT_SHA>)
+add_check_template_target(<CMAKE_INIT_SHA> <CMAKE_INIT_BRANCH>)
 ```
 
 Here, the `<CMAKE_INIT_SHA>` contains the git hash of the used cmake-init template.
@@ -260,9 +260,10 @@ The hash is usually configured using
 ```cmake
 # Meta information about the project
 set(META_CMAKE_INIT_SHA      "<CMAKE_INIT_SHA>")
+set(META_CMAKE_INIT_BRANCH   "<CMAKE_INIT_BRANCH>")
 
 # Add cmake-init template check cmake targets
-add_check_template_target(<CMAKE_INIT_SHA>)
+add_check_template_target(<CMAKE_INIT_SHA> <CMAKE_INIT_BRANCH>)
 ```
 
 Correctly configures, this module adds a cmake build target named `check-template` that compares the passed `<CMAKE_INIT_SHA>` with the current master commit hash of this repository and provides a link for a diff view.
