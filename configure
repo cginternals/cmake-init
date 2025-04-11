@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Default options
+
 BUILD_DIR="build"
 CMAKE_GENERATOR="Unix Makefiles"
 BUILD_TYPE="Release"
@@ -105,8 +106,12 @@ then
   CMAKE_GENERATOR="$CMAKE_GENERATOR_OVERRIDE"
 fi
 
+if [ -n "$BUILD_DIR_PREFIX" ]; then
+  BUILD_DIR="${BUILD_DIR_PREFIX}-${BUILD_DIR}"
+fi
+
 # Configure build
-echo "Configuring in $BUILD_DIR..."
+echo "Configuring in \"$BUILD_DIR\""
 echo ""
 
 # Create build directory
@@ -116,8 +121,10 @@ then
 fi
 
 # Configure project
+
 PREVIOUS_DIR=$(pwd)
-cd $BUILD_DIR
+
+pushd $BUILD_DIR
 echo cmake -G "$CMAKE_GENERATOR" "-DCMAKE_BUILD_TYPE=$BUILD_TYPE" $CMAKE_OPTIONS "$PREVIOUS_DIR"
 cmake -G "$CMAKE_GENERATOR" "-DCMAKE_BUILD_TYPE=$BUILD_TYPE" $CMAKE_OPTIONS "$PREVIOUS_DIR"
 if [ $? == 0 ]
@@ -130,5 +137,4 @@ else
     echo ""
     echo "Configuration failed.";
 fi
-
-cd "$PREVIOUS_DIR"
+popd

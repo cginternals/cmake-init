@@ -4,7 +4,7 @@
 # 
 
 # CMake version
-cmake_minimum_required(VERSION 3.13 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.15 FATAL_ERROR)
 
 #
 # Configure CMake environment
@@ -14,22 +14,17 @@ cmake_minimum_required(VERSION 3.13 FATAL_ERROR)
 include(cmake/Custom.cmake)
 
 # Set policies
-set_policy(CMP0054 NEW) # ENABLE CMP0054: Only interpret if() arguments as variables or keywords when unquoted.
-set_policy(CMP0042 NEW) # ENABLE CMP0042: MACOSX_RPATH is enabled by default.
-set_policy(CMP0063 NEW) # ENABLE CMP0063: Honor visibility properties for all target types.
-set_policy(CMP0077 NEW) # ENABLE CMP0077: option() honors normal variables
+set_policy(CMP0054 NEW) #  ENABLE CMP0054: Only interpret if() arguments as variables or keywords when unquoted.
+set_policy(CMP0042 NEW) #  ENABLE CMP0042: MACOSX_RPATH is enabled by default.
+set_policy(CMP0063 NEW) #  ENABLE CMP0063: Honor visibility properties for all target types.
+set_policy(CMP0077 NEW) #  ENABLE CMP0077: option() honors normal variables.
+set_policy(CMP0120 OLD) # DISABLE CMP0120: The WriteCompilerDetectionHeader module is removed.
 
 # Include cmake modules
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 include(GenerateExportHeader)
-
-set(WriterCompilerDetectionHeaderFound NOTFOUND)
-# This module is only available with CMake >=3.1, so check whether it could be found
-# BUT in CMake 3.1 this module doesn't recognize AppleClang as compiler, so just use it as of CMake 3.2
-if (${CMAKE_VERSION} VERSION_GREATER "3.2")
-    include(WriteCompilerDetectionHeader OPTIONAL RESULT_VARIABLE WriterCompilerDetectionHeaderFound)
-endif()
+include(WriteCompilerDetectionHeader)
 
 # Include custom cmake modules
 include(cmake/Coverage.cmake)
@@ -89,7 +84,7 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 set(IDE_FOLDER "")
 
 # Declare project
-project(${META_PROJECT_NAME} C CXX)
+project(${META_PROJECT_NAME} VERSION ${META_VERSION} DESCRIPTION ${META_PROJECT_DESCRIPTION} LANGUAGES C CXX)
 
 # Set output directories
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR})
@@ -172,9 +167,11 @@ set(CMAKE_INSTALL_RPATH_USE_LINK_PATH FALSE) # Do NOT add path to dependencies f
 if(NOT SYSTEM_DIR_INSTALL)
     # Find libraries relative to binary
     if(APPLE)
-        set(CMAKE_INSTALL_RPATH "@loader_path/../../../${INSTALL_LIB}")
+        set(EXECUTABLE_INSTALL_RPATH "@loader_path/../../../${INSTALL_LIB}")
+        set(LIBRARY_INSTALL_RPATH    "@loader_path/../../../${INSTALL_LIB}")
     else()
-        set(CMAKE_INSTALL_RPATH "$ORIGIN/${INSTALL_LIB}")       
+        set(EXECUTABLE_INSTALL_RPATH "$ORIGIN/${INSTALL_LIB}")
+        set(LIBRARY_INSTALL_RPATH    "$ORIGIN")
     endif()
 endif()
 
