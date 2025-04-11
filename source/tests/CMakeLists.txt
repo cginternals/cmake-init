@@ -4,7 +4,7 @@
 #
 
 # CMake version
-cmake_minimum_required(VERSION 3.10 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.15 FATAL_ERROR)
 
 # Meta information about the project
 set(META_PROJECT_NAME "template")
@@ -57,16 +57,10 @@ endif ()
 # Target 'test'
 # 
 
-if (${CMAKE_VERSION} VERSION_LESS "3.11")
-    set_policy(CMP0037 OLD) # DISABLE CMP0037: Target names should be reserved and should match a validity pattern.
+if (NOT TARGET test)
     add_custom_target(test)
     set_target_properties(test PROPERTIES EXCLUDE_FROM_DEFAULT_BUILD 1)
-else ()
-    if (NOT TARGET test)
-        add_custom_target(test)
-        set_target_properties(test PROPERTIES EXCLUDE_FROM_DEFAULT_BUILD 1)
-    endif()
-endif ()
+endif()
 
 
 # 
