@@ -21,7 +21,7 @@ The main target platforms are typical desktop, laptop, and server platforms. Cur
 However, other UNIX versions may work as well if they are supported by CMake.
 
 The cmake-init template assumes you want to setup a project using
-* CMake (3.1 or above)
+* CMake (3.2 or above)
 * C/C++ compiler
 
 
@@ -99,7 +99,7 @@ As with most CMake projects, cmake-init initializes the CMake environment. This 
 
 ```cmake
 # CMake version
-cmake_minimum_required(VERSION 3.1 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.2 FATAL_ERROR)
 ```
 
 required policies,
@@ -123,44 +123,6 @@ and an include of default modules that are typically required for each project.
 ```cpp
 include(GenerateExportHeader)
 include(WriteCompilerDetectionHeader)
-```
-
-
-### CMake Backward Compatibility
-
-As some modules as `WriteCompilerDetectionHeader` may not be available, cmake-init suggests to use fallbacks and availability detection.
-
-Using this example, the module include
-
-```cmake
-include(WriteCompilerDetectionHeader)
-```
-
-is replaced by
-
-```cmake
-set(WriterCompilerDetectionHeaderFound NOTFOUND)
-# This module is only available with CMake >=3.1, so check whether it could be found
-# BUT in CMake 3.1 this module doesn't recognize AppleClang as compiler, so just use it as of CMake 3.2
-if (${CMAKE_VERSION} VERSION_GREATER "3.2")
-    include(WriteCompilerDetectionHeader OPTIONAL RESULT_VARIABLE WriterCompilerDetectionHeaderFound)
-endif()
-```
-
-and the result can be later used with
-
-```cmake
-if (WriterCompilerDetectionHeaderFound)
-  # ...
-endif ()
-```
-
-Another issue with older CMake versions is the unavailability of then-unpublished language standards (e.g., C++11 and CMake 3.1). For those versions, the compile options has to be extended manually.
-
-For new projects, we suggest to require at least CMake 3.2 and to therefore adjust the minimum required version:
-
-```cmake
-cmake_minimum_required(VERSION 3.1 FATAL_ERROR)
 ```
 
 

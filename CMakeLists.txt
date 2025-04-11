@@ -4,7 +4,7 @@
 # 
 
 # CMake version
-cmake_minimum_required(VERSION 3.1 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.2 FATAL_ERROR)
 
 #
 # Configure CMake environment
@@ -24,13 +24,7 @@ set_policy(CMP0120 OLD) # DISABLE CMP0120: The WriteCompilerDetectionHeader modu
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 include(GenerateExportHeader)
-
-set(WriterCompilerDetectionHeaderFound NOTFOUND)
-# This module is only available with CMake >=3.1, so check whether it could be found
-# BUT in CMake 3.1 this module doesn't recognize AppleClang as compiler, so just use it as of CMake 3.2
-if (${CMAKE_VERSION} VERSION_GREATER "3.2")
-    include(WriteCompilerDetectionHeader OPTIONAL RESULT_VARIABLE WriterCompilerDetectionHeaderFound)
-endif()
+include(WriteCompilerDetectionHeader)
 
 # Include custom cmake modules
 include(cmake/Coverage.cmake)
