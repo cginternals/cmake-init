@@ -125,7 +125,6 @@ include(GenerateExportHeader)
 include(WriteCompilerDetectionHeader)
 ```
 
-
 ### Project Meta Information
 
 The declaration of project-wide information--that are used, e.g., within documentation, testing, and deployment--, is combined within the project meta information section in the main `CMakeLists.txt`.
