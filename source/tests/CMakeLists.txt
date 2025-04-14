@@ -10,7 +10,10 @@ cmake_minimum_required(VERSION 3.15 FATAL_ERROR)
 set(META_PROJECT_NAME "template")
 
 # Declare project
-project("${META_PROJECT_NAME}-tests" C CXX)
+project("${META_PROJECT_NAME}-tests")
+
+enable_language(C)
+enable_language(CXX)
 
 # Set policies
 set_policy(CMP0054 NEW) # ENABLE CMP0054: Only interpret if() arguments as variables or keywords when unquoted.

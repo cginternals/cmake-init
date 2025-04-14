@@ -33,6 +33,10 @@ set(DEFAULT_PROJECT_OPTIONS
 
 set(DEFAULT_INCLUDE_DIRECTORIES)
 
+if (CMAKE_SYSTEM_NAME STREQUAL "FreeBSD")
+    LIST(APPEND DEFAULT_INCLUDE_DIRECTORIES "/usr/local/include")
+endif ()
+
 
 # 
 # Libraries
@@ -50,7 +54,8 @@ set(DEFAULT_COMPILE_DEFINITIONS
 )
 
 # MSVC compiler options
-if ("${CMAKE_CXX_COMPILER_ID}" MATCHES "MSVC")
+if ("${CMAKE_CXX_COMPILER_ID}" MATCHES "MSVC" OR
+    "${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang" AND "x${CMAKE_CXX_SIMULATE_ID}" MATCHES "xMSVC")
     set(DEFAULT_COMPILE_DEFINITIONS ${DEFAULT_COMPILE_DEFINITIONS}
         _SCL_SECURE_NO_WARNINGS  # Calling any one of the potentially unsafe methods in the Standard C++ Library
         _CRT_SECURE_NO_WARNINGS  # Calling any one of the potentially unsafe methods in the CRT Library
@@ -62,79 +67,89 @@ endif ()
 # Compile options
 # 
 
-set(DEFAULT_COMPILE_OPTIONS)
+set(DEFAULT_COMPILE_OPTIONS_PRIVATE)
+set(DEFAULT_COMPILE_OPTIONS_PUBLIC)
 
 # MSVC compiler options
 if ("${CMAKE_CXX_COMPILER_ID}" MATCHES "MSVC")
-    set(DEFAULT_COMPILE_OPTIONS ${DEFAULT_COMPILE_OPTIONS}
-        PRIVATE
+    set(DEFAULT_COMPILE_OPTIONS_PRIVATE ${DEFAULT_COMPILE_OPTIONS_PRIVATE}
+        $<$<CXX_COMPILER_ID:MSVC>:
             /MP           # -> build with multiple processes
-            /W4           # -> warning level 4
-            # /WX         # -> treat warnings as errors
+        >
+        /W4           # -> warning level 4
+        # /WX         # -> treat warnings as errors
+        /wd4251       # -> disable warning: 'identifier': class 'type' needs to have dll-interface to be used by clients of class 'type2'
+        /wd4592       # -> disable warning: 'identifier': symbol will be dynamically initialized (implementation limitation)
+        # /wd4201     # -> disable warning: nonstandard extension used: nameless struct/union (caused by GLM)
+        /wd4127       # -> disable warning: conditional expression is constant (caused by Qt)
 
-            #$<$<CONFIG:Debug>:
-            #/RTCc         # -> value is assigned to a smaller data type and results in a data loss
-            #>
+        # /Zm114      # -> Memory size for precompiled headers (insufficient for msvc 2013)
+        /Zm200        # -> Memory size for precompiled headers
+        
+        $<$<CXX_COMPILER_ID:Clang>:
+            -Wno-microsoft-cast
+        >
 
-            $<$<CONFIG:Release>: 
-            /Gw           # -> whole program global optimization
-            /GS-          # -> buffer security check: no 
-            /GL           # -> whole program optimization: enable link-time code generation (disables Zi)
-            /GF           # -> enable string pooling
-            >
-            
-            # No manual c++11 enable for MSVC as all supported MSVC versions for cmake-init have C++11 implicitly enabled (MSVC >=2013)
+        #$<$<CONFIG:Debug>:
+        #/RTCc         # -> value is assigned to a smaller data type and results in a data loss
+        #>
 
-        PUBLIC
-            /wd4251       # -> disable warning: 'identifier': class 'type' needs to have dll-interface to be used by clients of class 'type2'
-            /wd4592       # -> disable warning: 'identifier': symbol will be dynamically initialized (implementation limitation)
-            # /wd4201     # -> disable warning: nonstandard extension used: nameless struct/union (caused by GLM)
-            # /wd4127     # -> disable warning: conditional expression is constant (caused by Qt)
+        $<$<CONFIG:Release>: 
+        /Gw           # -> whole program global optimization
+        /GS-          # -> buffer security check: no 
+        /GL           # -> whole program optimization: enable link-time code generation (disables Zi)
+        /GF           # -> enable string pooling
+        >
+        
+        # No manual c++11 enable for MSVC as all supported MSVC versions for cmake-init have C++11 implicitly enabled (MSVC >=2013)
     )
 endif ()
 
 # GCC and Clang compiler options
-if ("${CMAKE_CXX_COMPILER_ID}" MATCHES "GNU" OR "${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang")
-    set(DEFAULT_COMPILE_OPTIONS ${DEFAULT_COMPILE_OPTIONS}
-        PRIVATE
-            -Wall
-            -Wextra
-            -Wunused
+if ("${CMAKE_CXX_COMPILER_ID}" MATCHES "GNU" OR "${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang" AND NOT MSVC)
+    set(DEFAULT_COMPILE_OPTIONS_PRIVATE ${DEFAULT_COMPILE_OPTIONS_PRIVATE}
+        #-fno-exceptions # since we use stl and stl is intended to use exceptions, exceptions should not be disabled
 
-            -Wreorder
-            -Wignored-qualifiers
-            -Wmissing-braces
-            -Wreturn-type
-            -Wswitch
-            -Wswitch-default
-            -Wuninitialized
-            -Wmissing-field-initializers
+        -Wall
+        -Wextra
+        -Wunused
+
+        -Wreorder
+        -Wignored-qualifiers
+        -Wmissing-braces
+        -Wreturn-type
+        -Wswitch
+        -Wswitch-default
+        -Wuninitialized
+        -Wmissing-field-initializers
+        
+        $<$<CXX_COMPILER_ID:GNU>:
+            -Wmaybe-uninitialized
+        
+            -Wno-unknown-pragmas
             
-            $<$<CXX_COMPILER_ID:GNU>:
-                -Wmaybe-uninitialized
-                
-                $<$<VERSION_GREATER:$<CXX_COMPILER_VERSION>,4.8>:
-                    -Wpedantic
-                    
-                    -Wreturn-local-addr
-                >
-            >
-            
-            $<$<CXX_COMPILER_ID:Clang>:
+            $<$<VERSION_GREATER:$<CXX_COMPILER_VERSION>,4.8>:
                 -Wpedantic
                 
-                # -Wreturn-stack-address # gives false positives
+                -Wreturn-local-addr
             >
-            
-            $<$<BOOL:${OPTION_COVERAGE_ENABLED}>:
-                -fprofile-arcs
-                -ftest-coverage
+        >
+        
+        $<$<CXX_COMPILER_ID:Clang>:
+            -Wpedantic
+        
+            $<$<PLATFORM_ID:Windows>:
+                -Wno-language-extension-token
+                -Wno-microsoft-cast
             >
-            
-        PUBLIC
-            $<$<PLATFORM_ID:Darwin>:
-                -pthread
-            >
+
+            # -Wreturn-stack-address # gives false positives
+        >
+    )
+    set(DEFAULT_COMPILE_OPTIONS_PUBLIC ${DEFAULT_COMPILE_OPTIONS_PUBLIC}
+        $<$<PLATFORM_ID:Darwin>:
+            -pthread
+        >
     )
 endif ()
 
@@ -147,16 +162,14 @@ set(DEFAULT_LINKER_OPTIONS)
 
 # Use pthreads on mingw and linux
 if("${CMAKE_CXX_COMPILER_ID}" MATCHES "GNU" OR "${CMAKE_SYSTEM_NAME}" MATCHES "Linux")
-    set(DEFAULT_LINKER_OPTIONS
+    set(DEFAULT_LINKER_OPTIONS ${DEFAULT_LINKER_OPTIONS}
         PUBLIC
-            ${DEFAULT_LINKER_OPTIONS}
             -pthread
     )
     
     if (${OPTION_COVERAGE_ENABLED})
-        set(DEFAULT_LINKER_OPTIONS
+        set(DEFAULT_LINKER_OPTIONS ${DEFAULT_LINKER_OPTIONS}
             PUBLIC
-                ${DEFAULT_LINKER_OPTIONS}
                 -fprofile-arcs
                 -ftest-coverage
         )

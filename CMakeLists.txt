@@ -1,10 +1,24 @@
 
-# 
+#
 # CMake options
 # 
 
 # CMake version
 cmake_minimum_required(VERSION 3.15 FATAL_ERROR)
+
+
+#
+# Detect type of CMake setup
+#
+
+# Use PROJECT_IS_TOP_LEVEL once we bump the required CMake version up to 3.21
+get_directory_property(META_HAS_PARENT PARENT_DIRECTORY)
+if(META_HAS_PARENT)
+  set(META_BUILD_AS_ROOT Off)
+else()
+  set(META_BUILD_AS_ROOT On)
+endif()
+
 
 #
 # Configure CMake environment
@@ -17,6 +31,7 @@ include(cmake/Custom.cmake)
 set_policy(CMP0054 NEW) #  ENABLE CMP0054: Only interpret if() arguments as variables or keywords when unquoted.
 set_policy(CMP0042 NEW) #  ENABLE CMP0042: MACOSX_RPATH is enabled by default.
 set_policy(CMP0063 NEW) #  ENABLE CMP0063: Honor visibility properties for all target types.
+set_policy(CMP0069 NEW) #  ENABLE CMP0069: INTERPROCEDURAL_OPTIMIZATION is enforced when enabled.
 set_policy(CMP0077 NEW) #  ENABLE CMP0077: option() honors normal variables.
 set_policy(CMP0120 OLD) # DISABLE CMP0120: The WriteCompilerDetectionHeader module is removed.
 
@@ -34,15 +49,33 @@ include(cmake/HealthCheck.cmake)
 
 
 # 
-# Project description and (meta) information
+# Project configuration options
 # 
 
+# Project options
+option(BUILD_SHARED_LIBS      "Build shared instead of static libraries."              ON)
+option(OPTION_SELF_CONTAINED  "Create a self-contained install with all dependencies." OFF)
+option(OPTION_BUILD_TESTS     "Build tests."                                           ON)
+option(OPTION_BUILD_DOCS      "Build documentation."                                   OFF)
+option(OPTION_BUILD_EXAMPLES  "Build examples."                                        OFF)
+option(OPTION_ENABLE_COVERAGE "Add coverage information."                              OFF)
+
 # Get git revision
-get_git_head_revision(GIT_REFSPEC GIT_SHA1)
-string(SUBSTRING "${GIT_SHA1}" 0 12 GIT_REV)
-if(NOT GIT_SHA1)
-    set(GIT_REV "0")
+if (OPTION_USE_GIT_INFORMATION AND META_BUILD_AS_ROOT)
+  get_git_head_revision(GIT_REFSPEC GIT_SHA1)
+  string(SUBSTRING "${GIT_SHA1}" 0 12 GIT_REV)
+  if(NOT GIT_SHA1)
+      set(GIT_REV "0")
+  endif()
+else()
+  set(GIT_SHA1 "")
+  set(GIT_REV "0")
 endif()
+
+
+# 
+# Project description and (meta) information
+# 
 
 # Meta information about the project
 set(META_PROJECT_NAME        "template")
@@ -51,7 +84,7 @@ set(META_AUTHOR_ORGANIZATION "CG Internals GmbH")
 set(META_AUTHOR_DOMAIN       "https://github.com/cginternals/cmake-init/")
 set(META_AUTHOR_MAINTAINER   "opensource@cginternals.com")
 set(META_VERSION_MAJOR       "2")
-set(META_VERSION_MINOR       "0")
+set(META_VERSION_MINOR       "1")
 set(META_VERSION_PATCH       "0")
 set(META_VERSION_REVISION    "${GIT_REV}")
 set(META_VERSION             "${META_VERSION_MAJOR}.${META_VERSION_MINOR}.${META_VERSION_PATCH}")
@@ -64,19 +97,6 @@ string(TOUPPER ${META_PROJECT_ID} META_PROJECT_ID)
 
 
 # 
-# Project configuration options
-# 
-
-# Project options
-option(BUILD_SHARED_LIBS      "Build shared instead of static libraries."              ON)
-option(OPTION_SELF_CONTAINED  "Create a self-contained install with all dependencies." OFF)
-option(OPTION_BUILD_TESTS     "Build tests."                                           ON)
-option(OPTION_BUILD_DOCS      "Build documentation."                                   OFF)
-option(OPTION_BUILD_EXAMPLES  "Build examples."                                        OFF)
-option(OPTION_ENABLE_COVERAGE "Add coverage information."                              OFF)
-
-
-# 
 # Declare project
 # 
 
@@ -85,7 +105,13 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 set(IDE_FOLDER "")
 
 # Declare project
-project(${META_PROJECT_NAME} VERSION ${META_VERSION} DESCRIPTION ${META_PROJECT_DESCRIPTION} LANGUAGES C CXX)
+project(${META_PROJECT_NAME}
+    VERSION ${META_VERSION}
+    DESCRIPTION ${META_PROJECT_DESCRIPTION}
+)
+
+enable_language(C)
+enable_language(CXX)
 
 # Set output directories
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR})
