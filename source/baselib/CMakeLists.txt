@@ -157,9 +157,9 @@ target_compile_definitions(${target}
 
 target_compile_options(${target}
     PRIVATE
-
+    ${DEFAULT_COMPILE_OPTIONS_PRIVATE}
     PUBLIC
-    ${DEFAULT_COMPILE_OPTIONS}
+    ${DEFAULT_COMPILE_OPTIONS_PUBLIC}
 
     INTERFACE
 )
