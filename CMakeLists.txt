@@ -38,6 +38,7 @@ set_policy(CMP0120 OLD) # DISABLE CMP0120: The WriteCompilerDetectionHeader modu
 # Include cmake modules
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
+include(CMakePackageConfigHelpers)
 include(GenerateExportHeader)
 include(WriteCompilerDetectionHeader)
 
@@ -220,7 +221,17 @@ add_subdirectory(deploy)
 install(FILES "${PROJECT_BINARY_DIR}/VERSION" DESTINATION ${INSTALL_ROOT} COMPONENT runtime)
 
 # Install cmake find script for the project
-install(FILES ${META_PROJECT_NAME}-config.cmake DESTINATION ${INSTALL_ROOT} COMPONENT dev)
+write_basic_package_version_file(
+    "${PROJECT_BINARY_DIR}/${META_PROJECT_NAME}-config-version.cmake"
+    VERSION ${PROJECT_VERSION}
+    COMPATIBILITY SameMajorVersion
+)
+install(FILES
+    ${META_PROJECT_NAME}-config.cmake
+    "${PROJECT_BINARY_DIR}/${META_PROJECT_NAME}-config-version.cmake"
+    DESTINATION ${INSTALL_ROOT}
+    COMPONENT dev
+)
 
 # Install the project meta files
 install(FILES AUTHORS   DESTINATION ${INSTALL_ROOT} COMPONENT runtime)
